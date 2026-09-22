@@ -5,12 +5,15 @@
  *   hue       which category the value belongs to. Assigned on first
  *             appearance and stable for a whole run, so the eye can follow one
  *             value from the input, to its placeholder, to the result.
- *   intensity whether it is still in clear or already masked. `valeur` is the
- *             pale level, `jeton` the reinforced one.
  *
- * Nothing else. No underline, no outline: six second channels were rendered
- * and compared before settling on this one. See brand/tokens/README.md in
- * piighost-identite.
+ * That is the whole of it. The intensity used to carry a second fact, whether
+ * a value was still in clear or already masked, `valeur` pale against `jeton`
+ * reinforced. That rule was retired on 22 September 2026: a value and its
+ * placeholder now wear the same colour and the text alone says which is which.
+ *
+ * `jeton` is still generated and this site no longer asks for it. The two
+ * levels stay in the contract because the hub and the local runner share this
+ * file byte for byte. See brand/tokens/README.md in piighost-identite.
  *
  * Colours come from CSS classes, never from a `style` attribute: the
  * production CSP is `style-src 'self'` with no `unsafe-inline`. They are also

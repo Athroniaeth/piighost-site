@@ -9,8 +9,8 @@
    * elle n'est pas dans le dictionnaire là-bas non plus, et une URL inconnue
    * n'a pas de langue.
    *
-   * C'est la seule page du site qui n'affiche aucune donnée, donc la seule où
-   * le corail de marque est autorisé. Voir CHARTE.md section 2.
+   * Le fantôme y porte la couleur de la marque, qui est celle des actions
+   * depuis que le corail est retiré. Voir CHARTE.md section 2.
    */
   const accueil = lien("home", router.locale ?? localePreferee());
 </script>
@@ -18,7 +18,7 @@
 <div
   class="mx-auto flex max-w-3xl flex-col items-center px-4 py-32 text-center"
 >
-  <Ghost size={64} class="corail" />
+  <Ghost size={64} class="text-primary" />
   <p class="mt-6 font-mono text-6xl font-bold text-primary">404</p>
   <h1 class="mt-4 text-2xl font-semibold">
     This page slipped past the placeholder

@@ -7,8 +7,9 @@
  * Cible : piighost-studio-v2, frontend/src/app.css, version Vite
  *
  * Direction : l'Évidence. Sur une interface, la seule couleur qui ne soit pas
- * de la donnée est --primary, plus --destructive pour les états d'erreur. Le
- * corail de marque n'a pas le droit d'apparaître ici.
+ * de la donnée est --primary, plus --destructive pour les états d'erreur.
+ * --primary est aussi la couleur de la marque depuis le 22 septembre 2026 : le
+ * corail est retiré, le fantôme se reconnaît à sa forme.
  *
  * Clair par défaut, sombre en classe sur <html>, jamais déduit du système.
  * Tout est une vraie feuille de style, jamais un style en ligne : la CSP de
@@ -101,63 +102,81 @@
   --sidebar-border: oklch(0.85 0.005 220);
   --sidebar-ring: oklch(0.51 0.23 277);
   --destructive-foreground: oklch(0.99 0.002 27);
-  --font-sans: "Instrument Sans", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-sans:
+    "Instrument Sans Variable", "Instrument Sans", system-ui, sans-serif;
+  --font-mono:
+    "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular,
+    monospace;
   --font-heading: var(--font-sans);
   --radius: 0.5rem;
 
   /* Couleurs de donnée. */
-  --chart-1: oklch(0.62 0.1401 64.1);
-  --chart-2: oklch(0.62 0.1276 96.4);
-  --chart-3: oklch(0.62 0.16 128.6);
-  --chart-4: oklch(0.62 0.1383 160.9);
-  --chart-5: oklch(0.62 0.143 240.4);
+  --chart-1: oklch(0.62 0.16 27);
+  --chart-2: oklch(0.62 0.1535 55);
+  --chart-3: oklch(0.62 0.1271 85);
+  --chart-4: oklch(0.62 0.16 140);
+  --chart-5: oklch(0.62 0.1169 175);
   --entite-01-valeur-fond: oklch(0.935 0.0328 27);
   --entite-01-valeur-texte: oklch(0.53 0.15 27);
   --entite-01-jeton-fond: oklch(0.855 0.0786 27);
-  --entite-01-jeton-texte: oklch(0.465 0.15 27);
+  --entite-01-jeton-texte: oklch(0.47 0.15 27);
   --entite-01-puce: oklch(0.62 0.16 27);
   --entite-02-valeur-fond: oklch(0.935 0.0386 55);
-  --entite-02-valeur-texte: oklch(0.525 0.13 55);
+  --entite-02-valeur-texte: oklch(0.52 0.1288 55);
   --entite-02-jeton-fond: oklch(0.855 0.0918 55);
   --entite-02-jeton-texte: oklch(0.46 0.1139 55);
   --entite-02-puce: oklch(0.62 0.1535 55);
-  --entite-03-valeur-fond: oklch(0.935 0.05 85);
-  --entite-03-valeur-texte: oklch(0.515 0.1055 85);
-  --entite-03-jeton-fond: oklch(0.855 0.11 85);
-  --entite-03-jeton-texte: oklch(0.455 0.0933 85);
+  --entite-03-valeur-fond: oklch(0.935 0.068 85);
+  --entite-03-valeur-texte: oklch(0.52 0.1066 85);
+  --entite-03-jeton-fond: oklch(0.855 0.115 85);
+  --entite-03-jeton-texte: oklch(0.46 0.0943 85);
   --entite-03-puce: oklch(0.62 0.1271 85);
-  --entite-04-valeur-fond: oklch(0.935 0.05 140);
-  --entite-04-valeur-texte: oklch(0.505 0.15 140);
-  --entite-04-jeton-fond: oklch(0.855 0.11 140);
+  --entite-04-valeur-fond: oklch(0.935 0.068 140);
+  --entite-04-valeur-texte: oklch(0.51 0.15 140);
+  --entite-04-jeton-fond: oklch(0.855 0.115 140);
   --entite-04-jeton-texte: oklch(0.45 0.1449 140);
   --entite-04-puce: oklch(0.62 0.16 140);
-  --entite-05-valeur-fond: oklch(0.935 0.05 175);
-  --entite-05-valeur-texte: oklch(0.505 0.0952 175);
-  --entite-05-jeton-fond: oklch(0.855 0.11 175);
-  --entite-05-jeton-texte: oklch(0.455 0.0858 175);
+  --entite-05-valeur-fond: oklch(0.935 0.068 175);
+  --entite-05-valeur-texte: oklch(0.51 0.0962 175);
+  --entite-05-jeton-fond: oklch(0.855 0.115 175);
+  --entite-05-jeton-texte: oklch(0.46 0.0867 175);
   --entite-05-puce: oklch(0.62 0.1169 175);
-  --entite-06-valeur-fond: oklch(0.935 0.05 215);
+  --entite-06-valeur-fond: oklch(0.935 0.0509 215);
   --entite-06-valeur-texte: oklch(0.51 0.0901 215);
-  --entite-06-jeton-fond: oklch(0.855 0.11 215);
-  --entite-06-jeton-texte: oklch(0.455 0.0804 215);
+  --entite-06-jeton-fond: oklch(0.855 0.115 215);
+  --entite-06-jeton-texte: oklch(0.46 0.0813 215);
   --entite-06-puce: oklch(0.62 0.1095 215);
   --entite-07-valeur-fond: oklch(0.935 0.0334 245);
-  --entite-07-valeur-texte: oklch(0.515 0.1296 245);
+  --entite-07-valeur-texte: oklch(0.52 0.1309 245);
   --entite-07-jeton-fond: oklch(0.855 0.0769 245);
-  --entite-07-jeton-texte: oklch(0.455 0.1145 245);
+  --entite-07-jeton-texte: oklch(0.46 0.1158 245);
   --entite-07-puce: oklch(0.62 0.1561 245);
-  --entite-08-valeur-fond: oklch(0.935 0.05 330);
+  --entite-08-valeur-fond: oklch(0.935 0.0534 330);
   --entite-08-valeur-texte: oklch(0.53 0.15 330);
-  --entite-08-jeton-fond: oklch(0.855 0.11 330);
-  --entite-08-jeton-texte: oklch(0.465 0.15 330);
+  --entite-08-jeton-fond: oklch(0.855 0.115 330);
+  --entite-08-jeton-texte: oklch(0.47 0.15 330);
   --entite-08-puce: oklch(0.62 0.16 330);
 
-  /* Marque. INTERDIT sur toute surface qui affiche de la donnée.
-     Voir brand/territoires/decision.md. */
-  --marque-corail: oklch(0.51 0.23 277);
-  --marque-corail-texte: oklch(0.17 0.012 220);
-  --marque-corail-sombre: oklch(0.62 0.19 277);
+  /* Marque. Le corail est retiré : elle porte la couleur d'action.
+     Voir brand/charte/CHARTE.md, journal du 22 septembre 2026. */
+  --marque: var(--primary);
+
+  /* Coloration syntaxique : GitHub Primer, cité tel quel.
+     Seul hexadécimal du fichier, voir CHARTE.md section 8. */
+  --code-comment: #656d76;
+  --code-string: #0a3069;
+  --code-keyword: #cf222e;
+  --code-constant: #0550ae;
+  --code-entity: #6639ba;
+  --code-base: #24292f;
+
+  /* Drapeaux du sélecteur de langue. Ne suivent pas le thème :
+     un bleu marine éclairci en sombre serait un autre drapeau. */
+  --flag-white: #ffffff;
+  --flag-fr-blue: #0055a4;
+  --flag-fr-red: #ef4135;
+  --flag-us-blue: #0a3161;
+  --flag-us-red: #b31942;
 }
 
 .dark {
@@ -190,51 +209,60 @@
   --destructive-foreground: oklch(0.18 0.03 27);
 
   /* Couleurs de donnée. */
-  --chart-1: oklch(0.62 0.1401 64.1);
-  --chart-2: oklch(0.62 0.1276 96.4);
-  --chart-3: oklch(0.62 0.16 128.6);
-  --chart-4: oklch(0.62 0.1383 160.9);
-  --chart-5: oklch(0.62 0.143 240.4);
-  --entite-01-valeur-fond: oklch(0.305 0.07 27);
-  --entite-01-valeur-texte: oklch(0.7 0.13 27);
+  --chart-1: oklch(0.62 0.16 27);
+  --chart-2: oklch(0.62 0.1535 55);
+  --chart-3: oklch(0.62 0.1271 85);
+  --chart-4: oklch(0.62 0.16 140);
+  --chart-5: oklch(0.62 0.1169 175);
+  --entite-01-valeur-fond: oklch(0.305 0.068 27);
+  --entite-01-valeur-texte: oklch(0.69 0.13 27);
   --entite-01-jeton-fond: oklch(0.4 0.09 27);
-  --entite-01-jeton-texte: oklch(0.785 0.1249 27);
+  --entite-01-jeton-texte: oklch(0.78 0.1285 27);
   --entite-01-puce: oklch(0.62 0.16 27);
-  --entite-02-valeur-fond: oklch(0.305 0.07 55);
-  --entite-02-valeur-texte: oklch(0.7 0.13 55);
+  --entite-02-valeur-fond: oklch(0.305 0.068 55);
+  --entite-02-valeur-texte: oklch(0.68 0.13 55);
   --entite-02-jeton-fond: oklch(0.4 0.09 55);
-  --entite-02-jeton-texte: oklch(0.785 0.13 55);
+  --entite-02-jeton-texte: oklch(0.78 0.13 55);
   --entite-02-puce: oklch(0.62 0.1535 55);
   --entite-03-valeur-fond: oklch(0.305 0.0625 85);
-  --entite-03-valeur-texte: oklch(0.7 0.13 85);
+  --entite-03-valeur-texte: oklch(0.68 0.13 85);
   --entite-03-jeton-fond: oklch(0.4 0.082 85);
-  --entite-03-jeton-texte: oklch(0.785 0.13 85);
+  --entite-03-jeton-texte: oklch(0.78 0.13 85);
   --entite-03-puce: oklch(0.62 0.1271 85);
-  --entite-04-valeur-fond: oklch(0.305 0.07 140);
-  --entite-04-valeur-texte: oklch(0.7 0.13 140);
+  --entite-04-valeur-fond: oklch(0.305 0.068 140);
+  --entite-04-valeur-texte: oklch(0.67 0.13 140);
   --entite-04-jeton-fond: oklch(0.4 0.09 140);
   --entite-04-jeton-texte: oklch(0.78 0.13 140);
   --entite-04-puce: oklch(0.62 0.16 140);
   --entite-05-valeur-fond: oklch(0.305 0.0575 175);
-  --entite-05-valeur-texte: oklch(0.7 0.13 175);
+  --entite-05-valeur-texte: oklch(0.67 0.1263 175);
   --entite-05-jeton-fond: oklch(0.4 0.0754 175);
-  --entite-05-jeton-texte: oklch(0.78 0.13 175);
+  --entite-05-jeton-texte: oklch(0.77 0.13 175);
   --entite-05-puce: oklch(0.62 0.1169 175);
   --entite-06-valeur-fond: oklch(0.305 0.0539 215);
-  --entite-06-valeur-texte: oklch(0.7 0.1237 215);
+  --entite-06-valeur-texte: oklch(0.67 0.1184 215);
   --entite-06-jeton-fond: oklch(0.4 0.0707 215);
   --entite-06-jeton-texte: oklch(0.78 0.13 215);
   --entite-06-puce: oklch(0.62 0.1095 215);
-  --entite-07-valeur-fond: oklch(0.305 0.07 245);
-  --entite-07-valeur-texte: oklch(0.7 0.13 245);
+  --entite-07-valeur-fond: oklch(0.305 0.068 245);
+  --entite-07-valeur-texte: oklch(0.68 0.13 245);
   --entite-07-jeton-fond: oklch(0.4 0.09 245);
   --entite-07-jeton-texte: oklch(0.78 0.12 245);
   --entite-07-puce: oklch(0.62 0.1561 245);
-  --entite-08-valeur-fond: oklch(0.305 0.07 330);
-  --entite-08-valeur-texte: oklch(0.7 0.13 330);
+  --entite-08-valeur-fond: oklch(0.305 0.068 330);
+  --entite-08-valeur-texte: oklch(0.68 0.13 330);
   --entite-08-jeton-fond: oklch(0.4 0.09 330);
-  --entite-08-jeton-texte: oklch(0.785 0.13 330);
+  --entite-08-jeton-texte: oklch(0.78 0.13 330);
   --entite-08-puce: oklch(0.62 0.16 330);
+
+  /* Coloration syntaxique : GitHub Primer, cité tel quel.
+     Seul hexadécimal du fichier, voir CHARTE.md section 8. */
+  --code-comment: #8b949e;
+  --code-string: #a5d6ff;
+  --code-keyword: #ff7b72;
+  --code-constant: #79c0ff;
+  --code-entity: #d2a8ff;
+  --code-base: #c9d1d9;
 }
 
 @layer base {
@@ -353,47 +381,4 @@
 }
 .entite-08-puce {
   background-color: var(--entite-08-puce);
-}
-
-/* Les deux drapeaux du sélecteur de langue. Ni tokens de charte ni suivis du
-   thème, et c'est voulu : la couleur d'un drapeau est fixée par le drapeau, et
-   un bleu marine éclairci en mode sombre serait un autre drapeau. Ils vivent
-   ici parce qu'un composant ne porte aucune couleur brute. */
-:root {
-  --flag-white: #ffffff;
-  --flag-fr-blue: #0055a4;
-  --flag-fr-red: #ef4135;
-  --flag-us-blue: #0a3161;
-  --flag-us-red: #b31942;
-}
-
-/* La coloration syntaxique : GitHub Primer, repris tel quel.
- *
- * En hexadécimal et non en oklch, contrairement au reste du fichier, et c'est
- * volontaire : ce sont les valeurs publiées de github.com, et les convertir
- * effacerait ce qui permet de les vérifier contre la source. Elles ne
- * participent pas au système de la charte, elles citent un autre système.
- *
- * Un seul écart : le gris des commentaires en clair. Primer le pose sur du
- * blanc pur, où son #6e7781 tient 4.5:1 ; notre bloc de code est sur
- * #f4f5f6 et il y tombe à 4.17, sous le seuil du corps de texte. #656d76,
- * que Primer emploie lui-même ailleurs, rend 4.81. Tout le reste passe : le
- * minimum est 4.62 en clair et 6.04 en sombre.
- */
-:root {
-  --code-comment: #656d76;
-  --code-string: #0a3069;
-  --code-keyword: #cf222e;
-  --code-constant: #0550ae;
-  --code-entity: #8250df;
-  --code-base: #24292f;
-}
-
-.dark {
-  --code-comment: #8b949e;
-  --code-string: #a5d6ff;
-  --code-keyword: #ff7b72;
-  --code-constant: #79c0ff;
-  --code-entity: #d2a8ff;
-  --code-base: #c9d1d9;
 }

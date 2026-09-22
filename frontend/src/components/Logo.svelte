@@ -16,5 +16,5 @@
 
 <span class="inline-flex items-center gap-2 font-semibold tracking-[-0.03em]">
   <Ghost {size} class="text-primary" />
-  <span style:font-size="{size * 0.92}px">piighost</span>
+  <span class="text-[1.265rem]">piighost</span>
 </span>

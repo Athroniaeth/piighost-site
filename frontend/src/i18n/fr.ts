@@ -473,17 +473,6 @@ export const fr: Dictionary = {
     phHashLength: "Longueur du hash",
     phMaskChar: "Caractère de masque",
   },
-  sommaire: {
-    titre: "Sections de la page",
-    overview: "Présentation",
-    problem: "Le problème",
-    detector: "Pourquoi piighost",
-    howItWorks: "Fonctionnement",
-    ecosystem: "L'écosystème",
-    quickStart: "Démarrage rapide",
-    faq: "Questions",
-    getStarted: "Se lancer",
-  },
   philosophy: {
     eyebrow: "Philosophie",
     title: "Pourquoi anonymiser ?",

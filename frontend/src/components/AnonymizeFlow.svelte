@@ -48,7 +48,7 @@
 <div
   class="mx-auto w-full max-w-md rounded-xl border bg-card p-6 shadow-sm sm:p-8 lg:max-w-none"
 >
-  <p class="font-mono text-base leading-relaxed sm:text-lg">
+  <p class="text-justify font-mono text-base leading-relaxed sm:text-lg">
     <Segments
       entites={ENTITES}
       segments={SEGMENTS}

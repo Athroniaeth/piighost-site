@@ -1,5 +1,6 @@
 <script lang="ts">
   import Segments from "./Segments.svelte";
+  import { cn } from "../lib/cn";
   import { untrack } from "svelte";
   import { Flux, type Entite, type Segment } from "../lib/flux.svelte";
 
@@ -16,12 +17,17 @@
     etiquetteBrute,
     etiquetteJeton,
     demarreEnJetons = false,
+    justifie = true,
   }: {
     entites: Entite[];
     segments: Segment[];
     etiquetteBrute: string;
     etiquetteJeton: string;
     demarreEnJetons?: boolean;
+    /** Faux pour l'appel d'outil : ses lignes se terminent par un vrai retour
+     *  à la ligne, et une ligne ainsi terminée est une dernière ligne, que la
+     *  justification laisse en drapeau. Le bloc sortirait à moitié aligné. */
+    justifie?: boolean;
   } = $props();
 
   const flux = untrack(() => new Flux(entites.length, demarreEnJetons));
@@ -34,7 +40,12 @@
   >
     {flux.enJetons ? etiquetteJeton : etiquetteBrute}
   </p>
-  <p class="whitespace-pre-wrap break-words font-mono text-sm leading-relaxed">
+  <p
+    class={cn(
+      "whitespace-pre-wrap break-words font-mono text-sm leading-relaxed",
+      justifie && "text-justify",
+    )}
+  >
     <Segments
       {entites}
       {segments}

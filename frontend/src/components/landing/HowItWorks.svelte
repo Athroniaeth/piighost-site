@@ -156,7 +156,9 @@
                 >
                   {hw.labels.userMessage}
                 </p>
-                <p class="break-words font-mono text-sm leading-relaxed">
+                <p
+                  class="break-words text-justify font-mono text-sm leading-relaxed"
+                >
                   <Segments
                     entites={ENTITES_ANONYMISE}
                     segments={SEGMENTS_ANONYMISE}
@@ -184,6 +186,7 @@
                 etiquetteBrute={hw.labels.toolRuns}
                 etiquetteJeton={hw.labels.toolCall}
                 demarreEnJetons
+                justifie={false}
               />
               {@render legende(hw.toolsCaption)}
             </div>

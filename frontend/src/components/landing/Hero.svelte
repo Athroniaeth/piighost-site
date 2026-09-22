@@ -19,7 +19,9 @@
       <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">
         {i18n.t.hero.title}
       </h1>
-      <p class="mt-6 max-w-xl text-lg text-muted-foreground">
+      <p
+        class="mt-6 max-w-xl text-justify text-lg hyphens-auto text-muted-foreground"
+      >
         {i18n.t.hero.description}
       </p>
       <div class="mt-8 flex flex-wrap gap-3">

@@ -22,7 +22,9 @@
 <div class="border-b">
   <div class="mx-auto max-w-3xl px-4 py-16">
     <h1 class="font-mono text-3xl font-bold sm:text-4xl">{project.name}</h1>
-    <p class="mt-4 text-lg text-muted-foreground">{tagline}</p>
+    <p class="mt-4 text-justify text-lg hyphens-auto text-muted-foreground">
+      {tagline}
+    </p>
     <div class="mt-6 flex flex-wrap gap-3">
       <Button
         variant="outline"

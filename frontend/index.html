@@ -1,31 +1,39 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- The first block of text an index reads. A single page application shows
-         a crawler nothing else until it runs the bundle, so these are not a
-         detail: they are the page, as far as most crawlers are concerned.
-         Rewrite all four for your application, and keep the title under sixty
-         characters and the description under a hundred and sixty. -->
-    <title>Litestar + Svelte template</title>
+    <!-- Ces balises sont celles du repli. Le prérendu les réécrit par page,
+         dans frontend/prerender.mjs, à partir de routes.json et du
+         dictionnaire : ce que voit un robot n'est donc pas ce bloc, sauf sur
+         une URL inconnue. -->
+    <title>piighost, utilisez un LLM sans lui donner vos données confidentielles</title>
     <meta
       name="description"
-      content="A Litestar API and a Svelte single page application, decoupled: two images, two deployment cycles, one versioned OpenAPI contract between them."
+      content="Bibliotheque Python qui remplace chaque valeur sensible par un jeton stable avant l'envoi a un modele, puis la restitue. Libre, sous licence MIT."
     />
+    <link rel="canonical" href="https://piighost.dev/fr" />
 
-    <!-- What a link preview shows on Slack, Discord, X and every chat app.
-         og:url and the image want absolute URLs; set them once you have a
-         domain. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#f9fbfb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0d1214" media="(prefers-color-scheme: dark)" />
+
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Litestar + Svelte template" />
+    <meta property="og:site_name" content="piighost" />
+    <meta property="og:title" content="Le modele travaille. Les donnees restent." />
     <meta
       property="og:description"
-      content="A Litestar API and a Svelte single page application, decoupled: two images, two deployment cycles, one versioned OpenAPI contract between them."
+      content="Utilisez un LLM sans lui donner vos donnees confidentielles."
     />
+    <meta property="og:image" content="https://piighost.dev/og.png" />
+    <meta property="og:url" content="https://piighost.dev/fr" />
     <meta name="twitter:card" content="summary_large_image" />
+
+    <script src="/theme.js"></script>
   </head>
   <body>
     <div id="app"></div>

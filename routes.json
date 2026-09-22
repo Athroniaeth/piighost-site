@@ -1,0 +1,21 @@
+{
+  "commentaire": [
+    "La forme du site, écrite une fois. Trois consommateurs la lisent :",
+    "  frontend/src/lib/routes.ts   le routeur et les liens",
+    "  backend/seo.py               robots.txt et sitemap.xml",
+    "  frontend/prerender.mjs       un HTML par route au build",
+    "Une route ajoutée ici apparaît dans les trois. Une route ajoutée ailleurs",
+    "est une route que les robots ne trouveront pas."
+  ],
+  "locales": ["fr", "en"],
+  "localeParDefaut": "fr",
+  "origine": "https://piighost.dev",
+  "pages": [
+    { "nom": "home",        "chemin": "/",                      "priorite": 1.0, "frequence": "weekly" },
+    { "nom": "piighost",    "chemin": "/projects/piighost",     "priorite": 0.9, "frequence": "weekly" },
+    { "nom": "api",         "chemin": "/projects/api",          "priorite": 0.8, "frequence": "monthly" },
+    { "nom": "chat",        "chemin": "/projects/chat",         "priorite": 0.7, "frequence": "monthly" },
+    { "nom": "proofreader", "chemin": "/projects/proofreader",  "priorite": 0.7, "frequence": "monthly" },
+    { "nom": "philosophy",  "chemin": "/philosophy",            "priorite": 0.6, "frequence": "monthly" }
+  ]
+}

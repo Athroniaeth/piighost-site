@@ -1,39 +1,10 @@
 <script lang="ts">
-  import { apiHelloHello } from "./generated/api";
-
-  // Le SDK généré appelle /api en relatif : Vite proxifie en dev, nginx en
-  // production. Aucune URL d'API dans le bundle, donc rien à reconfigurer.
-  const greeting = apiHelloHello().then(({ data, error }) => {
-    if (error || !data) {
-      throw new Error("Requête /api/hello en échec");
-    }
-    return data.message;
-  });
+  import { router } from "./lib/router.svelte";
+  import { t } from "./lib/i18n.svelte";
 </script>
 
-<main class="app">
-  <h1>frontend</h1>
-  <p>Svelte 5 + Litestar + Vite</p>
-  <div class="card">
-    {#await greeting}
-      <p>Chargement…</p>
-    {:then message}
-      <p data-testid="greeting">{message}</p>
-    {:catch error}
-      <p data-testid="greeting-error">{error.message}</p>
-    {/await}
-  </div>
+<main class="mx-auto max-w-3xl p-8">
+  <h1 class="text-4xl font-semibold tracking-tight">{t("home.title")}</h1>
+  <p class="mt-4 text-muted-foreground">{t("home.lede")}</p>
+  <p class="mt-6 font-mono text-sm">route : {router.nom} / {router.locale}</p>
 </main>
-
-<style>
-  .app {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-  }
-
-  .card {
-    padding: 2em;
-  }
-</style>

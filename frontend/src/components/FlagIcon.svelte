@@ -39,15 +39,22 @@
   </svg>
 {:else}
   <svg viewBox="0 0 16 16" class="shrink-0 text-foreground/25 {extra}" aria-hidden="true">
-    <!-- viewBox imbriqué : l'Union Jack se dessine sur sa propre grille 60 × 30
-         et se met à l'échelle dans l'icône, plutôt que de réécrire chaque
-         coordonnée. -->
-    <svg x="0" y="2" width="16" height="12" viewBox="0 0 60 30">
-      <rect width="60" height="30" fill="var(--flag-gb-blue)" />
-      <path d="M0,0 L60,30 M60,0 L0,30" stroke="var(--flag-white)" stroke-width="6" />
-      <path d="M0,0 L60,30 M60,0 L0,30" stroke="var(--flag-gb-red)" stroke-width="3" />
-      <path d="M30,0 V30 M0,15 H60" stroke="var(--flag-white)" stroke-width="10" />
-      <path d="M30,0 V30 M0,15 H60" stroke="var(--flag-gb-red)" stroke-width="6" />
+    <!-- viewBox imbriqué : le drapeau se dessine sur sa propre grille 26 × 13,
+         une unité par bande, et se met à l'échelle dans l'icône.
+         Les cinquante étoiles ne sont pas dessinées : à seize pixels de large
+         elles deviennent une bouillie grise qui salit le canton au lieu de le
+         décrire. Neuf points suffisent à le dire. -->
+    <svg x="0" y="2" width="16" height="12" viewBox="0 0 26 13">
+      <rect width="26" height="13" fill="var(--flag-white)" />
+      {#each [0, 2, 4, 6, 8, 10, 12] as y (y)}
+        <rect {y} width="26" height="1" fill="var(--flag-us-red)" />
+      {/each}
+      <rect width="10.4" height="7" fill="var(--flag-us-blue)" />
+      {#each [1.3, 3.9, 6.5, 9.1] as cx (cx)}
+        {#each [1.2, 3.5, 5.8] as cy (cy)}
+          <circle {cx} {cy} r="0.42" fill="var(--flag-white)" />
+        {/each}
+      {/each}
     </svg>
     <rect
       x="0.25"

@@ -187,7 +187,7 @@ export const en: Dictionary = {
     tagline: "Anonymize PII before it reaches the LLM.",
     projects: "Projects",
     links: "Links",
-    mit: "MIT licensed. Built with Svelte and shadcn/ui.",
+    mit: "MIT licensed.",
   },
   hero: {
     title: "Anonymize PII before it reaches the LLM",

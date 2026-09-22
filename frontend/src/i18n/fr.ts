@@ -189,7 +189,7 @@ export const fr: Dictionary = {
       "Anonymisez les données personnelles avant qu'elles n'atteignent le modèle.",
     projects: "Projets",
     links: "Liens",
-    mit: "Licence MIT. Construit avec Svelte et shadcn/ui.",
+    mit: "Licence MIT.",
   },
   hero: {
     title:

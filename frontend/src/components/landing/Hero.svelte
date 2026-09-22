@@ -9,7 +9,8 @@
 </script>
 
 <section
-  class="relative flex min-h-[calc(100dvh-4rem)] snap-start scroll-mt-16 items-center overflow-hidden border-b"
+  id="overview"
+  class="relative flex min-h-[calc(100dvh-4rem)] scroll-mt-16 items-center overflow-hidden border-b"
 >
   <div class="halo-primaire pointer-events-none absolute inset-0"></div>
   <div

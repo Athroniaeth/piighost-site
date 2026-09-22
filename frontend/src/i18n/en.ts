@@ -463,6 +463,17 @@ export const en: Dictionary = {
     phHashLength: "Hash length",
     phMaskChar: "Mask character",
   },
+  sommaire: {
+    titre: "Page sections",
+    overview: "Overview",
+    problem: "The problem",
+    detector: "Why piighost",
+    howItWorks: "How it works",
+    ecosystem: "The ecosystem",
+    quickStart: "Quick start",
+    faq: "FAQ",
+    getStarted: "Get started",
+  },
   philosophy: {
     eyebrow: "Philosophy",
     title: "Why Anonymize?",

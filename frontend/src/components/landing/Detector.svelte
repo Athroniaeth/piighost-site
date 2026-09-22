@@ -10,6 +10,7 @@
 </script>
 
 <Section
+  id="detector"
   eyebrow={i18n.t.detector.eyebrow}
   title={i18n.t.detector.title}
   description={i18n.t.detector.description}

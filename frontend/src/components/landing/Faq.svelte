@@ -13,7 +13,7 @@
   const estCode = (s: object): s is { code: string } => "code" in s;
 </script>
 
-<Section title={i18n.t.faq.heading}>
+<Section id="faq" title={i18n.t.faq.heading}>
   <Accordion
     {items}
     class="mx-auto max-w-4xl"

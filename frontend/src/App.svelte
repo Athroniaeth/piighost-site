@@ -1,7 +1,6 @@
 <script lang="ts">
   import SiteNav from "./components/SiteNav.svelte";
   import SiteFooter from "./components/SiteFooter.svelte";
-  import SmoothSnap from "./components/SmoothSnap.svelte";
   import BackToTop from "./components/BackToTop.svelte";
   import Home from "./pages/Home.svelte";
   import Philosophy from "./pages/Philosophy.svelte";
@@ -28,7 +27,6 @@
   });
 </script>
 
-<SmoothSnap />
 <div class="flex min-h-dvh flex-col">
   <SiteNav />
   <main id="contenu" class="flex-1">

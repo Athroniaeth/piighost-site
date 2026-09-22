@@ -9,7 +9,11 @@
   const ICONES = [Cloud, Cpu, Scale, Ban];
 </script>
 
-<Section eyebrow={i18n.t.problem.eyebrow} title={i18n.t.problem.title}>
+<Section
+  id="problem"
+  eyebrow={i18n.t.problem.eyebrow}
+  title={i18n.t.problem.title}
+>
   <div class="mx-auto grid max-w-4xl gap-6 sm:grid-cols-2">
     {#each i18n.t.problem.items as item, i (item.title)}
       {@const Icone = ICONES[i]}

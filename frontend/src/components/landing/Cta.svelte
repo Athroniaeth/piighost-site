@@ -6,7 +6,7 @@
   import { GITHUB_ORG } from "../../lib/site";
 </script>
 
-<section class="snap-start scroll-mt-16 border-t bg-muted/30">
+<section id="get-started" class="scroll-mt-16 border-t bg-muted/30">
   <div class="mx-auto max-w-3xl px-4 py-20 text-center">
     <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
       {i18n.t.cta.title}

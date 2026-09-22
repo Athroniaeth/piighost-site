@@ -5,17 +5,17 @@
  * `style-src 'self'; script-src 'self'` sans `unsafe-inline`.
  */
 
-/* Défilement par sections, repris de globals.css du studio : c'est ce qui donne
-   à la page d'accueil son rythme d'une section par écran. */
+/* Le défilement reste doux pour que les liens du sommaire glissent jusqu'à leur
+   section, mais il n'est plus contraint : le collage par sections et le verrou
+   de molette qui l'accompagnait ont été retirés. Le repère de droite dit où on
+   est, il ne décide pas où on va. */
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-    scroll-snap-type: none;
   }
 }
 

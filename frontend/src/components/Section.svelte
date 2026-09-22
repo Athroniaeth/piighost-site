@@ -4,9 +4,9 @@
   /**
    * Une section de la page d'accueil : un écran, un sujet.
    *
-   * La hauteur minimale et `snap-start` donnent le défilement par sections du
-   * site ; `scroll-mt-16` réserve la hauteur de la barre collante, sans quoi
-   * un titre atterrit sous elle.
+   * La hauteur minimale donne le rythme d'une section par écran ;
+   * `scroll-mt-16` réserve la hauteur de la barre collante, sans quoi un titre
+   * visé par une ancre atterrit dessous.
    */
   let {
     id = undefined,
@@ -27,7 +27,7 @@
 
 <section
   {id}
-  class="flex min-h-[calc(100dvh-4rem)] snap-start scroll-mt-16 flex-col justify-center"
+  class="flex min-h-[calc(100dvh-4rem)] scroll-mt-16 flex-col justify-center"
 >
   <div class="mx-auto w-full max-w-7xl px-6 py-16">
     {#if eyebrow || title || description}

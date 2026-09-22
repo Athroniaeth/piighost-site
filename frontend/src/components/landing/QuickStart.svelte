@@ -86,6 +86,7 @@ answer = engine.query("Where does Patrick live?")`;
 </script>
 
 <Section
+  id="quick-start"
   eyebrow={i18n.t.quickStart.eyebrow}
   title={i18n.t.quickStart.title}
   description={i18n.t.quickStart.description}

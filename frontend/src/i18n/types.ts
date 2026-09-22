@@ -134,6 +134,20 @@ export type Dictionary = {
     heading: string;
     items: { question: string; answer: FaqSegment[] }[];
   };
+  /** Le repère de lecture à droite de l'accueil. Libellés courts et dédiés :
+   *  un surtitre de section peut faire quarante caractères, une entrée de
+   *  sommaire non. */
+  sommaire: {
+    titre: string;
+    overview: string;
+    problem: string;
+    detector: string;
+    howItWorks: string;
+    ecosystem: string;
+    quickStart: string;
+    faq: string;
+    getStarted: string;
+  };
   philosophy: PhilosophyDict;
   playground: {
     tabDetector: string;

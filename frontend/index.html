@@ -21,16 +21,11 @@
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon-180.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <meta
-      name="theme-color"
-      content="#f6f8f9"
-      media="(prefers-color-scheme: light)"
-    />
-    <meta
-      name="theme-color"
-      content="#080d0f"
-      media="(prefers-color-scheme: dark)"
-    />
+    <!-- Une seule valeur, sans `media` : le thème du site vient de la classe
+         posée par theme.js depuis localStorage, jamais du système. Conditionner
+         la couleur de chrome au système donnait une barre d'adresse sombre
+         au-dessus d'une page claire, ce que la charte interdit. -->
+    <meta name="theme-color" content="#f6f8f9" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="piighost" />

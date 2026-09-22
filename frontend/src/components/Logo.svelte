@@ -14,7 +14,7 @@
   let { size = 20 }: { size?: number } = $props();
 </script>
 
-<span class="inline-flex items-center gap-2 font-semibold tracking-[-0.03em]">
+<span class="inline-flex items-center gap-2 font-semibold tracking-[-0.035em]">
   <Ghost {size} class="text-primary" />
   <span class="text-[1.265rem]">piighost</span>
 </span>

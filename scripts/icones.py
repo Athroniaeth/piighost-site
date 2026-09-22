@@ -41,8 +41,17 @@ APPLICATIONS = [
 ]
 
 
-def rendre(svg: pathlib.Path, taille: int, destination: pathlib.Path) -> None:
-    """Rend un SVG en PNG à fond transparent, à la taille exacte."""
+def rendre(
+    svg: pathlib.Path,
+    taille: int,
+    destination: pathlib.Path,
+    hauteur: int | None = None,
+) -> None:
+    """Rend un SVG en PNG à fond transparent, à la taille exacte.
+
+    `hauteur` sert aux formats qui ne sont pas carrés, la vignette de partage
+    étant en 1200 x 630.
+    """
     page = (
         "<!doctype html><meta charset='utf-8'>"
         "<style>html,body{margin:0;padding:0;background:transparent}"
@@ -58,7 +67,7 @@ def rendre(svg: pathlib.Path, taille: int, destination: pathlib.Path) -> None:
                 str(CHROME), "--headless", "--no-sandbox", "--disable-gpu",
                 "--force-color-profile=srgb", "--hide-scrollbars",
                 "--default-background-color=00000000",
-                f"--window-size={taille},{taille}",
+                f"--window-size={taille},{hauteur or taille}",
                 "--virtual-time-budget=4000",
                 f"--screenshot={destination}", str(chemin),
             ],
@@ -96,11 +105,19 @@ def main() -> None:
 
     with tempfile.TemporaryDirectory() as tmp:
         pour_ico = []
-        for taille in (16, 32, 48):
+        # 256 comprise : le cahier des charges demande quatre images, et un
+        # ICO sans elle rend flou dès qu'un système l'agrandit.
+        for taille in (16, 32, 48, 256):
             chemin = pathlib.Path(tmp) / f"favicon-{taille}.png"
             rendre(LOGO / "favicon.svg", taille, chemin)
             pour_ico.append(chemin)
         assembler_ico(pour_ico, SORTIE / "favicon.ico")
+
+        # La vignette de partage était le seul fichier encore copié à la main
+        # plutôt que fabriqué, ce que l'en-tête de ce script reproche justement
+        # aux icônes. Elle se rend comme les autres, depuis son SVG.
+        rendre(LOGO / "og.svg", 1200, SORTIE / "og.png", hauteur=630)
+        print(f"  og.png                 {(SORTIE / 'og.png').stat().st_size} o")
         print(f"  favicon.ico            {(SORTIE / 'favicon.ico').stat().st_size} o")
 
     for nom, source, taille in APPLICATIONS:

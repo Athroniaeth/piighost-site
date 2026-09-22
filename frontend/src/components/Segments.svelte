@@ -6,8 +6,8 @@
   /**
    * Une phrase dont les valeurs sensibles basculent en jetons.
    *
-   * La teinte dit la catégorie, l'intensité dit l'état : pâle tant que la
-   * valeur est en clair, renforcé une fois remplacée par son jeton. Le
+   * La teinte dit la catégorie, et c'est tout : une valeur et le jeton qui la
+   * remplace portent exactement la même couleur, seul le texte change. Le
    * battement se pose en `--foreground`, pas en couleur d'accent : c'est une
    * marque d'attention passagère, pas une catégorie de plus.
    */
@@ -67,7 +67,7 @@
       ><span
         class={cn(
           "inline-block rounded px-1 transition-all duration-500 ease-in-out",
-          classeDe(entite.jeton, masquee ? "jeton" : "valeur"),
+          classeDe(entite.jeton),
           battement === morceau.index
             ? "scale-[1.04] ring-1 ring-foreground/30"
             : "scale-100",

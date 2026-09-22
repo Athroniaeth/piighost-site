@@ -77,7 +77,7 @@
     texte.split(/(<<[^>]+>>)/g).map((part) => ({
       texte: part,
       classe: part.startsWith("<<")
-        ? `rounded px-1 font-mono ${classeDe(part, "jeton")}`
+        ? `rounded px-1 font-mono ${classeDe(part)}`
         : "",
     }));
 

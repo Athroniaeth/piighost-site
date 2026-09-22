@@ -2,17 +2,19 @@
   import Ghost from "./Ghost.svelte";
 
   /**
-   * Le verrouillage horizontal, en currentColor.
+   * Le verrouillage horizontal : le fantôme sur la primaire, le mot sur le
+   * texte.
    *
-   * Pas de corail ici : cette page affiche des valeurs détectées, donc elle
-   * tombe sous la règle de la charte, la seule couleur qui ne soit pas de la
-   * donnée est celle des actions. Le corail vit sur la vignette de partage et
-   * les icônes, où aucune donnée n'est à l'écran.
+   * Le symbole ne porte pas une couleur de marque à lui, il porte celle des
+   * actions. C'est ce qui le garde compatible avec la règle de la charte sur
+   * une page qui affiche de la donnée — la seule couleur qui n'en soit pas est
+   * `--primary` — tout en lui rendant la présence qu'un symbole en gris n'a
+   * pas. Deux couleurs suffisent : une troisième ferait un logo bavard.
    */
   let { size = 20 }: { size?: number } = $props();
 </script>
 
 <span class="inline-flex items-center gap-2 font-semibold tracking-[-0.03em]">
-  <Ghost {size} />
+  <Ghost {size} class="text-primary" />
   <span style:font-size="{size * 0.92}px">piighost</span>
 </span>

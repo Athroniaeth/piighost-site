@@ -10,9 +10,21 @@
   import { router } from "../lib/router.svelte";
   import { track } from "../lib/analytics";
   import { GITHUB_ORG, HUB_URL, getProject, projects } from "../lib/site";
+  import { fermerAuClicDehors } from "../lib/dehors";
   import type { NomDePage } from "../lib/routes";
 
   const surProjet = $derived(projects.some((p) => p.slug === router.nom));
+
+  let menuProjets = $state<HTMLDetailsElement | null>(null);
+
+  $effect(() => (menuProjets ? fermerAuClicDehors(menuProjets) : undefined));
+
+  // Et sur un clic *dans* le menu : la navigation est côté client, donc sans
+  // ceci le menu resterait déplié par-dessus la page qu'il vient d'ouvrir.
+  $effect(() => {
+    router.nom;
+    if (menuProjets) menuProjets.open = false;
+  });
 
   function sortant(destination: string) {
     track({ name: "outbound", props: { destination, page: router.nom } });
@@ -63,8 +75,10 @@
       </a>
 
       <!-- `details` plutôt qu'un menu en JavaScript : l'ouverture au clavier, la
-           fermeture par Échap et le repli sans script viennent du navigateur. -->
-      <details class="group relative">
+           fermeture par Échap et le repli sans script viennent du navigateur.
+           La seule chose qu'il ne fait pas est se refermer sur un clic à côté,
+           d'où les quelques lignes du script ; le reste reste au navigateur. -->
+      <details class="group relative" bind:this={menuProjets}>
         <summary
           class="{LIEN_NAV} cursor-pointer list-none gap-1 {surProjet
             ? 'text-primary'

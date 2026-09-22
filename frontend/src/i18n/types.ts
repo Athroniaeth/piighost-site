@@ -51,6 +51,7 @@ export type Dictionary = {
     github: string;
     toggleTheme: string;
     toggleLanguage: string;
+    language: string;
     backToTop: string;
     mainNavigation: string;
   };

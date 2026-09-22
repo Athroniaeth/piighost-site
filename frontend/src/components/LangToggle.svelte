@@ -1,30 +1,86 @@
 <script lang="ts">
-  import Button from "../ui/Button.svelte";
+  import Check from "@lucide/svelte/icons/check";
+  import ChevronDown from "@lucide/svelte/icons/chevron-down";
+  import FlagIcon from "./FlagIcon.svelte";
   import { router } from "../lib/router.svelte";
-  import { LOCALES, lien } from "../lib/routes";
+  import { LOCALES, lien, type Locale } from "../lib/routes";
   import { i18n } from "../lib/i18n.svelte";
   import { track } from "../lib/analytics";
+  import { fermerAuClicDehors } from "../lib/dehors";
 
-  const autre = $derived(LOCALES.find((l) => l !== router.locale) ?? "en");
+  /**
+   * Le choix de la langue, en liste plutôt qu'en bascule.
+   *
+   * Une bascule ne dit ni où l'on est ni ce qui existe : elle affiche l'autre
+   * langue, ce qui se lit aussi bien comme « vous êtes en anglais ». La liste
+   * montre les deux, coche celle en cours, et n'a plus rien à deviner.
+   *
+   * Chaque entrée reste un vrai lien vers la route traduite, comme la bascule
+   * l'était : c'est ce qui permet à un robot de découvrir l'autre version, en
+   * plus des `hreflang` du head. Un `select` HTML ne peut contenir ni lien ni
+   * drapeau dessiné — d'où le `details`, la mécanique du menu des projets.
+   *
+   * Le nom de chaque langue est écrit dans cette langue : quelqu'un qui cherche
+   * la sienne balaie le mot qu'il écrirait, pas sa traduction.
+   */
+  const NOMS: Record<Locale, string> = { fr: "Français", en: "English" };
 
-  function basculer(event: MouseEvent) {
-    if (event.metaKey || event.ctrlKey || event.button !== 0) return;
-    event.preventDefault();
-    const depuis = router.locale;
-    router.basculerLangue();
-    track({ name: "language_switched", props: { from: depuis, to: autre } });
+  let menu = $state<HTMLDetailsElement | null>(null);
+
+  $effect(() => (menu ? fermerAuClicDehors(menu) : undefined));
+  $effect(() => {
+    router.locale;
+    if (menu) menu.open = false;
+  });
+
+  function choisir(cible: Locale) {
+    return (event: MouseEvent) => {
+      if (event.metaKey || event.ctrlKey || event.button !== 0) return;
+      event.preventDefault();
+      if (cible === router.locale) {
+        if (menu) menu.open = false;
+        return;
+      }
+      const depuis = router.locale;
+      router.basculerLangue();
+      track({ name: "language_switched", props: { from: depuis, to: cible } });
+    };
   }
 </script>
 
-<!-- Un vrai lien vers l'autre langue, pas un bouton : c'est ce qui permet à un
-     robot de découvrir la version traduite, en plus des balises hreflang. -->
-<Button
-  variant="ghost"
-  size="sm"
-  href={lien(router.nom, autre)}
-  onclick={basculer}
-  aria-label={i18n.t.nav.toggleLanguage}
-  hreflang={autre}
->
-  {autre.toUpperCase()}
-</Button>
+<details class="group relative" bind:this={menu}>
+  <summary
+    class="inline-flex h-9 cursor-pointer list-none items-center gap-1.5 rounded-lg px-2.5
+           text-sm font-medium transition-colors hover:bg-muted hover:text-foreground
+           outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+    aria-label={i18n.t.nav.language}
+  >
+    <FlagIcon locale={router.locale} class="size-4" />
+    <span class="hidden sm:inline">{NOMS[router.locale]}</span>
+    <ChevronDown class="size-3.5 transition-transform group-open:rotate-180" />
+  </summary>
+
+  <ul
+    class="absolute right-0 mt-1.5 grid min-w-[180px] gap-1 rounded-lg border bg-popover p-1"
+  >
+    {#each LOCALES as locale (locale)}
+      <li>
+        <a
+          href={lien(router.nom, locale)}
+          hreflang={locale}
+          lang={locale}
+          onclick={choisir(locale)}
+          aria-current={locale === router.locale ? "true" : undefined}
+          class="flex items-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-popover-foreground
+                 hover:bg-muted outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        >
+          <FlagIcon {locale} class="size-4" />
+          <span>{NOMS[locale]}</span>
+          {#if locale === router.locale}
+            <Check class="ms-auto size-3.5 text-primary" />
+          {/if}
+        </a>
+      </li>
+    {/each}
+  </ul>
+</details>

@@ -15,6 +15,7 @@ export const fr: Dictionary = {
     github: "GitHub",
     toggleTheme: "Changer le thème",
     toggleLanguage: "Passer en anglais",
+    language: "Langue",
     backToTop: "Remonter en haut",
     mainNavigation: "Navigation principale",
   },

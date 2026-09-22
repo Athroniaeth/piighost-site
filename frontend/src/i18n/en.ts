@@ -15,6 +15,7 @@ export const en: Dictionary = {
     github: "GitHub",
     toggleTheme: "Toggle theme",
     toggleLanguage: "Switch to French",
+    language: "Language",
     backToTop: "Scroll to top",
     mainNavigation: "Main navigation",
   },

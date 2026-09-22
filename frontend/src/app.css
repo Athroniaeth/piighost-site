@@ -137,11 +137,11 @@
   --entite-05-jeton-fond: oklch(0.855 0.0798 240.4);
   --entite-05-jeton-texte: oklch(0.46 0.1061 240.4);
   --entite-05-puce: oklch(0.62 0.143 240.4);
-  --entite-06-valeur-fond: oklch(0.935 0.0314 279.1);
-  --entite-06-valeur-texte: oklch(0.53 0.15 279.1);
-  --entite-06-jeton-fond: oklch(0.855 0.0725 279.1);
-  --entite-06-jeton-texte: oklch(0.47 0.15 279.1);
-  --entite-06-puce: oklch(0.62 0.16 279.1);
+  --entite-06-valeur-fond: oklch(0.935 0.0314 27.5);
+  --entite-06-valeur-texte: oklch(0.53 0.15 27.5);
+  --entite-06-jeton-fond: oklch(0.855 0.0725 27.5);
+  --entite-06-jeton-texte: oklch(0.47 0.15 27.5);
+  --entite-06-puce: oklch(0.62 0.16 27.5);
   --entite-07-valeur-fond: oklch(0.935 0.0481 317.9);
   --entite-07-valeur-texte: oklch(0.53 0.15 317.9);
   --entite-07-jeton-fond: oklch(0.855 0.1113 317.9);
@@ -220,11 +220,11 @@
   --entite-05-jeton-fond: oklch(0.4 0.09 240.4);
   --entite-05-jeton-texte: oklch(0.78 0.1245 240.4);
   --entite-05-puce: oklch(0.62 0.143 240.4);
-  --entite-06-valeur-fond: oklch(0.305 0.068 279.1);
-  --entite-06-valeur-texte: oklch(0.68 0.13 279.1);
-  --entite-06-jeton-fond: oklch(0.4 0.09 279.1);
-  --entite-06-jeton-texte: oklch(0.78 0.1133 279.1);
-  --entite-06-puce: oklch(0.62 0.16 279.1);
+  --entite-06-valeur-fond: oklch(0.305 0.068 27.5);
+  --entite-06-valeur-texte: oklch(0.70 0.13 27.5);
+  --entite-06-jeton-fond: oklch(0.4 0.09 27.5);
+  --entite-06-jeton-texte: oklch(0.78 0.1133 27.5);
+  --entite-06-puce: oklch(0.62 0.16 27.5);
   --entite-07-valeur-fond: oklch(0.305 0.068 317.9);
   --entite-07-valeur-texte: oklch(0.68 0.13 317.9);
   --entite-07-jeton-fond: oklch(0.4 0.09 317.9);
@@ -353,4 +353,16 @@
 }
 .entite-08-puce {
   background-color: var(--entite-08-puce);
+}
+
+/* Les deux drapeaux du sélecteur de langue. Ni tokens de charte ni suivis du
+   thème, et c'est voulu : la couleur d'un drapeau est fixée par le drapeau, et
+   un bleu marine éclairci en mode sombre serait un autre drapeau. Ils vivent
+   ici parce qu'un composant ne porte aucune couleur brute. */
+:root {
+  --flag-white: #ffffff;
+  --flag-fr-blue: #0055a4;
+  --flag-fr-red: #ef4135;
+  --flag-gb-blue: #012169;
+  --flag-gb-red: #c8102e;
 }

@@ -16,7 +16,7 @@ export function meta(nom: NomDePage, locale: Locale): { titre: string; descripti
   const CLES: Record<NomDePage, { titre: Cle; description: Cle }> = {
     home: { titre: "home.title", description: "home.lede" },
     philosophy: { titre: "philosophy.title", description: "philosophy.lede" },
-    piighost: { titre: "project.piighost.title", description: "project.piighost.lede" },
+    piighost: { titre: "project.piighost.titreOnglet", description: "project.piighost.lede" },
     api: { titre: "project.api.title", description: "project.api.lede" },
     chat: { titre: "project.chat.title", description: "project.chat.lede" },
     proofreader: { titre: "project.proofreader.title", description: "project.proofreader.lede" },
@@ -28,7 +28,14 @@ export function meta(nom: NomDePage, locale: Locale): { titre: string; descripti
   // Seule la première lettre s'abaisse : passer toute la phrase en minuscules
   // transformait « LLM » en « llm ».
   const enMinuscule = brut.charAt(0).toLowerCase() + brut.slice(1);
-  const titre = nom === "home" ? `piighost, ${enMinuscule}` : `${brut} | piighost`;
+  // Pas de suffixe quand le titre porte déjà le nom du produit : « piighost-api
+  // | piighost » n'apprend rien et mange la largeur utile d'un résultat.
+  const titre =
+    nom === "home"
+      ? `piighost, ${enMinuscule}`
+      : brut.includes("piighost")
+        ? brut
+        : `${brut} | piighost`;
   return { titre, description: tr(locale, cle.description) };
 }
 

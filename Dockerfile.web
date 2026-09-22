@@ -7,7 +7,11 @@ WORKDIR /app
 COPY frontend/package.json frontend/pnpm-lock.yaml ./frontend/
 RUN corepack enable && pnpm -C frontend install --frozen-lockfile
 
+# routes.json vit à la racine parce que trois consommateurs le lisent : le
+# routeur du frontend, le sitemap de Litestar et le prérendu. L'image du
+# frontend en a donc besoin, même si elle ne contient pas de Python.
 COPY openapi.json ./openapi.json
+COPY routes.json ./routes.json
 COPY frontend ./frontend
 RUN pnpm -C frontend generate-types && pnpm -C frontend build
 

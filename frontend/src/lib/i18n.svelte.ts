@@ -81,6 +81,9 @@ const STRINGS = {
       "piighost protects a running conversation message by message. It is not a dataset anonymiser, and saying so up front is cheaper for everyone than discovering it in week three.",
 
     "project.piighost.title": "piighost",
+    // Le titre d'onglet ne peut pas être « piighost | piighost ». Une page dont
+    // le nom est celui du produit a besoin de dire ce qu'elle est.
+    "project.piighost.titreOnglet": "piighost, the Python library",
     "project.piighost.lede":
       "The Python library. Detection, substitution, restoration, and the pipeline that holds them together.",
     "project.api.title": "piighost-api",
@@ -169,6 +172,9 @@ const STRINGS = {
       "piighost protège une conversation en cours, message par message. Ce n'est pas un anonymiseur de jeux de données, et le dire tout de suite coûte moins cher à tout le monde que de le découvrir la troisième semaine.",
 
     "project.piighost.title": "piighost",
+    // Le titre d'onglet ne peut pas être « piighost | piighost ». Une page dont
+    // le nom est celui du produit a besoin de dire ce qu'elle est.
+    "project.piighost.titreOnglet": "piighost, la bibliothèque Python",
     "project.piighost.lede":
       "La bibliothèque Python. Détection, substitution, restitution, et le pipeline qui les tient ensemble.",
     "project.api.title": "piighost-api",

@@ -25,6 +25,10 @@ prérendu. `frontend/src/lib/routes.ts` refuse de se charger si son union de
 types et le fichier ont divergé, donc le build échoue plutôt que le site ne
 perde une URL en silence.
 
+Le prix de cette source unique : **les deux images doivent l'embarquer**, et
+`Dockerfile.api` comme `Dockerfile.web` le copient explicitement. Oublier cette
+ligne ne se voit pas en développement, seulement au démarrage du conteneur.
+
 **Une URL inconnue renvoie un vrai 404.** nginx laisse `error_page` porter le
 code ; répondre 200 sur une page d'erreur est un « soft 404 » que les index
 classent comme un doublon de l'accueil.

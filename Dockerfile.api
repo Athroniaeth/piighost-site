@@ -21,6 +21,11 @@ RUN useradd -m -u 10001 app
 
 COPY --from=builder --chown=app:app /python /python
 COPY --from=builder --chown=app:app /app/.venv /app/.venv
+# routes.json est lu par backend/seo.py au chargement du module, pour dériver
+# robots.txt et sitemap.xml. C'est le même fichier que lisent le routeur du
+# frontend et le prérendu : le prix d'une source unique est que chaque image
+# doit l'embarquer.
+COPY --chown=app:app routes.json /app/routes.json
 COPY --chown=app:app backend /app/backend
 
 ENV PATH="/app/.venv/bin:$PATH" PYTHONPATH=/app PYTHONUNBUFFERED=1 \

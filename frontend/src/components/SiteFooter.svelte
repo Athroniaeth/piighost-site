@@ -9,7 +9,7 @@
 </script>
 
 <footer class="border-t">
-  <div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-3">
+  <div class="mx-auto grid max-w-7xl gap-8 px-6 py-12 sm:grid-cols-3">
     <div>
       <Logo size={22} />
       <p class="mt-2 max-w-xs text-sm text-muted-foreground">

@@ -13,7 +13,7 @@
 >
   <div class="halo-primaire pointer-events-none absolute inset-0"></div>
   <div
-    class="mx-auto grid w-full max-w-6xl items-center gap-12 px-4 py-16 lg:grid-cols-2"
+    class="mx-auto grid w-full max-w-7xl items-center gap-12 px-6 py-16 lg:grid-cols-2"
   >
     <div>
       <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">

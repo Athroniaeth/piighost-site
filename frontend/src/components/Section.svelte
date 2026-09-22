@@ -29,7 +29,7 @@
   {id}
   class="flex min-h-[calc(100dvh-4rem)] snap-start scroll-mt-16 flex-col justify-center"
 >
-  <div class="mx-auto w-full max-w-6xl px-4 py-16">
+  <div class="mx-auto w-full max-w-7xl px-6 py-16">
     {#if eyebrow || title || description}
       <div class="mb-12">
         {#if eyebrow || title}

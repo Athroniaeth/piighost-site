@@ -17,13 +17,18 @@
 
   let menuProjets = $state<HTMLDetailsElement | null>(null);
 
-  $effect(() => (menuProjets ? fermerAuClicDehors(menuProjets) : undefined));
+  $effect(() => {
+    if (!menuProjets) return;
+    return fermerAuClicDehors(menuProjets);
+  });
 
   // Et sur un clic *dans* le menu : la navigation est côté client, donc sans
   // ceci le menu resterait déplié par-dessus la page qu'il vient d'ouvrir.
   $effect(() => {
-    router.nom;
-    if (menuProjets) menuProjets.open = false;
+    // Lire la route est la dépendance de l'effet : il se rejoue à chaque
+    // navigation, et referme le menu resté ouvert par dessus la page suivante.
+    const route = router.nom;
+    if (route && menuProjets) menuProjets.open = false;
   });
 
   function sortant(destination: string) {
@@ -38,7 +43,7 @@
 <header
   class="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur"
 >
-  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+  <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
     <Lien
       vers="home"
       class="rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50"

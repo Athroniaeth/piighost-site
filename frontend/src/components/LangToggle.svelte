@@ -27,10 +27,15 @@
 
   let menu = $state<HTMLDetailsElement | null>(null);
 
-  $effect(() => (menu ? fermerAuClicDehors(menu) : undefined));
   $effect(() => {
-    router.locale;
-    if (menu) menu.open = false;
+    if (!menu) return;
+    return fermerAuClicDehors(menu);
+  });
+  $effect(() => {
+    // Lire la route est la dépendance de l'effet : il se rejoue à chaque
+    // navigation, et referme le menu resté ouvert par dessus la page suivante.
+    const route = router.locale;
+    if (route && menu) menu.open = false;
   });
 
   function choisir(cible: Locale) {

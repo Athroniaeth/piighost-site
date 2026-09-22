@@ -23,7 +23,11 @@
 </script>
 
 {#if locale === "fr"}
-  <svg viewBox="0 0 16 16" class="shrink-0 text-foreground/25 {extra}" aria-hidden="true">
+  <svg
+    viewBox="0 0 16 16"
+    class="shrink-0 text-foreground/25 {extra}"
+    aria-hidden="true"
+  >
     <rect y="2" width="5.34" height="12" fill="var(--flag-fr-blue)" />
     <rect x="5.34" y="2" width="5.32" height="12" fill="var(--flag-white)" />
     <rect x="10.66" y="2" width="5.34" height="12" fill="var(--flag-fr-red)" />
@@ -38,7 +42,11 @@
     />
   </svg>
 {:else}
-  <svg viewBox="0 0 16 16" class="shrink-0 text-foreground/25 {extra}" aria-hidden="true">
+  <svg
+    viewBox="0 0 16 16"
+    class="shrink-0 text-foreground/25 {extra}"
+    aria-hidden="true"
+  >
     <!-- viewBox imbriqué : le drapeau se dessine sur sa propre grille 26 × 13,
          une unité par bande, et se met à l'échelle dans l'icône.
          Les cinquante étoiles ne sont pas dessinées : à seize pixels de large

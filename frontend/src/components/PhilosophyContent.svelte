@@ -4,7 +4,7 @@
   const p = $derived(i18n.t.philosophy);
 </script>
 
-<article class="mx-auto max-w-3xl px-4 py-16">
+<article class="feuille mx-auto max-w-3xl px-4 py-16">
   <header class="mb-12 text-center">
     <p class="mb-2 text-sm font-semibold uppercase tracking-wide text-primary">
       {p.eyebrow}

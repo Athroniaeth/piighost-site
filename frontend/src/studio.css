@@ -19,17 +19,6 @@ html {
   }
 }
 
-/* La lueur du bandeau d'accueil. Le studio l'écrit en valeur arbitraire
-   Tailwind, `var(--primary)/12%`, qui n'est pas une couleur CSS valide et ne
-   peignait donc rien ; `color-mix` fait ce que la valeur voulait dire. */
-.halo-primaire {
-  background-image: radial-gradient(
-    60% 50% at 50% 0%,
-    color-mix(in oklch, var(--primary) 12%, transparent),
-    transparent
-  );
-}
-
 /* L'avancement de l'onglet courant dans « comment ça marche ». La durée est
    écrite ici plutôt que dans un attribut `style`, que la CSP refuserait ; elle
    doit rester égale à DIAPO_MS dans HowItWorks.svelte. */
@@ -98,4 +87,63 @@ html {
 }
 .tok-punctuation {
   color: var(--code-base);
+}
+
+/* Le fond du site : un semis de points, sur toutes les pages.
+ *
+ * Retenu contre une grille, un voile d'accent et un grain de papier. Deux
+ * raisons, vues sur rendu plutôt que supposées. Un point ne dessine jamais de
+ * ligne, donc il n'entre pas en concurrence avec les bords des cartes, dont la
+ * page est faite presque partout ; et il n'ajoute aucune couleur, alors que la
+ * couleur a déjà un travail ici, dire la catégorie d'une donnée détectée.
+ *
+ * `fixed` : le fond ne défile pas avec le contenu, il est le même d'une page à
+ * l'autre. `z-index: -1` le place derrière le texte mais devant la couleur de
+ * fond. Pas de masque d'extinction : posé sur un élément fixe, il resterait
+ * ancré à la fenêtre et la texture se collerait en haut de l'écran.
+ *
+ * Tout est en CSS, sans image : la CSP de production est `default-src 'self'`.
+ */
+body::before {
+  --point: color-mix(in oklch, var(--foreground) 13%, transparent);
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(var(--point) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+}
+
+.dark body::before {
+  --point: color-mix(in oklch, var(--foreground) 17%, transparent);
+}
+
+/* La feuille de lecture des pages de texte long.
+ *
+ * Sur l'accueil, les cartes arrêtent le semis d'elles-mêmes. Philosophie et les
+ * pages projet posent leur prose à même le fond, sur neuf mille pixels de haut :
+ * sans surface, les points passent entre les lignes et le texte devient sale.
+ *
+ * La feuille est de la couleur du fond, sans bord ni ombre : on ne voit pas une
+ * carte apparaître, on voit le semis s'arrêter là où la lecture commence. Les
+ * deux dégradés adoucissent ses bords verticaux, sinon la fin du semis dessine
+ * deux lignes droites que rien ne justifie.
+ */
+.feuille {
+  position: relative;
+}
+
+.feuille::before {
+  content: "";
+  position: absolute;
+  inset: 0 -2.5rem;
+  z-index: -1;
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    var(--background) 2.5rem,
+    var(--background) calc(100% - 2.5rem),
+    transparent
+  );
 }

@@ -12,7 +12,6 @@
   id="overview"
   class="relative flex min-h-[calc(100dvh-4rem)] scroll-mt-16 items-center overflow-hidden border-b"
 >
-  <div class="halo-primaire pointer-events-none absolute inset-0"></div>
   <div
     class="mx-auto grid w-full max-w-7xl items-center gap-12 px-6 py-16 lg:grid-cols-2"
   >

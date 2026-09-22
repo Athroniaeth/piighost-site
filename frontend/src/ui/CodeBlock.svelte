@@ -37,10 +37,7 @@
 </script>
 
 <div
-  class={cn(
-    "group relative overflow-hidden rounded-lg border bg-muted/30",
-    extra,
-  )}
+  class={cn("group relative overflow-hidden rounded-lg border bg-muted", extra)}
 >
   <CopyButton value={code} class="absolute right-2 top-2 size-7" />
   <pre

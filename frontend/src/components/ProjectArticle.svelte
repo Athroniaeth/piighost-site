@@ -17,7 +17,7 @@
   const page = $derived(i18n.t.projects[slug] as ProjectPageDict);
 </script>
 
-<div class="mx-auto max-w-3xl px-4 py-12">
+<div class="feuille mx-auto max-w-3xl px-4 py-12">
   {#each page.sections as section, i (i)}
     <section class="mt-10 first:mt-0">
       <h2 class="text-2xl font-semibold tracking-tight">{section.heading}</h2>

@@ -30,7 +30,7 @@ const STRINGS = {
     "home.title": "Use an LLM without handing it your confidential data",
     "home.lede":
       "piighost replaces every sensitive value with a stable placeholder before the text leaves your process. The model reasons on placeholders, your tools receive the real values, and the reply comes back in clear. Your agent code does not change.",
-    "home.cta.start": "Get started",
+    "home.cta.start": "Read the documentation",
     "home.cta.github": "GitHub",
     "home.demo.before": "what you write",
     "home.demo.after": "what the model receives",
@@ -43,14 +43,14 @@ const STRINGS = {
     "meca.1": "Detect",
     "meca.2": "Substitute",
     "meca.3": "Restore",
-    "meca.1.note": "Keep the detector you trust. Presidio plugs in through an extra.",
-    "meca.2.note": "The same value keeps the same placeholder for the whole thread, so the model can follow who is who.",
+    "meca.1.note": "Eight detector families ship with the library, and you keep the one you trust. Presidio plugs in through an extra.",
+    "meca.2.note": "The same value keeps the same placeholder for the whole thread, so the model can follow who is who. Three memory backends hold the mapping: in-process, Redis, SQLAlchemy.",
     "meca.3.note": "The tool receives the real value while the model only ever wrote the placeholder.",
     "meca.2.of": "becomes",
     "meca.3.of": "comes back as",
 
     "integ.band": "integrations",
-    "integ.note": "Your agent code does not change. The middleware sits between it and the model.",
+    "integ.note": "Six integrations, two of them proxies you point an existing client at. Your agent code does not change: the middleware sits between it and the model.",
 
     "eco.band": "the ecosystem",
     "philosophy.band": "three reasons",
@@ -144,7 +144,7 @@ const STRINGS = {
     "home.title": "Utilisez un LLM sans lui donner vos données confidentielles",
     "home.lede":
       "piighost remplace chaque valeur sensible par un jeton stable avant que le texte ne quitte votre processus. Le modèle raisonne sur les jetons, vos outils reçoivent les vraies valeurs, et la réponse revient en clair. Votre code d'agent ne change pas.",
-    "home.cta.start": "Démarrer",
+    "home.cta.start": "Lire la documentation",
     "home.cta.github": "GitHub",
     "home.demo.before": "ce que vous écrivez",
     "home.demo.after": "ce que le modèle reçoit",
@@ -155,14 +155,14 @@ const STRINGS = {
     "meca.1": "Détecter",
     "meca.2": "Substituer",
     "meca.3": "Rendre",
-    "meca.1.note": "Gardez le détecteur en qui vous avez confiance. Presidio se branche par une option.",
-    "meca.2.note": "La même valeur garde le même jeton sur tout le fil, donc le modèle sait qui est qui.",
+    "meca.1.note": "Huit familles de détecteurs sont livrées, et vous gardez celui en qui vous avez confiance. Presidio se branche par une option.",
+    "meca.2.note": "La même valeur garde le même jeton sur tout le fil, donc le modèle sait qui est qui. Trois mémoires gardent la correspondance : en processus, Redis, SQLAlchemy.",
     "meca.3.note": "L'outil reçoit la vraie valeur alors que le modèle n'a jamais écrit que le jeton.",
     "meca.2.of": "devient",
     "meca.3.of": "revient en",
 
     "integ.band": "intégrations",
-    "integ.note": "Votre code d'agent ne change pas. L'intercepteur se place entre lui et le modèle.",
+    "integ.note": "Six intégrations, dont deux proxys sur lesquels pointer un client existant. Votre code d'agent ne change pas : l'intercepteur se place entre lui et le modèle.",
 
     "eco.band": "l'écosystème",
     "philosophy.band": "trois raisons",
@@ -189,7 +189,7 @@ const STRINGS = {
     "home.limit.kicker": "Ce que ce n'est pas",
     "home.limit.title": "Une pseudonymisation, pas une anonymisation",
     "home.limit.body":
-      "La correspondance est conservée pour pouvoir restituer la réponse, ce qui en fait une pseudonymisation au sens du RGPD. Les vraies valeurs restent stockées le temps de la conversation, et ce stockage doit être protégé en conséquence. piighost vous en donne les moyens : AES-GCM sur les valeurs, Argon2id sur les clés. Il n'anonymise pas un jeu de données et ne fait ni k-anonymat ni confidentialité différentielle. Pour cela, regardez ARX ou Amnesia.",
+      "La correspondance est conservée pour pouvoir restituer la réponse, ce qui en fait une pseudonymisation au sens du RGPD. Les vraies valeurs restent stockées le temps de la conversation, et ce stockage doit être protégé en conséquence. piighost vous en donne les moyens : AES-GCM sur les valeurs, Argon2id sur les clés. Il n'anonymise pas un jeu de données et ne fait ni k-anonymat ni confidentialité différentielle.",
 
     "home.eco.kicker": "L'écosystème",
     "home.eco.title": "Une bibliothèque, et ce qui tourne dessus",

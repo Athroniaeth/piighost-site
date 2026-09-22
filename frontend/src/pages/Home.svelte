@@ -67,7 +67,7 @@
 </section>
 
 <Bande>{t("meca.band")}</Bande>
-<div class="mx-auto grid max-w-6xl gap-3 px-5 py-4 lg:grid-cols-3">
+<div class="mx-auto grid max-w-6xl gap-3 px-5 py-4 lg:grid-cols-[1.3fr_1fr_1fr]">
   <Panneau etape={1} titre={t("meca.1")}>
     <div class="grid font-mono text-[0.75rem] sm:grid-cols-2 sm:gap-x-6">
       {#each DETECTEURS as [nom, role], i (nom)}
@@ -138,11 +138,15 @@
 
 <Bande>{t("limit.band")}</Bande>
 <div class="mx-auto max-w-6xl px-5 py-4">
-  <div class="rounded-lg border bg-card p-4">
-    <h2 class="text-[1.0625rem] font-semibold tracking-[-0.02em]">{t("home.limit.title")}</h2>
-    <p class="mt-2 max-w-[86ch] text-[0.8125rem] leading-relaxed text-muted-foreground">
+  <div class="grid gap-4 rounded-lg border bg-card p-4 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-8">
+    <div>
+      <h2 class="text-[1.0625rem] leading-snug font-semibold tracking-[-0.02em]">
+        {t("home.limit.title")}
+      </h2>
+      <p class="mt-2 font-mono text-[0.75rem] text-muted-foreground lg:mt-3">{t("limit.see")}</p>
+    </div>
+    <p class="self-center text-[0.8125rem] leading-relaxed text-muted-foreground">
       {t("home.limit.body")}
     </p>
-    <p class="mt-3 border-t pt-3 font-mono text-[0.75rem] text-muted-foreground">{t("limit.see")}</p>
   </div>
 </div>

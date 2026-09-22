@@ -26,7 +26,7 @@
   {t("nav.skip")}
 </a>
 
-<header class="sticky top-0 z-40 border-b bg-sidebar/95 backdrop-blur">
+<header class="sticky top-0 z-40 border-b bg-sidebar">
   <nav
     class="mx-auto flex h-14 max-w-6xl items-center gap-5 px-5"
     aria-label={t("nav.menu")}
@@ -47,7 +47,7 @@
         <ChevronDown class="size-3.5 transition-transform group-open:rotate-180" />
       </summary>
       <div
-        class="absolute left-0 mt-1.5 flex w-60 flex-col gap-0.5 rounded-lg border bg-popover p-1.5 shadow-md"
+        class="absolute left-0 mt-1.5 flex w-60 flex-col gap-0.5 rounded-lg border bg-popover p-1.5"
       >
         {#each PROJETS as projet (projet)}
           <Lien

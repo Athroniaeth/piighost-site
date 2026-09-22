@@ -45,7 +45,7 @@
   </p>
 {/snippet}
 
-<div class="rounded-xl border bg-card p-5 shadow-sm">
+<div class="rounded-xl border bg-card p-5">
   <p class="mb-2.5 font-mono text-[0.625rem] tracking-[0.12em] text-muted-foreground uppercase">
     {t("home.demo.before")}
   </p>

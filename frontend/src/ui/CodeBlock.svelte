@@ -36,7 +36,7 @@
 >
   <CopyButton
     value={code}
-    class="no-print absolute end-2 top-2 bg-card shadow-sm ring-1 ring-foreground/10"
+    class="no-print absolute end-2 top-2 bg-card ring-1 ring-foreground/10"
   />
   <pre
     class={cn(

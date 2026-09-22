@@ -23,12 +23,16 @@ import {
 
 /** La langue à servir à quelqu'un qui arrive sur `/`, sans rien imposer. */
 export function localePreferee(): Locale {
+  if (typeof navigator === "undefined") return LOCALE_DEFAUT;
   for (const demandee of navigator.languages ?? [navigator.language]) {
     const base = demandee.slice(0, 2).toLowerCase();
     if (estLocale(base)) return base;
   }
   return LOCALE_DEFAUT;
 }
+
+/** Vrai dans un navigateur, faux au prérendu. */
+const NAVIGATEUR = typeof window !== "undefined";
 
 class Router {
   nom = $state<NomDePage>("home");
@@ -37,8 +41,19 @@ class Router {
   introuvable = $state(false);
 
   constructor() {
+    // Au prérendu il n'y a ni `location` ni `history` : la route est posée par
+    // `definir()` avant le rendu. Sans cette garde, le build serveur planterait
+    // à l'import, et le prérendu se réduirait à une page vide livrée aux robots.
+    if (!NAVIGATEUR) return;
     this.lire();
     addEventListener("popstate", () => this.lire());
+  }
+
+  /** Pose la route sans toucher à l'historique. Réservé au prérendu. */
+  definir(nom: NomDePage, locale: Locale) {
+    this.nom = nom;
+    this.locale = locale;
+    this.introuvable = false;
   }
 
   private lire() {
@@ -63,6 +78,7 @@ class Router {
 
   /** Navigue sans recharger. `remplacer` évite d'empiler la redirection. */
   aller(nom: NomDePage, locale: Locale = this.locale, options: { remplacer?: boolean } = {}) {
+    if (!NAVIGATEUR) return this.definir(nom, locale);
     const url = lien(nom, locale);
     if (options.remplacer) history.replaceState({}, "", url);
     else history.pushState({}, "", url);

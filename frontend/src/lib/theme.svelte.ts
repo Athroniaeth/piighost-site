@@ -15,10 +15,14 @@ class Theme {
   dark = $state(false);
 
   constructor() {
+    // Au prérendu il n'y a pas de document : on reste en clair, qui est le
+    // mode par défaut, et le script de démarrage corrige avant la peinture.
+    if (typeof document === "undefined") return;
     this.dark = document.documentElement.classList.contains("dark");
   }
 
   toggle() {
+    if (typeof document === "undefined") return;
     this.dark = !this.dark;
     localStorage.setItem(STORAGE_KEY, this.dark ? "dark" : "light");
     document.documentElement.classList.toggle("dark", this.dark);

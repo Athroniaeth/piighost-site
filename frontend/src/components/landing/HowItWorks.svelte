@@ -147,7 +147,11 @@
           {/if}
         </div>
 
-        <div class="relative mt-6 flex min-h-[24rem] flex-col justify-center">
+        <!-- Hauteur réservée, mais contenu en haut : les quatre onglets n'ont
+             pas la même hauteur et ils défilent seuls, donc la réserve évite que
+             la section saute toutes les dix secondes. Le centrage vertical, lui,
+             ajoutait une centaine de pixels de vide sous les onglets. -->
+        <div class="relative mt-6 flex min-h-[24rem] flex-col justify-start">
           {#if courant === "detect"}
             <div class="space-y-4">
               <div class="rounded-lg border bg-card p-4 shadow-sm">

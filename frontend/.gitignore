@@ -42,3 +42,6 @@ __pycache__/
 venv/
 
 dist-ssr/
+
+# Écrite par prerender.mjs : elle porte les empreintes des blocs schema.org.
+csp.conf

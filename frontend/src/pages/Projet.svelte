@@ -1,68 +1,84 @@
 <script lang="ts">
-  import Button from "../ui/Button.svelte";
-  import Bande from "../components/Bande.svelte";
-  import Rangee from "../components/Rangee.svelte";
-  import GithubIcon from "../components/GithubIcon.svelte";
-  import ExternalLink from "@lucide/svelte/icons/external-link";
-  import { t, tProjet } from "../lib/i18n.svelte";
-  import { router } from "../lib/router.svelte";
-  import { track } from "../lib/analytics";
+  import ProjectHeader from "../components/ProjectHeader.svelte";
+  import ProjectArticle from "../components/ProjectArticle.svelte";
+  import CodeBlock from "../ui/CodeBlock.svelte";
+  import { getProject } from "../lib/site";
 
   type Slug = "piighost" | "api" | "chat" | "proofreader";
   let { slug }: { slug: Slug } = $props();
 
-  /** Ce qui distingue chaque projet : son dépôt, son adresse, son installation. */
-  const FICHES: Record<Slug, { depot: string; site: string | null; install: string | null }> = {
-    piighost: {
-      depot: "Athroniaeth/piighost",
-      site: "https://athroniaeth.github.io/piighost/",
-      install: "pip install piighost",
-    },
-    api: {
-      depot: "Athroniaeth/piighost-api",
-      site: null,
-      install: "docker run ghcr.io/athroniaeth/piighost-api",
-    },
-    chat: { depot: "Athroniaeth/piighost-chat", site: "https://chat.piighost.dev", install: null },
-    proofreader: { depot: "Athroniaeth/piighost-proofreader", site: null, install: null },
-  };
+  const USAGE = `from langchain.agents import create_agent
 
-  const fiche = $derived(FICHES[slug]);
-  const urlDepot = $derived(`https://github.com/${fiche.depot}`);
-  const sortant = (d: string) => track({ name: "outbound", props: { destination: d, page: router.nom } });
+from piighost import Anonymizer, ExactMatchDetector
+from piighost.pipeline import ThreadAnonymizationPipeline
+from piighost.middleware import PIIAnonymizationMiddleware
+
+# Wire any detector you like: regex, a NER model, or an LLM.
+detector = ExactMatchDetector([("Patrick", "PERSON")])
+pipeline = ThreadAnonymizationPipeline(detector=detector, anonymizer=Anonymizer())
+middleware = PIIAnonymizationMiddleware(pipeline=pipeline)
+
+agent = create_agent(
+    model="openai:gpt-5.5",
+    tools=[send_email],
+    middleware=[middleware],
+)`;
+
+  const REQUETE = `POST /v1/anonymize
+{ "text": "Email Patrick at patrick@acme.com" }
+
+200 OK
+{ "anonymized_text": "Email <<PERSON:1>> at <<EMAIL:1>>", "entities": [ ... ] }`;
+
+  const project = $derived(getProject(slug));
 </script>
 
-<header class="mx-auto max-w-6xl px-5 pt-14 pb-16">
-  <h1 class="font-mono text-[1.875rem] leading-tight font-semibold tracking-[-0.03em]">
-    {tProjet(slug, "title")}
-  </h1>
-  <p class="mt-4 max-w-[62ch] text-[0.975rem] leading-relaxed text-muted-foreground">
-    {tProjet(slug, "lede")}
-  </p>
-  <div class="mt-6 flex flex-wrap gap-2">
-    <Button size="lg" variant="outline" href={urlDepot} onclick={() => sortant(slug + ":repo")}>
-      <GithubIcon class="size-4" />
-      {t("project.repo")}
-    </Button>
-    {#if fiche.site}
-      <Button size="lg" href={fiche.site} onclick={() => sortant(slug + ":site")}>
-        <ExternalLink />
-        {t("project.open")}
-      </Button>
-    {/if}
-  </div>
-</header>
+{#snippet piighostInstall()}
+  <CodeBlock code="uv add 'piighost[cache]'" language="bash" />
+{/snippet}
+{#snippet piighostUsage()}
+  <CodeBlock code={USAGE} language="python" />
+{/snippet}
+{#snippet apiQuickstart()}
+  <CodeBlock
+    code={`uv add piighost-api
+piighost-api serve pipeline:pipeline --port 8000`}
+    language="bash"
+  />
+{/snippet}
+{#snippet apiRequest()}
+  <CodeBlock code={REQUETE} />
+{/snippet}
+{#snippet chatRun()}
+  <CodeBlock
+    code={`git clone https://github.com/Athroniaeth/piighost-chat
+cd piighost-chat
+docker compose up`}
+    language="bash"
+  />
+{/snippet}
+{#snippet proofreaderRun()}
+  <CodeBlock
+    code={`uv sync --group dev
+cp .env.example .env  # fill in LITELLM_API_KEY etc.
+uv run streamlit run app.py`}
+    language="bash"
+  />
+{/snippet}
 
-<Bande>{t("project.band")}</Bande>
-<div class="mx-auto max-w-6xl px-5 py-4">
-  <div class="rounded-lg border bg-card px-4 py-1">
-    <Rangee code={fiche.depot}>{t("project.repo")}</Rangee>
-    {#if fiche.site}
-      <Rangee code={fiche.site.replace(/^https?:\/\//, "")}>{t("project.site")}</Rangee>
-    {/if}
-    {#if fiche.install}
-      <Rangee code={fiche.install}>{t("project.install")}</Rangee>
-    {/if}
-    <Rangee code="MIT">{t("project.licence")}</Rangee>
-  </div>
-</div>
+<ProjectHeader {project} />
+{#if slug === "piighost"}
+  <ProjectArticle
+    {slug}
+    blocs={{ install: piighostInstall, usage: piighostUsage }}
+  />
+{:else if slug === "api"}
+  <ProjectArticle
+    {slug}
+    blocs={{ quickstart: apiQuickstart, request: apiRequest }}
+  />
+{:else if slug === "chat"}
+  <ProjectArticle {slug} blocs={{ run: chatRun }} />
+{:else}
+  <ProjectArticle {slug} blocs={{ run: proofreaderRun }} />
+{/if}

@@ -1,96 +1,125 @@
 <script lang="ts">
-  import Logo from "./Logo.svelte";
+  import ChevronDown from "@lucide/svelte/icons/chevron-down";
   import Lien from "./Lien.svelte";
   import ThemeToggle from "./ThemeToggle.svelte";
   import LangToggle from "./LangToggle.svelte";
   import Button from "../ui/Button.svelte";
-  import Github from "./GithubIcon.svelte";
-  import ChevronDown from "@lucide/svelte/icons/chevron-down";
-  import { t } from "../lib/i18n.svelte";
+  import GithubIcon from "./GithubIcon.svelte";
+  import { i18n } from "../lib/i18n.svelte";
   import { router } from "../lib/router.svelte";
   import { track } from "../lib/analytics";
+  import { GITHUB_ORG, HUB_URL, getProject, projects } from "../lib/site";
   import type { NomDePage } from "../lib/routes";
 
-  const PROJETS: NomDePage[] = ["piighost", "api", "chat", "proofreader"];
-  const surProjet = $derived((PROJETS as string[]).includes(router.nom));
+  const surProjet = $derived(projects.some((p) => p.slug === router.nom));
 
   function sortant(destination: string) {
     track({ name: "outbound", props: { destination, page: router.nom } });
   }
+
+  const LIEN_NAV =
+    "inline-flex h-9 items-center rounded-lg px-3 text-sm font-medium transition-colors " +
+    "hover:bg-muted hover:text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
 </script>
 
-<a
-  href="#contenu"
-  class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:rounded-md focus:bg-card focus:px-3 focus:py-2 focus:ring-3 focus:ring-ring/50"
+<header
+  class="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur"
 >
-  {t("nav.skip")}
-</a>
-
-<header class="sticky top-0 z-40 border-b bg-sidebar">
-  <nav
-    class="mx-auto flex h-14 max-w-6xl items-center gap-5 px-5"
-    aria-label={t("nav.menu")}
-  >
-    <Lien vers="home" class="mr-1 rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
-      <Logo />
-    </Lien>
-
-    <!-- `details` plutôt qu'un menu en JavaScript : l'ouverture au clavier, la
-         fermeture par Échap et le repli sans script viennent du navigateur. -->
-    <details class="group relative hidden sm:block">
-      <summary
-        class="flex cursor-pointer list-none items-center gap-1 rounded-md px-1.5 py-1 text-sm
-               {surProjet ? 'font-semibold text-foreground' : 'text-muted-foreground'}
-               hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 outline-none"
-      >
-        {t("nav.projects")}
-        <ChevronDown class="size-3.5 transition-transform group-open:rotate-180" />
-      </summary>
-      <div
-        class="absolute left-0 mt-1.5 flex w-60 flex-col gap-0.5 rounded-lg border bg-popover p-1.5"
-      >
-        {#each PROJETS as projet (projet)}
-          <Lien
-            vers={projet}
-            class="rounded-md px-2.5 py-1.5 text-sm text-popover-foreground hover:bg-accent
-                   aria-[current=page]:font-semibold outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-          >
-            {t(`project.${projet}.title`)}
-          </Lien>
-        {/each}
-      </div>
-    </details>
-
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
     <Lien
-      vers="philosophy"
-      class="hidden rounded-md px-1.5 py-1 text-sm text-muted-foreground hover:text-foreground
-             aria-[current=page]:font-semibold aria-[current=page]:text-foreground sm:block
-             outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+      vers="home"
+      class="rounded-md font-mono text-lg font-bold tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
     >
-      {t("nav.philosophy")}
+      piighost
     </Lien>
 
-    <a
-      href="https://athroniaeth.github.io/piighost/"
-      class="hidden rounded-md px-1.5 py-1 text-sm text-muted-foreground hover:text-foreground sm:block
-             outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-      onclick={() => sortant("docs")}
+    <nav
+      aria-label={i18n.t.nav.mainNavigation}
+      class="hidden items-center gap-1 md:flex"
     >
-      {t("nav.docs")}
-    </a>
+      <Lien vers="home" class="{LIEN_NAV} aria-[current=page]:text-primary">
+        {i18n.t.nav.home}
+      </Lien>
 
-    <div class="ml-auto flex items-center gap-1">
-      <LangToggle />
-      <ThemeToggle />
+      <a
+        href={getProject("piighost").docs}
+        target="_blank"
+        rel="noreferrer"
+        class={LIEN_NAV}
+        onclick={() => sortant("docs")}
+      >
+        {i18n.t.nav.docs}
+      </a>
+
+      <a
+        href={HUB_URL}
+        target="_blank"
+        rel="noreferrer"
+        class={LIEN_NAV}
+        onclick={() => sortant("hub")}
+      >
+        {i18n.t.nav.hub}
+      </a>
+
+      <!-- `details` plutôt qu'un menu en JavaScript : l'ouverture au clavier, la
+           fermeture par Échap et le repli sans script viennent du navigateur. -->
+      <details class="group relative">
+        <summary
+          class="{LIEN_NAV} cursor-pointer list-none gap-1 {surProjet
+            ? 'text-primary'
+            : ''}"
+        >
+          {i18n.t.nav.projects}
+          <ChevronDown
+            class="size-3.5 transition-transform group-open:rotate-180"
+          />
+        </summary>
+        <ul
+          class="absolute left-0 mt-1.5 grid min-w-[280px] gap-1 rounded-lg border bg-popover p-1"
+        >
+          {#each projects as projet (projet.slug)}
+            <li>
+              <Lien
+                vers={projet.slug as NomDePage}
+                class="flex flex-col gap-0.5 rounded-md px-2.5 py-1.5 text-popover-foreground
+                       hover:bg-muted outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+              >
+                <span class="font-mono text-sm font-medium">
+                  {i18n.t.nav[projet.slug as keyof typeof i18n.t.nav] ??
+                    projet.name}
+                </span>
+                <span class="text-xs text-muted-foreground">
+                  {i18n.t.projects[projet.slug as keyof typeof i18n.t.projects]
+                    ?.tagline ?? projet.tagline}
+                </span>
+              </Lien>
+            </li>
+          {/each}
+        </ul>
+      </details>
+
+      <Lien
+        vers="philosophy"
+        class="{LIEN_NAV} aria-[current=page]:text-primary"
+      >
+        {i18n.t.nav.philosophy}
+      </Lien>
+    </nav>
+
+    <div class="flex items-center gap-1">
       <Button
         variant="ghost"
         size="icon"
-        href="https://github.com/Athroniaeth/piighost"
-        aria-label={t("nav.github")}
+        href="{GITHUB_ORG}/piighost"
+        target="_blank"
+        rel="noreferrer"
+        aria-label={i18n.t.nav.github}
         onclick={() => sortant("github")}
       >
-        <Github />
+        <GithubIcon class="size-5" />
       </Button>
+      <ThemeToggle />
+      <LangToggle />
     </div>
-  </nav>
+  </div>
 </header>

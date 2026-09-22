@@ -1,0 +1,121 @@
+/* Ce que Tailwind ne couvre pas, et que le studio obtenait autrement.
+ *
+ * Tout est une vraie feuille de style, jamais un style en ligne ni un thème
+ * calculé au chargement : la CSP de production est
+ * `style-src 'self'; script-src 'self'` sans `unsafe-inline`.
+ */
+
+/* Défilement par sections, repris de globals.css du studio : c'est ce qui donne
+   à la page d'accueil son rythme d'une section par écran. */
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
+}
+
+/* La lueur du bandeau d'accueil. Le studio l'écrit en valeur arbitraire
+   Tailwind, `var(--primary)/12%`, qui n'est pas une couleur CSS valide et ne
+   peignait donc rien ; `color-mix` fait ce que la valeur voulait dire. */
+.halo-primaire {
+  background-image: radial-gradient(
+    60% 50% at 50% 0%,
+    color-mix(in oklch, var(--primary) 12%, transparent),
+    transparent
+  );
+}
+
+/* L'avancement de l'onglet courant dans « comment ça marche ». La durée est
+   écrite ici plutôt que dans un attribut `style`, que la CSP refuserait ; elle
+   doit rester égale à DIAPO_MS dans HowItWorks.svelte. */
+@keyframes hiw-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.hiw-progress {
+  transform-origin: left;
+  animation: hiw-progress 10000ms linear forwards;
+}
+
+/* La coloration syntaxique. Le studio appelle shiki au rendu serveur avec les
+   thèmes github-light et github-dark ; ici la tokenisation est faite dans
+   lib/highlight.ts et les couleurs sont des classes, parce que shiki émet des
+   styles en ligne que la CSP bloquerait. Les valeurs sont celles des deux
+   thèmes github. */
+.tok-comment {
+  color: #6a737d;
+}
+.tok-string {
+  color: #032f62;
+}
+.tok-keyword {
+  color: #d73a49;
+}
+.tok-boolean {
+  color: #005cc5;
+}
+.tok-number {
+  color: #005cc5;
+}
+.tok-function {
+  color: #6f42c1;
+}
+.tok-command {
+  color: #6f42c1;
+}
+.tok-flag {
+  color: #005cc5;
+}
+.tok-key {
+  color: #005cc5;
+}
+.tok-section {
+  color: #22863a;
+}
+.tok-punctuation {
+  color: #24292e;
+}
+
+.dark .tok-comment {
+  color: #8b949e;
+}
+.dark .tok-string {
+  color: #a5d6ff;
+}
+.dark .tok-keyword {
+  color: #ff7b72;
+}
+.dark .tok-boolean {
+  color: #79c0ff;
+}
+.dark .tok-number {
+  color: #79c0ff;
+}
+.dark .tok-function {
+  color: #d2a8ff;
+}
+.dark .tok-command {
+  color: #d2a8ff;
+}
+.dark .tok-flag {
+  color: #79c0ff;
+}
+.dark .tok-key {
+  color: #79c0ff;
+}
+.dark .tok-section {
+  color: #7ee787;
+}
+.dark .tok-punctuation {
+  color: #c9d1d9;
+}

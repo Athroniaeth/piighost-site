@@ -1,6 +1,7 @@
 import { hydrate, mount } from "svelte";
 import App from "./App.svelte";
 import "./app.css";
+import "./studio.css";
 import { initAnalytics } from "./lib/analytics";
 
 const target = document.getElementById("app");
@@ -13,4 +14,6 @@ initAnalytics(import.meta.env.VITE_OPENPANEL_CLIENT_ID);
 // Les pages sont prérendues, donc la cible contient déjà le balisage :
 // `hydrate` reprend cet arbre au lieu de le jeter. Sur une URL inconnue, que
 // nginx sert avec l'index de repli, il n'y a rien à reprendre et on monte.
-export default target.firstChild ? hydrate(App, { target }) : mount(App, { target });
+export default target.firstChild
+  ? hydrate(App, { target })
+  : mount(App, { target });

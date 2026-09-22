@@ -2,7 +2,7 @@
   import Button from "../ui/Button.svelte";
   import { router } from "../lib/router.svelte";
   import { LOCALES, lien } from "../lib/routes";
-  import { t } from "../lib/i18n.svelte";
+  import { i18n } from "../lib/i18n.svelte";
   import { track } from "../lib/analytics";
 
   const autre = $derived(LOCALES.find((l) => l !== router.locale) ?? "en");
@@ -23,7 +23,7 @@
   size="sm"
   href={lien(router.nom, autre)}
   onclick={basculer}
-  aria-label={t("nav.language")}
+  aria-label={i18n.t.nav.toggleLanguage}
   hreflang={autre}
 >
   {autre.toUpperCase()}

@@ -17,14 +17,14 @@ import donnees from "../../../routes.json";
  *  fichier disent la même chose. */
 export type Locale = "fr" | "en";
 export type NomDePage =
-  | "home"
-  | "piighost"
-  | "api"
-  | "chat"
-  | "proofreader"
-  | "philosophy";
+  "home" | "piighost" | "api" | "chat" | "proofreader" | "philosophy";
 
-export type Page = { nom: NomDePage; chemin: string; priorite: number; frequence: string };
+export type Page = {
+  nom: NomDePage;
+  chemin: string;
+  priorite: number;
+  frequence: string;
+};
 
 export const LOCALES = donnees.locales as readonly Locale[];
 export const LOCALE_DEFAUT = donnees.localeParDefaut as Locale;
@@ -75,18 +75,26 @@ export function cheminDe(nom: NomDePage): string {
 }
 
 /** Toutes les URL du site, dans toutes les langues. Sert au prérendu. */
-export function toutesLesUrls(): { url: string; nom: NomDePage; locale: Locale }[] {
+export function toutesLesUrls(): {
+  url: string;
+  nom: NomDePage;
+  locale: Locale;
+}[] {
   return LOCALES.flatMap((locale) =>
     PAGES.map((p) => ({ url: lien(p.nom, locale), nom: p.nom, locale })),
   );
 }
 
 /** Reconnaît une URL. Renvoie null si elle n'appartient pas au site. */
-export function reconnaitre(chemin: string): { nom: NomDePage; locale: Locale } | null {
+export function reconnaitre(
+  chemin: string,
+): { nom: NomDePage; locale: Locale } | null {
   const segments = chemin.replace(/\/+$/, "").split("/").filter(Boolean);
   const [premier, ...reste] = segments;
   if (!premier || !estLocale(premier)) return null;
   const sousChemin = "/" + reste.join("/");
-  const page = PAGES.find((p) => p.chemin === (reste.length ? sousChemin : "/"));
+  const page = PAGES.find(
+    (p) => p.chemin === (reste.length ? sousChemin : "/"),
+  );
   return page ? { nom: page.nom, locale: premier } : null;
 }

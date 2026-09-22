@@ -11,6 +11,7 @@ import { render } from "svelte/server";
 import App from "./App.svelte";
 import { router } from "./lib/router.svelte";
 import { meta, alternatives } from "./lib/head";
+import { donneesStructurees } from "./lib/jsonld";
 import type { Locale, NomDePage } from "./lib/routes";
 
 export { toutesLesUrls } from "./lib/routes";
@@ -21,6 +22,9 @@ export type Rendu = {
   titre: string;
   description: string;
   lang: Locale;
+  /** Les blocs schema.org de la page. Sérialisés par le prérendu, jamais par
+   *  un composant : voir lib/jsonld.ts. */
+  jsonld: object[];
 };
 
 export function rendre(nom: NomDePage, locale: Locale): Rendu {
@@ -29,7 +33,9 @@ export function rendre(nom: NomDePage, locale: Locale): Rendu {
   const { titre, description } = meta(nom, locale);
 
   const liens = alternatives(nom)
-    .map((a) => `<link rel="alternate" hreflang="${a.locale}" href="${a.url}" />`)
+    .map(
+      (a) => `<link rel="alternate" hreflang="${a.locale}" href="${a.url}" />`,
+    )
     .join("\n    ");
 
   return {
@@ -40,5 +46,6 @@ export function rendre(nom: NomDePage, locale: Locale): Rendu {
     titre,
     description,
     lang: locale,
+    jsonld: donneesStructurees(nom, locale),
   };
 }

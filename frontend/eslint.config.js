@@ -19,12 +19,14 @@ export default ts.config(
     },
   },
   {
-    files: ["**/*.svelte"],
+    // `.svelte.ts` porte des runes : sans le parseur de Svelte il est lu comme
+    // du JavaScript et chaque annotation de type devient une erreur de syntaxe.
+    files: ["**/*.svelte", "**/*.svelte.ts"],
     languageOptions: {
       parserOptions: { parser: ts.parser },
     },
   },
   {
-    ignores: ["src/generated/", "public/", "dist/"],
+    ignores: ["src/generated/", "public/", "dist/", "dist-ssr/"],
   },
 );

@@ -25,6 +25,9 @@ COPY deploy/default.conf.template /etc/nginx/templates/default.conf.template
 # Outside templates/ on purpose: it holds no variable to substitute, and the server
 # config includes it by absolute path.
 COPY deploy/security-headers.conf /etc/nginx/security-headers.conf
+# Écrite par le prérendu, pas versionnée : elle porte l'empreinte de chaque bloc
+# schema.org, qui change avec la copie du site.
+COPY --from=builder /app/frontend/csp.conf /etc/nginx/csp.conf
 COPY --from=builder /app/frontend/dist /usr/share/nginx/html
 
 EXPOSE 8080

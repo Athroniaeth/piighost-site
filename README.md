@@ -4,9 +4,14 @@ Le site vitrine de [piighost](https://github.com/Athroniaeth/piighost), servi
 sur `piighost.dev`. Six pages, deux langues, prérendues.
 
 Reconstruction complète à partir de
-[template-litestar-svelte](https://github.com/Athroniaeth/template-litestar-svelte),
-avec l'identité visuelle produite dans `piighost-identite`. Le playground a
-disparu : ce site présente, il ne fait plus tourner le produit.
+[template-litestar-svelte](https://github.com/Athroniaeth/template-litestar-svelte).
+C'est un **portage à l'identique** du studio actuel : mêmes sections, même
+copie, mêmes couleurs, même typographie. Le playground a disparu, parce que ce
+site présente et ne fait plus tourner le produit ; c'est le seul retrait.
+
+L'identité visuelle produite dans `piighost-identite` **n'est pas appliquée
+ici**. C'est une étape séparée, qui viendra sur ce portage une fois qu'il est
+jugé fidèle.
 
 Litestar 2.24, Svelte 5, Vite 8, Tailwind 4, nginx, OpenPanel auto hébergé.
 
@@ -44,8 +49,10 @@ frontend/
   src/ui/              les composants de base, repris de piighost-design
   src/components/      la navigation, le pied de page, la démonstration
   src/pages/           les six pages
-  src/app.css          les tokens, GÉNÉRÉS par piighost-identite
-  prerender.mjs        un HTML par URL, après le build
+  src/i18n/            les dictionnaires, repris tels quels du studio
+  src/app.css          les tokens du studio, repris tels quels
+  src/studio.css       ce que Tailwind ne couvre pas : collage, coloration
+  prerender.mjs        un HTML par URL, puis csp.conf, après le build
 deploy/                nginx : arbre prérendu, /api, /api/op, en-têtes
 ```
 
@@ -65,24 +72,29 @@ uv run pytest            # les tests du backend
 cd frontend && pnpm build   # build, prérendu et vérification des types
 ```
 
-## L'identité visuelle ne se modifie pas ici
+## Ce que le portage a dû changer, et pourquoi
 
-`frontend/src/app.css` est **généré**. Sa source est
-`piighost-identite/brand/tokens/tokens.json`, et sa production est vérifiée :
-44 paires de contraste du socle et 32 paires d'entités sont contrôlées à chaque
-génération, et le générateur refuse d'écrire si une seule échoue.
+Tout le reste est repris tel quel. Ces quatre écarts sont imposés par la pile,
+pas par le goût, et chacun est commenté à son emplacement.
 
-Pour changer une couleur, un rayon ou une police, il faut éditer la source dans
-`piighost-identite` puis relancer :
+| Écart | Raison |
+|---|---|
+| Polices servies par fontsource au lieu de `next/font` | il n'y a plus de Next. Ce sont les mêmes, Geist et Geist Mono, auto hébergées. |
+| Coloration syntaxique en classes, pas par shiki | shiki émet des styles en ligne, que la CSP `style-src 'self'` refuse. La tokenisation vit dans `src/lib/highlight.ts`, les couleurs sont celles de github-light et github-dark. |
+| `radial-gradient` du bandeau écrit en `color-mix` | le studio l'écrit `var(--primary)/12%`, qui n'est pas une couleur CSS valide et ne peignait donc rien. |
+| Pied de page : « construit avec Svelte » | la ligne nommait Next.js. La pile a changé, la phrase serait fausse. |
 
-```bash
-node brand/outils/tokens.mjs
-cp brand/tokens/cibles/studio-app.css <ici>/frontend/src/app.css
-```
+## Les données structurées et la politique de sécurité
 
-Les règles d'usage, ce qui se fait et ce qui ne se fait pas, sont dans
-`piighost-identite/brand/charte/CHARTE.md`. Le skill `piighost-design` en donne
-la version destinée à un agent.
+Les blocs schema.org sont écrits par le prérendu, pas par un composant : leur
+contenu est fixe par route, et un composant les rejouerait à l'hydratation sur
+une page déjà servie complète.
+
+Conséquence sur la CSP : un bloc `application/ld+json` **est** un élément
+`script`, donc `script-src 'self'` le refuse. Le prérendu calcule l'empreinte
+sha256 de chaque bloc et écrit `frontend/csp.conf`, que
+`deploy/security-headers.conf` inclut et que `Dockerfile.web` copie dans
+l'image. Le fichier n'est pas versionné : il change avec la copie du site.
 
 ## La mesure d'audience
 

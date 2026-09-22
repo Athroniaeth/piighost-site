@@ -77,7 +77,11 @@ class Router {
   }
 
   /** Navigue sans recharger. `remplacer` évite d'empiler la redirection. */
-  aller(nom: NomDePage, locale: Locale = this.locale, options: { remplacer?: boolean } = {}) {
+  aller(
+    nom: NomDePage,
+    locale: Locale = this.locale,
+    options: { remplacer?: boolean } = {},
+  ) {
     if (!NAVIGATEUR) return this.definir(nom, locale);
     const url = lien(nom, locale);
     if (options.remplacer) history.replaceState({}, "", url);
@@ -99,7 +103,8 @@ export const router = new Router();
 
 /** Intercepte un clic sur un lien interne pour éviter le rechargement. */
 export function naviguer(event: MouseEvent, nom: NomDePage, locale?: Locale) {
-  if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0)
+    return;
   event.preventDefault();
   router.aller(nom, locale ?? router.locale);
 }

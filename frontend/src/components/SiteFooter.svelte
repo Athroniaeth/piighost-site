@@ -1,73 +1,68 @@
 <script lang="ts">
-  import Logo from "./Logo.svelte";
   import Lien from "./Lien.svelte";
-  import { t } from "../lib/i18n.svelte";
-  import { router } from "../lib/router.svelte";
-  import { track } from "../lib/analytics";
+  import { i18n } from "../lib/i18n.svelte";
+  import { GITHUB_ORG, HUB_URL, projects } from "../lib/site";
   import type { NomDePage } from "../lib/routes";
 
-  const PROJETS: NomDePage[] = ["piighost", "api", "chat", "proofreader"];
-  const annee = new Date().getFullYear();
+  const EXTERNE = "hover:text-foreground";
 </script>
 
-<footer class="mt-20 border-t bg-sidebar">
-  <div class="mx-auto grid max-w-6xl gap-8 px-5 py-10 sm:grid-cols-[1.4fr_1fr_1fr]">
+<footer class="border-t">
+  <div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-3">
     <div>
-      <Logo size={18} />
-      <p class="mt-3 max-w-[38ch] text-sm leading-relaxed text-muted-foreground">
-        {t("home.lede")}
+      <p class="font-mono text-lg font-bold">piighost</p>
+      <p class="mt-2 max-w-xs text-sm text-muted-foreground">
+        {i18n.t.footer.tagline}
       </p>
     </div>
-
-    <nav aria-label={t("nav.projects")}>
-      <p class="mb-2.5 font-mono text-[0.625rem] tracking-[0.12em] text-muted-foreground uppercase">
-        {t("nav.projects")}
-      </p>
-      <ul class="flex flex-col gap-1.5">
-        {#each PROJETS as projet (projet)}
+    <div>
+      <p class="text-sm font-semibold">{i18n.t.footer.projects}</p>
+      <ul class="mt-3 space-y-2 text-sm text-muted-foreground">
+        {#each projects as projet (projet.slug)}
           <li>
-            <Lien vers={projet} class="text-sm text-muted-foreground hover:text-foreground">
-              {t(`project.${projet}.title`)}
-            </Lien>
+            <Lien vers={projet.slug as NomDePage} class={EXTERNE}
+              >{projet.name}</Lien
+            >
           </li>
         {/each}
       </ul>
-    </nav>
-
+    </div>
     <div>
-      <p class="mb-2.5 font-mono text-[0.625rem] tracking-[0.12em] text-muted-foreground uppercase">
-        piighost
-      </p>
-      <ul class="flex flex-col gap-1.5 text-sm">
-        <li>
-          <Lien vers="philosophy" class="text-muted-foreground hover:text-foreground">
-            {t("nav.philosophy")}
-          </Lien>
-        </li>
+      <p class="text-sm font-semibold">{i18n.t.footer.links}</p>
+      <ul class="mt-3 space-y-2 text-sm text-muted-foreground">
         <li>
           <a
-            href="https://athroniaeth.github.io/piighost/"
-            class="text-muted-foreground hover:text-foreground"
-            onclick={() => track({ name: "outbound", props: { destination: "docs", page: router.nom } })}
-            >{t("nav.docs")}</a
+            class={EXTERNE}
+            href="{GITHUB_ORG}/piighost"
+            target="_blank"
+            rel="noreferrer">GitHub</a
           >
         </li>
         <li>
           <a
-            href="https://github.com/Athroniaeth/piighost"
-            class="text-muted-foreground hover:text-foreground"
-            onclick={() => track({ name: "outbound", props: { destination: "github", page: router.nom } })}
-            >{t("nav.github")}</a
+            class={EXTERNE}
+            href="https://pypi.org/project/piighost/"
+            target="_blank"
+            rel="noreferrer">PyPI</a
+          >
+        </li>
+        <li>
+          <a
+            class={EXTERNE}
+            href="https://athroniaeth.github.io/piighost/"
+            target="_blank"
+            rel="noreferrer">Documentation</a
+          >
+        </li>
+        <li>
+          <a class={EXTERNE} href={HUB_URL} target="_blank" rel="noreferrer"
+            >{i18n.t.nav.hub}</a
           >
         </li>
       </ul>
     </div>
   </div>
-
-  <div class="border-t">
-    <p class="mx-auto flex max-w-6xl justify-between px-5 py-4 font-mono text-[0.6875rem] text-muted-foreground">
-      <span>piighost {annee}</span>
-      <span>{t("footer.rights")}</span>
-    </p>
+  <div class="border-t py-6 text-center text-xs text-muted-foreground">
+    {i18n.t.footer.mit}
   </div>
 </footer>

@@ -1,6 +1,8 @@
 <script lang="ts">
   import SiteNav from "./components/SiteNav.svelte";
   import SiteFooter from "./components/SiteFooter.svelte";
+  import SmoothSnap from "./components/SmoothSnap.svelte";
+  import BackToTop from "./components/BackToTop.svelte";
   import Home from "./pages/Home.svelte";
   import Philosophy from "./pages/Philosophy.svelte";
   import Projet from "./pages/Projet.svelte";
@@ -11,17 +13,22 @@
 
   const PROJETS = ["piighost", "api", "chat", "proofreader"] as const;
   type Slug = (typeof PROJETS)[number];
-  const estProjet = (n: string): n is Slug => (PROJETS as readonly string[]).includes(n);
+  const estProjet = (n: string): n is Slug =>
+    (PROJETS as readonly string[]).includes(n);
 
   // Les balises et la mesure suivent la route, pas le chargement : sans cela
   // l'onglet garderait le titre de la première page visitée.
   $effect(() => {
     if (router.introuvable) return;
     appliquer(router.nom, router.locale);
-    track({ name: "page_view", props: { page: router.nom, locale: router.locale } });
+    track({
+      name: "page_view",
+      props: { page: router.nom, locale: router.locale },
+    });
   });
 </script>
 
+<SmoothSnap />
 <div class="flex min-h-dvh flex-col">
   <SiteNav />
   <main id="contenu" class="flex-1">
@@ -37,3 +44,4 @@
   </main>
   <SiteFooter />
 </div>
+<BackToTop />

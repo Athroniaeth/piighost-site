@@ -2,7 +2,6 @@
   import Check from "@lucide/svelte/icons/check";
   import Copy from "@lucide/svelte/icons/copy";
   import Button from "./Button.svelte";
-  import { t } from "../lib/i18n.svelte";
 
   let { value, class: extra = "" }: { value: string; class?: string } =
     $props();
@@ -22,8 +21,8 @@
 
 <Button
   variant="ghost"
-  size="icon-sm"
-  aria-label={copied ? t("common.copied") : t("common.copy")}
+  size="icon"
+  aria-label="Copy"
   class={extra}
   onclick={copy}
 >

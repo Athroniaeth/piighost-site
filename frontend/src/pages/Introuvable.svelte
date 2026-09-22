@@ -1,23 +1,34 @@
 <script lang="ts">
   import Button from "../ui/Button.svelte";
-  import Ghost from "../components/Ghost.svelte";
-  import { t } from "../lib/i18n.svelte";
   import { router, localePreferee } from "../lib/router.svelte";
   import { lien } from "../lib/routes";
+
+  /**
+   * La page d'erreur, reprise telle quelle du site actuel, y compris sa copie
+   * en anglais : elle n'est pas dans le dictionnaire là-bas non plus, et une
+   * URL inconnue n'a pas de langue.
+   */
+  const accueil = lien("home", router.locale ?? localePreferee());
 </script>
 
-<article class="mx-auto flex max-w-lg flex-col items-center gap-4 px-5 py-28 text-center">
-  <Ghost size={44} class="text-muted-foreground/40" />
-  <h1 class="text-[1.75rem] font-semibold tracking-[-0.03em]">{t("404.title")}</h1>
-  <p class="text-[0.95rem] leading-relaxed text-muted-foreground">{t("404.body")}</p>
+<div
+  class="mx-auto flex max-w-3xl flex-col items-center px-4 py-32 text-center"
+>
+  <p class="font-mono text-6xl font-bold text-primary">404</p>
+  <h1 class="mt-4 text-2xl font-semibold">
+    This page slipped past the placeholder
+  </h1>
+  <p class="mt-2 text-muted-foreground">
+    The page you are looking for does not exist.
+  </p>
   <Button
-    class="mt-2"
-    href={lien("home", router.locale ?? localePreferee())}
+    class="mt-8"
+    href={accueil}
     onclick={(e: MouseEvent) => {
       e.preventDefault();
       router.aller("home");
     }}
   >
-    {t("404.back")}
+    Back home
   </Button>
-</article>
+</div>

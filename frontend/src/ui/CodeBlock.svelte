@@ -1,6 +1,11 @@
 <script lang="ts">
   import CopyButton from "./CopyButton.svelte";
-  import { regexTokens, tomlTokens } from "../lib/highlight";
+  import {
+    pythonTokens,
+    regexTokens,
+    shellTokens,
+    tomlTokens,
+  } from "../lib/highlight";
   import { cn } from "../lib/cn";
 
   /**
@@ -14,17 +19,20 @@
     class: extra = "",
   }: {
     code: string;
-    language?: "toml" | "regex" | "plain";
+    language?: "toml" | "regex" | "python" | "bash" | "plain";
     wrap?: boolean;
     class?: string;
   } = $props();
 
+  const TOKENISEURS = {
+    toml: tomlTokens,
+    regex: regexTokens,
+    python: pythonTokens,
+    bash: shellTokens,
+  };
+
   const tokens = $derived(
-    language === "toml"
-      ? tomlTokens(code)
-      : language === "regex"
-        ? regexTokens(code)
-        : null,
+    language === "plain" ? null : TOKENISEURS[language](code),
   );
 </script>
 
@@ -34,10 +42,7 @@
     extra,
   )}
 >
-  <CopyButton
-    value={code}
-    class="no-print absolute end-2 top-2 bg-card ring-1 ring-foreground/10"
-  />
+  <CopyButton value={code} class="absolute right-2 top-2 size-7" />
   <pre
     class={cn(
       "overflow-x-auto p-4 font-mono text-sm leading-relaxed",

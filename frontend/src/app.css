@@ -1,69 +1,62 @@
-/* Tokens piighost. NE PAS ÉDITER À LA MAIN.
+/* Les tokens de piighost-studio, repris tels quels.
  *
- * Généré par brand/outils/tokens.mjs depuis brand/tokens/tokens.json et
- * brand/tokens/entites.json. Les cinq surfaces sortent du même objet : la
- * dérive 73 contre 45 relevée à l'étape 0 venait de fichiers recopiés.
+ * Ce site est le portage à l'identique du studio actuel sur le gabarit
+ * Litestar + Svelte : mêmes sections, même copie, mêmes couleurs. La charte
+ * graphique de piighost-identite ne s'applique pas ici, c'est une étape
+ * séparée.
  *
- * Cible : piighost-studio-v2, frontend/src/app.css, version Vite
+ * Deux écarts, tous deux imposés par la pile et non par le goût :
+ *   - les polices sont auto hébergées par fontsource au lieu de `next/font`,
+ *     parce qu'il n'y a plus de Next. Ce sont les mêmes, Geist et Geist Mono.
+ *   - `tw-animate-css` et `shadcn/tailwind.css` ne sont pas importés : les
+ *     composants portés n'en utilisent rien.
  *
- * Direction : l'Évidence. Sur une interface, la seule couleur qui ne soit pas
- * de la donnée est --primary, plus --destructive pour les états d'erreur. Le
- * corail de marque n'a pas le droit d'apparaître ici.
- *
- * Clair par défaut, sombre en classe sur <html>, jamais déduit du système.
  * Tout est une vraie feuille de style, jamais un style en ligne : la CSP de
- * production est style-src 'self' sans unsafe-inline. Les polices sont auto
- * hébergées pour la même raison.
+ * production est style-src 'self' sans unsafe-inline, et c'est aussi la raison
+ * pour laquelle les polices ne viennent pas d'un CDN.
  */
 
-@import "@fontsource-variable/instrument-sans";
-@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
 @import "tailwindcss";
-
-/* La palette d'attribution vit dans un module TypeScript, pas dans un
-   composant. Tailwind ne garde que les classes qu'il a vues dans un fichier
-   scanné : nommer le module évite que toutes les pastilles sortent sans
-   couleur. */
-@source "./lib/labels.ts";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-  --font-heading: var(--font-heading);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+  --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -74,167 +67,72 @@
 }
 
 :root {
-  --background: oklch(0.978 0.002 220);
-  --foreground: oklch(0.17 0.012 220);
-  --card: oklch(0.996 0.001 220);
-  --card-foreground: oklch(0.17 0.012 220);
-  --popover: oklch(0.996 0.001 220);
-  --popover-foreground: oklch(0.17 0.012 220);
-  --primary: oklch(0.52 0.088 199);
-  --primary-foreground: oklch(0.99 0.002 199);
-  --secondary: oklch(0.945 0.003 220);
-  --secondary-foreground: oklch(0.24 0.010 220);
-  --muted: oklch(0.952 0.002 220);
-  --muted-foreground: oklch(0.50 0.008 220);
-  --accent: oklch(0.945 0.003 220);
-  --accent-foreground: oklch(0.24 0.010 220);
-  --destructive: oklch(0.52 0.17 27);
-  --border: oklch(0.862 0.005 220);
-  --input: oklch(0.650 0.007 220);
-  --ring: oklch(0.52 0.088 199);
-  --sidebar: oklch(0.962 0.002 220);
-  --sidebar-foreground: oklch(0.17 0.012 220);
-  --sidebar-primary: oklch(0.52 0.088 199);
-  --sidebar-primary-foreground: oklch(0.99 0.002 199);
-  --sidebar-accent: oklch(0.932 0.003 220);
-  --sidebar-accent-foreground: oklch(0.24 0.010 220);
-  --sidebar-border: oklch(0.850 0.005 220);
-  --sidebar-ring: oklch(0.52 0.088 199);
-  --destructive-foreground: oklch(0.99 0.002 27);
-  --font-sans: "Instrument Sans", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-heading: var(--font-sans);
-  --radius: 0.5rem;
-
-  /* Couleurs de donnée. */
-  --chart-1: oklch(0.62 0.1401 64.1);
-  --chart-2: oklch(0.62 0.1276 96.4);
-  --chart-3: oklch(0.62 0.16 128.6);
-  --chart-4: oklch(0.62 0.1383 160.9);
-  --chart-5: oklch(0.62 0.143 240.4);
-  --entite-01-valeur-fond: oklch(0.935 0.0435 64.1);
-  --entite-01-valeur-texte: oklch(0.52 0.1175 64.1);
-  --entite-01-jeton-fond: oklch(0.855 0.1028 64.1);
-  --entite-01-jeton-texte: oklch(0.46 0.104 64.1);
-  --entite-01-puce: oklch(0.62 0.1401 64.1);
-  --entite-02-valeur-fond: oklch(0.935 0.068 96.4);
-  --entite-02-valeur-texte: oklch(0.52 0.1071 96.4);
-  --entite-02-jeton-fond: oklch(0.855 0.115 96.4);
-  --entite-02-jeton-texte: oklch(0.46 0.0947 96.4);
-  --entite-02-puce: oklch(0.62 0.1276 96.4);
-  --entite-03-valeur-fond: oklch(0.935 0.068 128.6);
-  --entite-03-valeur-texte: oklch(0.51 0.1345 128.6);
-  --entite-03-jeton-fond: oklch(0.855 0.115 128.6);
-  --entite-03-jeton-texte: oklch(0.46 0.1213 128.6);
-  --entite-03-puce: oklch(0.62 0.16 128.6);
-  --entite-04-valeur-fond: oklch(0.935 0.068 160.9);
-  --entite-04-valeur-texte: oklch(0.51 0.1137 160.9);
-  --entite-04-jeton-fond: oklch(0.855 0.115 160.9);
-  --entite-04-jeton-texte: oklch(0.46 0.1026 160.9);
-  --entite-04-puce: oklch(0.62 0.1383 160.9);
-  --entite-05-valeur-fond: oklch(0.935 0.0347 240.4);
-  --entite-05-valeur-texte: oklch(0.51 0.1176 240.4);
-  --entite-05-jeton-fond: oklch(0.855 0.0798 240.4);
-  --entite-05-jeton-texte: oklch(0.46 0.1061 240.4);
-  --entite-05-puce: oklch(0.62 0.143 240.4);
-  --entite-06-valeur-fond: oklch(0.935 0.0314 279.1);
-  --entite-06-valeur-texte: oklch(0.53 0.15 279.1);
-  --entite-06-jeton-fond: oklch(0.855 0.0725 279.1);
-  --entite-06-jeton-texte: oklch(0.47 0.15 279.1);
-  --entite-06-puce: oklch(0.62 0.16 279.1);
-  --entite-07-valeur-fond: oklch(0.935 0.0481 317.9);
-  --entite-07-valeur-texte: oklch(0.53 0.15 317.9);
-  --entite-07-jeton-fond: oklch(0.855 0.1113 317.9);
-  --entite-07-jeton-texte: oklch(0.47 0.15 317.9);
-  --entite-07-puce: oklch(0.62 0.16 317.9);
-  --entite-08-valeur-fond: oklch(0.935 0.0363 356.6);
-  --entite-08-valeur-texte: oklch(0.53 0.15 356.6);
-  --entite-08-jeton-fond: oklch(0.855 0.0876 356.6);
-  --entite-08-jeton-texte: oklch(0.47 0.15 356.6);
-  --entite-08-puce: oklch(0.62 0.16 356.6);
-
-  /* Marque. INTERDIT sur toute surface qui affiche de la donnée.
-     Voir brand/territoires/decision.md. */
-  --marque-corail: oklch(0.72 0.16 32);
-  --marque-corail-texte: oklch(0.17 0.012 220);
-  --marque-corail-sombre: oklch(0.55 0.16 32);
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.51 0.23 277);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.51 0.23 277);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
 .dark {
-  --background: oklch(0.155 0.010 220);
-  --foreground: oklch(0.962 0.002 220);
-  --card: oklch(0.198 0.011 220);
-  --card-foreground: oklch(0.962 0.002 220);
-  --popover: oklch(0.198 0.011 220);
-  --popover-foreground: oklch(0.962 0.002 220);
-  --primary: oklch(0.76 0.115 199);
-  --primary-foreground: oklch(0.155 0.010 220);
-  --secondary: oklch(0.262 0.010 220);
-  --secondary-foreground: oklch(0.962 0.002 220);
-  --muted: oklch(0.262 0.010 220);
-  --muted-foreground: oklch(0.715 0.009 220);
-  --accent: oklch(0.262 0.010 220);
-  --accent-foreground: oklch(0.962 0.002 220);
-  --destructive: oklch(0.70 0.155 27);
-  --border: oklch(0.99 0.002 220 / 16%);
-  --input: oklch(0.99 0.002 220 / 38%);
-  --ring: oklch(0.76 0.115 199);
-  --sidebar: oklch(0.178 0.010 220);
-  --sidebar-foreground: oklch(0.962 0.002 220);
-  --sidebar-primary: oklch(0.76 0.115 199);
-  --sidebar-primary-foreground: oklch(0.155 0.010 220);
-  --sidebar-accent: oklch(0.262 0.010 220);
-  --sidebar-accent-foreground: oklch(0.962 0.002 220);
-  --sidebar-border: oklch(0.99 0.002 220 / 16%);
-  --sidebar-ring: oklch(0.76 0.115 199);
-  --destructive-foreground: oklch(0.18 0.03 27);
-
-  /* Couleurs de donnée. */
-  --chart-1: oklch(0.62 0.1401 64.1);
-  --chart-2: oklch(0.62 0.1276 96.4);
-  --chart-3: oklch(0.62 0.16 128.6);
-  --chart-4: oklch(0.62 0.1383 160.9);
-  --chart-5: oklch(0.62 0.143 240.4);
-  --entite-01-valeur-fond: oklch(0.305 0.068 64.1);
-  --entite-01-valeur-texte: oklch(0.68 0.13 64.1);
-  --entite-01-jeton-fond: oklch(0.4 0.09 64.1);
-  --entite-01-jeton-texte: oklch(0.78 0.13 64.1);
-  --entite-01-puce: oklch(0.62 0.1401 64.1);
-  --entite-02-valeur-fond: oklch(0.305 0.0628 96.4);
-  --entite-02-valeur-texte: oklch(0.68 0.13 96.4);
-  --entite-02-jeton-fond: oklch(0.4 0.0824 96.4);
-  --entite-02-jeton-texte: oklch(0.78 0.13 96.4);
-  --entite-02-puce: oklch(0.62 0.1276 96.4);
-  --entite-03-valeur-fond: oklch(0.305 0.068 128.6);
-  --entite-03-valeur-texte: oklch(0.67 0.13 128.6);
-  --entite-03-jeton-fond: oklch(0.4 0.09 128.6);
-  --entite-03-jeton-texte: oklch(0.78 0.13 128.6);
-  --entite-03-puce: oklch(0.62 0.16 128.6);
-  --entite-04-valeur-fond: oklch(0.305 0.068 160.9);
-  --entite-04-valeur-texte: oklch(0.67 0.13 160.9);
-  --entite-04-jeton-fond: oklch(0.4 0.0892 160.9);
-  --entite-04-jeton-texte: oklch(0.77 0.13 160.9);
-  --entite-04-puce: oklch(0.62 0.1383 160.9);
-  --entite-05-valeur-fond: oklch(0.305 0.068 240.4);
-  --entite-05-valeur-texte: oklch(0.68 0.13 240.4);
-  --entite-05-jeton-fond: oklch(0.4 0.09 240.4);
-  --entite-05-jeton-texte: oklch(0.78 0.1245 240.4);
-  --entite-05-puce: oklch(0.62 0.143 240.4);
-  --entite-06-valeur-fond: oklch(0.305 0.068 279.1);
-  --entite-06-valeur-texte: oklch(0.68 0.13 279.1);
-  --entite-06-jeton-fond: oklch(0.4 0.09 279.1);
-  --entite-06-jeton-texte: oklch(0.78 0.1133 279.1);
-  --entite-06-puce: oklch(0.62 0.16 279.1);
-  --entite-07-valeur-fond: oklch(0.305 0.068 317.9);
-  --entite-07-valeur-texte: oklch(0.68 0.13 317.9);
-  --entite-07-jeton-fond: oklch(0.4 0.09 317.9);
-  --entite-07-jeton-texte: oklch(0.78 0.13 317.9);
-  --entite-07-puce: oklch(0.62 0.16 317.9);
-  --entite-08-valeur-fond: oklch(0.305 0.068 356.6);
-  --entite-08-valeur-texte: oklch(0.69 0.13 356.6);
-  --entite-08-jeton-fond: oklch(0.4 0.09 356.6);
-  --entite-08-jeton-texte: oklch(0.78 0.13 356.6);
-  --entite-08-puce: oklch(0.62 0.16 356.6);
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.62 0.19 277);
+  --primary-foreground: oklch(0.13 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.62 0.19 277);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
 @layer base {
@@ -249,36 +147,17 @@
   }
 }
 
-/* Racine typographique variable. Toute l'échelle est en rem, donc remonter la
-   racine agit comme un zoom du navigateur. Relevé dans globals.css:144-153 du
-   studio, repris tel quel : c'est une contrainte, pas un choix. */
-@media (min-width: 1920px) { html { font-size: 18px; } }
-@media (min-width: 2560px) { html { font-size: 21px; } }
+/* Racine typographique variable : un zoom délibéré sur les grands écrans.
+   Toute l'échelle est en rem, donc remonter la racine agit comme le zoom du
+   navigateur. C'est pourquoi aucune taille de texte ne doit être en px. */
+@media (min-width: 1920px) {
+  html {
+    font-size: 18px;
+  }
+}
 
-/* Une valeur détectée porte la teinte de sa catégorie et l'intensité de son
-   état : `-valeur` tant qu'elle est en clair, `-jeton` une fois remplacée.
-   Voir brand/tokens/README.md. */
-.entite-01-valeur { background-color: var(--entite-01-valeur-fond); color: var(--entite-01-valeur-texte); }
-.entite-01-jeton  { background-color: var(--entite-01-jeton-fond);  color: var(--entite-01-jeton-texte); }
-.entite-01-puce   { background-color: var(--entite-01-puce); }
-.entite-02-valeur { background-color: var(--entite-02-valeur-fond); color: var(--entite-02-valeur-texte); }
-.entite-02-jeton  { background-color: var(--entite-02-jeton-fond);  color: var(--entite-02-jeton-texte); }
-.entite-02-puce   { background-color: var(--entite-02-puce); }
-.entite-03-valeur { background-color: var(--entite-03-valeur-fond); color: var(--entite-03-valeur-texte); }
-.entite-03-jeton  { background-color: var(--entite-03-jeton-fond);  color: var(--entite-03-jeton-texte); }
-.entite-03-puce   { background-color: var(--entite-03-puce); }
-.entite-04-valeur { background-color: var(--entite-04-valeur-fond); color: var(--entite-04-valeur-texte); }
-.entite-04-jeton  { background-color: var(--entite-04-jeton-fond);  color: var(--entite-04-jeton-texte); }
-.entite-04-puce   { background-color: var(--entite-04-puce); }
-.entite-05-valeur { background-color: var(--entite-05-valeur-fond); color: var(--entite-05-valeur-texte); }
-.entite-05-jeton  { background-color: var(--entite-05-jeton-fond);  color: var(--entite-05-jeton-texte); }
-.entite-05-puce   { background-color: var(--entite-05-puce); }
-.entite-06-valeur { background-color: var(--entite-06-valeur-fond); color: var(--entite-06-valeur-texte); }
-.entite-06-jeton  { background-color: var(--entite-06-jeton-fond);  color: var(--entite-06-jeton-texte); }
-.entite-06-puce   { background-color: var(--entite-06-puce); }
-.entite-07-valeur { background-color: var(--entite-07-valeur-fond); color: var(--entite-07-valeur-texte); }
-.entite-07-jeton  { background-color: var(--entite-07-jeton-fond);  color: var(--entite-07-jeton-texte); }
-.entite-07-puce   { background-color: var(--entite-07-puce); }
-.entite-08-valeur { background-color: var(--entite-08-valeur-fond); color: var(--entite-08-valeur-texte); }
-.entite-08-jeton  { background-color: var(--entite-08-jeton-fond);  color: var(--entite-08-jeton-texte); }
-.entite-08-puce   { background-color: var(--entite-08-puce); }
+@media (min-width: 2560px) {
+  html {
+    font-size: 21px;
+  }
+}

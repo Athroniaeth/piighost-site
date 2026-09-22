@@ -14,11 +14,16 @@
  *   node prerender.mjs        appelé par `pnpm build`
  */
 
+import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
 const DIST = "dist";
 const SSR = "./dist-ssr/entry-server.js";
+/** La politique servie par nginx, écrite ici parce que les empreintes des blocs
+ *  schema.org ne sont connues qu'après le rendu. deploy/security-headers.conf
+ *  l'inclut, Dockerfile.web la copie dans l'image. */
+const CSP = "csp.conf";
 
 const { rendre, toutesLesUrls } = await import(SSR);
 
@@ -30,15 +35,39 @@ function poser(html, motif, remplacement) {
 }
 
 const echappe = (s) =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
+/** Les empreintes des blocs schema.org, dédoublonnées entre les douze pages.
+ *  La CSP est script-src 'self' sans unsafe-inline : un bloc non autorisé est
+ *  refusé par le navigateur, et les données structurées disparaissent sans que
+ *  rien ne le signale. */
+const empreintes = new Set();
+
+/** Un bloc ld+json prêt à écrire, et son empreinte. */
+function structuree(donnees) {
+  // Un `<` échappé dans les chaînes : sans cela une valeur contenant
+  // `</script>` fermerait la balise depuis l'intérieur.
+  const json = JSON.stringify(donnees).replace(/</g, "\\u003c");
+  const hash = createHash("sha256").update(json, "utf8").digest("base64");
+  empreintes.add(`'sha256-${hash}'`);
+  return `<script type="application/ld+json">${json}</script>`;
+}
 
 let ecrites = 0;
 for (const { url, nom, locale } of toutesLesUrls()) {
-  const { corps, tete, titre, description, lang } = rendre(nom, locale);
+  const { corps, tete, titre, description, lang, jsonld } = rendre(nom, locale);
 
   let html = gabarit;
   html = html.replace('<html lang="fr">', `<html lang="${lang}">`);
-  html = poser(html, /<title>[\s\S]*?<\/title>/, `<title>${echappe(titre)}</title>`);
+  html = poser(
+    html,
+    /<title>[\s\S]*?<\/title>/,
+    `<title>${echappe(titre)}</title>`,
+  );
   html = poser(
     html,
     /<meta\s+name="description"[\s\S]*?\/>/,
@@ -64,7 +93,8 @@ for (const { url, nom, locale } of toutesLesUrls()) {
     /<meta property="og:url"[^>]*\/>/,
     `<meta property="og:url" content="https://piighost.dev${url}" />`,
   );
-  html = html.replace("</head>", `  ${tete}\n  </head>`);
+  const structurees = jsonld.map(structuree).join("\n    ");
+  html = html.replace("</head>", `  ${tete}\n    ${structurees}\n  </head>`);
   html = html.replace('<div id="app"></div>', `<div id="app">${corps}</div>`);
 
   const chemin = join(DIST, url.replace(/^\//, ""), "index.html");
@@ -73,4 +103,32 @@ for (const { url, nom, locale } of toutesLesUrls()) {
   ecrites += 1;
 }
 
-console.log(`prérendu : ${ecrites} pages écrites dans ${DIST}/`);
+const politique = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "img-src 'self' data:",
+  "style-src 'self'",
+  `script-src 'self' ${[...empreintes].sort().join(" ")}`,
+  "connect-src 'self'",
+  "form-action 'self'",
+].join("; ");
+
+await writeFile(
+  CSP,
+  [
+    "# Généré par frontend/prerender.mjs. Ne pas éditer à la main.",
+    "#",
+    "# script-src porte l'empreinte de chaque bloc schema.org écrit dans les pages.",
+    "# Un bloc ld+json est un élément script : sans son empreinte, la politique le",
+    "# refuse et les données structurées du site disparaissent en silence.",
+    `add_header Content-Security-Policy "${politique}" always;`,
+    "",
+  ].join("\n"),
+);
+
+console.log(
+  `prérendu : ${ecrites} pages écrites dans ${DIST}/, ` +
+    `${empreintes.size} empreintes dans ${CSP}`,
+);

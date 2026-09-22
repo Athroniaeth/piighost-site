@@ -34,6 +34,10 @@ const STRINGS = {
     "home.cta.github": "GitHub",
     "home.demo.before": "what you write",
     "home.demo.after": "what the model receives",
+    // {0} à {3} sont remplacés par les valeurs mises en couleur. La phrase est
+    // traduite en entier, pas assemblée de morceaux : une langue n'ordonne pas
+    // ses compléments comme l'autre.
+    "home.demo.sentence": "Hello, this is {0} from {1}. My order {2} should be delivered to {3}.",
 
     "home.how.kicker": "How it works",
     "home.how.title": "Detect, substitute, restore",
@@ -120,6 +124,8 @@ const STRINGS = {
     "home.cta.github": "GitHub",
     "home.demo.before": "ce que vous écrivez",
     "home.demo.after": "ce que le modèle reçoit",
+    "home.demo.sentence":
+      "Bonjour, ici {0} de {1}. Ma commande {2} doit être livrée au {3}.",
 
     "home.how.kicker": "Comment ça marche",
     "home.how.title": "Détecter, substituer, rendre",
@@ -204,6 +210,23 @@ export function t(cle: Cle): string {
 export function tr(locale: Locale, cle: Cle): string {
   const table = STRINGS[locale] as unknown as Table | undefined;
   return table?.[cle] ?? (STRINGS.en as unknown as Table)[cle] ?? cle;
+}
+
+/** Les clés d'un projet, sans construire une chaîne que le type ne voit pas.
+ *
+ *  `t(\`project.\${slug}.title\`)` compilerait en `string`, donc une faute de
+ *  frappe passerait. Ce helper garde l'union. */
+export function tProjet(
+  slug: "piighost" | "api" | "chat" | "proofreader",
+  champ: "title" | "lede",
+): string {
+  const cles = {
+    piighost: { title: "project.piighost.title", lede: "project.piighost.lede" },
+    api: { title: "project.api.title", lede: "project.api.lede" },
+    chat: { title: "project.chat.title", lede: "project.chat.lede" },
+    proofreader: { title: "project.proofreader.title", lede: "project.proofreader.lede" },
+  } as const;
+  return t(cles[slug][champ]);
 }
 
 export { STRINGS };

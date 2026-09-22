@@ -1,5 +1,6 @@
 <script lang="ts">
   import ChevronDown from "@lucide/svelte/icons/chevron-down";
+  import Logo from "./Logo.svelte";
   import Lien from "./Lien.svelte";
   import ThemeToggle from "./ThemeToggle.svelte";
   import LangToggle from "./LangToggle.svelte";
@@ -28,9 +29,9 @@
   <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
     <Lien
       vers="home"
-      class="rounded-md font-mono text-lg font-bold tracking-tight outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+      class="rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
     >
-      piighost
+      <Logo size={22} />
     </Lien>
 
     <nav

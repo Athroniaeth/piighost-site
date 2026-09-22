@@ -6,12 +6,14 @@ sur `piighost.dev`. Six pages, deux langues, prérendues.
 Reconstruction complète à partir de
 [template-litestar-svelte](https://github.com/Athroniaeth/template-litestar-svelte).
 C'est un **portage à l'identique** du studio actuel : mêmes sections, même
-copie, mêmes couleurs, même typographie. Le playground a disparu, parce que ce
-site présente et ne fait plus tourner le produit ; c'est le seul retrait.
+ordre, même copie, même disposition. Le playground a disparu, parce que ce site
+présente et ne fait plus tourner le produit ; c'est le seul retrait.
 
-L'identité visuelle produite dans `piighost-identite` **n'est pas appliquée
-ici**. C'est une étape séparée, qui viendra sur ce portage une fois qu'il est
-jugé fidèle.
+Par dessus ce portage, **l'identité visuelle de `piighost-identite` est
+appliquée**, et rien d'autre : tokens, polices, couleurs de donnée, logo et
+icônes. Aucune section n'a été ajoutée, retirée ni réordonnée. Le portage nu est
+gardé sous le tag `iso-studio`, donc la comparaison est rejouable à tout
+moment.
 
 Litestar 2.24, Svelte 5, Vite 8, Tailwind 4, nginx, OpenPanel auto hébergé.
 
@@ -83,6 +85,33 @@ pas par le goût, et chacun est commenté à son emplacement.
 | Coloration syntaxique en classes, pas par shiki | shiki émet des styles en ligne, que la CSP `style-src 'self'` refuse. La tokenisation vit dans `src/lib/highlight.ts`, les couleurs sont celles de github-light et github-dark. |
 | `radial-gradient` du bandeau écrit en `color-mix` | le studio l'écrit `var(--primary)/12%`, qui n'est pas une couleur CSS valide et ne peignait donc rien. |
 | Pied de page : « construit avec Svelte » | la ligne nommait Next.js. La pile a changé, la phrase serait fausse. |
+
+## L'identité visuelle ne se modifie pas ici
+
+`frontend/src/app.css` est **généré**. Sa source est
+`piighost-identite/brand/tokens/tokens.json`, et sa production est vérifiée :
+44 paires de contraste du socle et 32 paires d'entités sont contrôlées à chaque
+génération, et le générateur refuse d'écrire si une seule échoue.
+
+```bash
+node brand/outils/tokens.mjs
+cp brand/tokens/cibles/studio-app.css <ici>/frontend/src/app.css
+python3 brand/outils/rasteriser.py      # les icônes et le .ico
+```
+
+Trois règles de la charte se voient dans le code de ce dépôt :
+
+- **la teinte dit la catégorie, l'intensité dit l'état.** `src/lib/entites.ts`
+  associe une teinte à chaque catégorie, `src/lib/labels.ts` compose le nom de
+  classe. L'ambre que le site employait pour la donnée brute disait l'état,
+  donc l'inverse du playground, où la même couleur veut dire `ORG` ;
+- **le corail n'apparaît sur aucune surface qui affiche de la donnée.** La
+  seule page du site qui n'en affiche aucune est la 404, et c'est la seule où
+  le fantôme est corail. Ailleurs il est en `currentColor` ;
+- **aucune teinte brute hors de la couche de tokens.** Y compris la coloration
+  syntaxique, qui prend les pastilles d'entités.
+
+Les règles d'usage sont dans `piighost-identite/brand/charte/CHARTE.md`.
 
 ## Les données structurées et la politique de sécurité
 

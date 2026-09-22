@@ -1,12 +1,16 @@
 <script lang="ts">
   import Button from "../ui/Button.svelte";
+  import Ghost from "../components/Ghost.svelte";
   import { router, localePreferee } from "../lib/router.svelte";
   import { lien } from "../lib/routes";
 
   /**
-   * La page d'erreur, reprise telle quelle du site actuel, y compris sa copie
-   * en anglais : elle n'est pas dans le dictionnaire là-bas non plus, et une
-   * URL inconnue n'a pas de langue.
+   * La page d'erreur, reprise du site actuel, y compris sa copie en anglais :
+   * elle n'est pas dans le dictionnaire là-bas non plus, et une URL inconnue
+   * n'a pas de langue.
+   *
+   * C'est la seule page du site qui n'affiche aucune donnée, donc la seule où
+   * le corail de marque est autorisé. Voir CHARTE.md section 2.
    */
   const accueil = lien("home", router.locale ?? localePreferee());
 </script>
@@ -14,7 +18,8 @@
 <div
   class="mx-auto flex max-w-3xl flex-col items-center px-4 py-32 text-center"
 >
-  <p class="font-mono text-6xl font-bold text-primary">404</p>
+  <Ghost size={64} class="corail" />
+  <p class="mt-6 font-mono text-6xl font-bold text-primary">404</p>
   <h1 class="mt-4 text-2xl font-semibold">
     This page slipped past the placeholder
   </h1>

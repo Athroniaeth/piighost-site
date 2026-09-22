@@ -3,6 +3,7 @@
   import Echange from "../Echange.svelte";
   import Segments from "../Segments.svelte";
   import Tabs from "../../ui/Tabs.svelte";
+  import { classeDe } from "../../lib/entites";
   import { ent, txt, type Entite, type Segment } from "../../lib/flux.svelte";
   import { i18n } from "../../lib/i18n.svelte";
 
@@ -70,12 +71,13 @@
     txt("."),
   ];
 
-  /** Une légende où les jetons se détachent, comme dans les boîtes. */
+  /** Une légende où les jetons portent la teinte de leur catégorie, comme
+   *  dans les boîtes juste au dessus. */
   const morceaux = (texte: string) =>
     texte.split(/(<<[^>]+>>)/g).map((part) => ({
       texte: part,
       classe: part.startsWith("<<")
-        ? "rounded bg-primary/10 px-1 font-mono text-primary"
+        ? `rounded px-1 font-mono ${classeDe(part, "jeton")}`
         : "",
     }));
 

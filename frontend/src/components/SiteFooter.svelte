@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Logo from "./Logo.svelte";
   import Lien from "./Lien.svelte";
   import { i18n } from "../lib/i18n.svelte";
   import { GITHUB_ORG, HUB_URL, projects } from "../lib/site";
@@ -10,7 +11,7 @@
 <footer class="border-t">
   <div class="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-3">
     <div>
-      <p class="font-mono text-lg font-bold">piighost</p>
+      <Logo size={22} />
       <p class="mt-2 max-w-xs text-sm text-muted-foreground">
         {i18n.t.footer.tagline}
       </p>

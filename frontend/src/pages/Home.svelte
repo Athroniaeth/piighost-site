@@ -1,97 +1,148 @@
 <script lang="ts">
   import Button from "../ui/Button.svelte";
-  import StepChip from "../ui/StepChip.svelte";
-  import CodeBlock from "../ui/CodeBlock.svelte";
+  import Bande from "../components/Bande.svelte";
+  import Panneau from "../components/Panneau.svelte";
+  import Rangee from "../components/Rangee.svelte";
   import Substitution from "../components/Substitution.svelte";
-  import Section from "../components/Section.svelte";
-  import ProjetCarte from "../components/ProjetCarte.svelte";
-  import Github from "../components/GithubIcon.svelte";
-  import Check from "@lucide/svelte/icons/check";
-  import { t } from "../lib/i18n.svelte";
+  import GithubIcon from "../components/GithubIcon.svelte";
+  import Lien from "../components/Lien.svelte";
+  import { t, tProjet } from "../lib/i18n.svelte";
   import { router } from "../lib/router.svelte";
   import { track } from "../lib/analytics";
+  import { entityClass, dotClass } from "../lib/labels";
+  import type { NomDePage } from "../lib/routes";
 
-  const ETAPES = [
-    { n: 1, titre: "home.how.1.title", corps: "home.how.1.body" },
-    { n: 2, titre: "home.how.2.title", corps: "home.how.2.body" },
-    { n: 3, titre: "home.how.3.title", corps: "home.how.3.body" },
+  /** Les détecteurs réellement livrés, tels que le README les nomme. */
+  const DETECTEURS = [
+    ["regex", "generic, us, eu, fr"],
+    ["gliner2", "NER"],
+    ["spacy", "NER"],
+    ["transformers", "NER"],
+    ["llm", "modèle"],
+    ["exact", "correspondance"],
+    ["composite", "combinaison"],
+    ["chunked", "hors contexte"],
   ] as const;
 
-  const CONFIANCE = ["home.trust.1", "home.trust.2", "home.trust.3", "home.trust.4"] as const;
-  const PROJETS = ["piighost", "api", "chat", "proofreader"] as const;
+  const SUBSTITUTIONS = [
+    { teinte: 1, clair: "John Doe", jeton: "<<PERSON:1>>" },
+    { teinte: 4, clair: "john.doe@example.com", jeton: "<<EMAIL:1>>" },
+    { teinte: 6, clair: "FR76 3000 6000 01", jeton: "<<IBAN:1>>" },
+  ] as const;
 
-  const INSTALL = `pip install piighost`;
+  const INTEGRATIONS = [
+    ["langchain", "middleware"],
+    ["pydantic-ai", "hooks"],
+    ["llamaindex", "callback"],
+    ["openai", "proxy compatible"],
+    ["anthropic", "proxy compatible"],
+    ["claude-code", "intégration"],
+  ] as const;
+
+  const PROJETS: NomDePage[] = ["piighost", "api", "chat", "proofreader"];
+  const sortant = (d: string) => track({ name: "outbound", props: { destination: d, page: router.nom } });
 </script>
 
-<section class="mx-auto grid max-w-6xl gap-11 px-5 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-24">
+<section class="mx-auto grid max-w-6xl gap-10 px-5 pt-14 pb-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
   <div>
-    <h1 class="text-[2.25rem] leading-[1.04] font-semibold tracking-[-0.04em] sm:text-[3rem]">
+    <h1 class="text-[2.125rem] leading-[1.04] font-semibold tracking-[-0.04em] sm:text-[2.875rem]">
       {t("home.title")}
     </h1>
-    <p class="mt-5 max-w-[52ch] text-[1.0625rem] leading-relaxed text-muted-foreground">
+    <p class="mt-4 max-w-[52ch] text-[0.975rem] leading-relaxed text-muted-foreground">
       {t("home.lede")}
     </p>
-    <div class="mt-7 flex flex-wrap gap-2.5">
-      <Button
-        size="xl"
-        href="https://athroniaeth.github.io/piighost/"
-        onclick={() => track({ name: "outbound", props: { destination: "docs", page: router.nom } })}
-      >
+    <div class="mt-6 flex flex-wrap items-center gap-2">
+      <Button size="lg" href="https://athroniaeth.github.io/piighost/" onclick={() => sortant("docs")}>
         {t("home.cta.start")}
       </Button>
-      <Button
-        size="xl"
-        variant="outline"
-        href="https://github.com/Athroniaeth/piighost"
-        onclick={() => track({ name: "outbound", props: { destination: "github", page: router.nom } })}
-      >
-        <Github />
+      <Button size="lg" variant="outline" href="https://github.com/Athroniaeth/piighost" onclick={() => sortant("github")}>
+        <GithubIcon class="size-4" />
         {t("home.cta.github")}
       </Button>
-    </div>
-    <div class="mt-7 max-w-md">
-      <CodeBlock code={INSTALL} language="python" />
+      <code class="ml-1 font-mono text-[0.8125rem] text-muted-foreground">pip install piighost</code>
     </div>
   </div>
 
   <Substitution />
 </section>
 
-<Section kicker={t("home.how.kicker")} title={t("home.how.title")} lede={t("home.how.lede")}>
-  <ol class="grid gap-5 sm:grid-cols-3">
-    {#each ETAPES as etape (etape.n)}
-      <li class="rounded-xl bg-card p-5 ring-1 ring-foreground/10">
-        <div class="flex items-center gap-2.5">
-          <StepChip n={etape.n} />
-          <h3 class="text-base font-semibold">{t(etape.titre)}</h3>
+<Bande>{t("meca.band")}</Bande>
+<div class="mx-auto grid max-w-6xl gap-3 px-5 py-4 lg:grid-cols-3">
+  <Panneau etape={1} titre={t("meca.1")}>
+    <div class="grid font-mono text-[0.75rem] sm:grid-cols-2 sm:gap-x-6">
+      {#each DETECTEURS as [nom, role], i (nom)}
+        <div class={i < 2 ? "[&>*]:border-t-0" : ""}>
+          <Rangee code={role}>{nom}</Rangee>
         </div>
-        <p class="mt-3 text-[0.85rem] leading-relaxed text-muted-foreground">{t(etape.corps)}</p>
-      </li>
-    {/each}
-  </ol>
-</Section>
+      {/each}
+    </div>
+    <p class="mt-3 text-[0.75rem] leading-relaxed text-muted-foreground">{t("meca.1.note")}</p>
+  </Panneau>
 
-<!-- La limite avant l'argument : c'est la règle d'écriture de la charte, et
-     c'est aussi ce que le README du produit fait lui-même. -->
-<Section kicker={t("home.limit.kicker")} title={t("home.limit.title")}>
-  <p class="max-w-[72ch] text-[0.95rem] leading-relaxed text-muted-foreground">
-    {t("home.limit.body")}
-  </p>
-</Section>
+  <Panneau etape={2} titre={t("meca.2")}>
+    <div class="flex flex-col gap-2 font-mono text-[0.75rem]">
+      {#each SUBSTITUTIONS as s (s.clair)}
+        <div class="flex flex-wrap items-center gap-1.5">
+          <mark class="rounded-[3px] px-1.5 py-px {entityClass(s.teinte, 'valeur')}">{s.clair}</mark>
+          <span class="text-muted-foreground">{t("meca.2.of")}</span>
+          <mark class="rounded-[3px] px-1.5 py-px {entityClass(s.teinte, 'jeton')}">{s.jeton}</mark>
+        </div>
+      {/each}
+    </div>
+    <p class="mt-3 text-[0.75rem] leading-relaxed text-muted-foreground">{t("meca.2.note")}</p>
+  </Panneau>
 
-<Section kicker={t("home.eco.kicker")} title={t("home.eco.title")} lede={t("home.eco.lede")}>
-  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-    {#each PROJETS as projet (projet)}
-      <ProjetCarte slug={projet} />
+  <Panneau etape={3} titre={t("meca.3")}>
+    <div class="flex flex-col gap-2 font-mono text-[0.75rem]">
+      {#each SUBSTITUTIONS as s (s.clair)}
+        <div class="flex flex-wrap items-center gap-1.5">
+          <mark class="rounded-[3px] px-1.5 py-px {entityClass(s.teinte, 'jeton')}">{s.jeton}</mark>
+          <span class="text-muted-foreground">{t("meca.3.of")}</span>
+          <mark class="rounded-[3px] px-1.5 py-px {entityClass(s.teinte, 'valeur')}">{s.clair}</mark>
+        </div>
+      {/each}
+    </div>
+    <p class="mt-3 text-[0.75rem] leading-relaxed text-muted-foreground">{t("meca.3.note")}</p>
+  </Panneau>
+</div>
+
+<Bande>{t("integ.band")}</Bande>
+<div class="mx-auto max-w-6xl px-5 py-4">
+  <div class="rounded-lg border bg-card p-4">
+    <ul class="flex flex-wrap gap-1.5">
+      {#each INTEGRATIONS as [nom, role] (nom)}
+        <li
+          class="flex items-baseline gap-1.5 rounded border bg-background px-2 py-1 font-mono text-[0.75rem]"
+        >
+          {nom}<span class="text-[0.6875rem] text-muted-foreground">{role}</span>
+        </li>
+      {/each}
+    </ul>
+    <p class="mt-3 text-[0.8125rem] leading-relaxed text-muted-foreground">{t("integ.note")}</p>
+  </div>
+</div>
+
+<Bande>{t("eco.band")}</Bande>
+<div class="mx-auto max-w-6xl px-5 py-4">
+  <div class="rounded-lg border bg-card px-4 py-1">
+    {#each PROJETS as projet, i (projet)}
+      <Rangee puce={dotClass(i + 1)} href={`/${router.locale}/projects/${projet}`}>
+        <span class="font-mono text-[0.8125rem] font-medium">{tProjet(projet as never, "title")}</span>
+        <span class="hidden truncate text-[0.8125rem] text-muted-foreground sm:inline">
+          {tProjet(projet as never, "lede")}
+        </span>
+      </Rangee>
     {/each}
   </div>
+</div>
 
-  <ul class="mt-9 flex flex-wrap gap-x-7 gap-y-2.5">
-    {#each CONFIANCE as cle (cle)}
-      <li class="flex items-center gap-2 text-[0.85rem] text-muted-foreground">
-        <Check class="size-3.5 text-primary" aria-hidden="true" />
-        {t(cle)}
-      </li>
-    {/each}
-  </ul>
-</Section>
+<Bande>{t("limit.band")}</Bande>
+<div class="mx-auto max-w-6xl px-5 py-4">
+  <div class="rounded-lg border bg-card p-4">
+    <h2 class="text-[1.0625rem] font-semibold tracking-[-0.02em]">{t("home.limit.title")}</h2>
+    <p class="mt-2 max-w-[86ch] text-[0.8125rem] leading-relaxed text-muted-foreground">
+      {t("home.limit.body")}
+    </p>
+    <p class="mt-3 border-t pt-3 font-mono text-[0.75rem] text-muted-foreground">{t("limit.see")}</p>
+  </div>
+</div>

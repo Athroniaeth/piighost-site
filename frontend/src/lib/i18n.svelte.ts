@@ -39,6 +39,27 @@ const STRINGS = {
     // ses compléments comme l'autre.
     "home.demo.sentence": "Hello, this is {0} from {1}. My order {2} should be delivered to {3}.",
 
+    "meca.band": "the mechanism",
+    "meca.1": "Detect",
+    "meca.2": "Substitute",
+    "meca.3": "Restore",
+    "meca.1.note": "Keep the detector you trust. Presidio plugs in through an extra.",
+    "meca.2.note": "The same value keeps the same placeholder for the whole thread, so the model can follow who is who.",
+    "meca.3.note": "The tool receives the real value while the model only ever wrote the placeholder.",
+    "meca.2.of": "becomes",
+    "meca.3.of": "comes back as",
+
+    "integ.band": "integrations",
+    "integ.note": "Your agent code does not change. The middleware sits between it and the model.",
+
+    "eco.band": "the ecosystem",
+    "philosophy.band": "three reasons",
+    "project.band": "the facts",
+    "project.licence": "Licence",
+    "project.site": "Site",
+    "limit.band": "what it is not",
+    "limit.see": "For dataset anonymisation, look at ARX, Amnesia or Google DLP.",
+
     "home.how.kicker": "How it works",
     "home.how.title": "Detect, substitute, restore",
     "home.how.lede":
@@ -129,6 +150,27 @@ const STRINGS = {
     "home.demo.after": "ce que le modèle reçoit",
     "home.demo.sentence":
       "Bonjour, ici {0} de {1}. Ma commande {2} doit être livrée au {3}.",
+
+    "meca.band": "le mécanisme",
+    "meca.1": "Détecter",
+    "meca.2": "Substituer",
+    "meca.3": "Rendre",
+    "meca.1.note": "Gardez le détecteur en qui vous avez confiance. Presidio se branche par une option.",
+    "meca.2.note": "La même valeur garde le même jeton sur tout le fil, donc le modèle sait qui est qui.",
+    "meca.3.note": "L'outil reçoit la vraie valeur alors que le modèle n'a jamais écrit que le jeton.",
+    "meca.2.of": "devient",
+    "meca.3.of": "revient en",
+
+    "integ.band": "intégrations",
+    "integ.note": "Votre code d'agent ne change pas. L'intercepteur se place entre lui et le modèle.",
+
+    "eco.band": "l'écosystème",
+    "philosophy.band": "trois raisons",
+    "project.band": "les faits",
+    "project.licence": "Licence",
+    "project.site": "Site",
+    "limit.band": "ce que ce n'est pas",
+    "limit.see": "Pour anonymiser un jeu de données, regardez ARX, Amnesia ou Google DLP.",
 
     "home.how.kicker": "Comment ça marche",
     "home.how.title": "Détecter, substituer, rendre",

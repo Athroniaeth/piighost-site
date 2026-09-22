@@ -56,39 +56,46 @@ html {
 
 /* La coloration syntaxique. Le studio appelle shiki au rendu serveur, qui émet
    des styles en ligne que la CSP refuse : la tokenisation vit donc dans
-   lib/highlight.ts et les couleurs sont des classes. Elles sortent de la couche
-   de tokens, pas d'une palette brute : ce sont les pastilles d'entités, comme
-   pour les graphiques, parce qu'un extrait de code montre de la donnée. */
+   lib/highlight.ts et les couleurs sont des classes.
+
+   Ce sont celles de GitHub Primer, déclarées en `--code-*` dans app.css. Elles
+   ne viennent plus des pastilles d'entités : un extrait de code montre de la
+   syntaxe, pas de la donnée, et réemployer la palette des entités liait deux
+   choses sans rapport — changer la couleur d'une entité repeignait les
+   mots-clés, ce qui est exactement arrivé en passant l'entité 06 au rouge.
+
+   Six rôles pour onze types de jeton, c'est la granularité de Primer : une
+   constante, une entité et une base, quel que soit le langage. */
 .tok-comment {
-  color: var(--muted-foreground);
+  color: var(--code-comment);
 }
 .tok-string {
-  color: var(--entite-04-puce);
+  color: var(--code-string);
 }
 .tok-keyword {
-  color: var(--entite-06-puce);
+  color: var(--code-keyword);
 }
 .tok-boolean {
-  color: var(--entite-06-puce);
+  color: var(--code-constant);
 }
 .tok-number {
-  color: var(--entite-01-puce);
+  color: var(--code-constant);
 }
 .tok-function {
-  color: var(--entite-05-puce);
+  color: var(--code-entity);
 }
 .tok-command {
-  color: var(--entite-05-puce);
+  color: var(--code-entity);
 }
 .tok-flag {
-  color: var(--entite-01-puce);
+  color: var(--code-constant);
 }
 .tok-key {
-  color: var(--entite-05-puce);
+  color: var(--code-constant);
 }
 .tok-section {
-  color: var(--entite-03-puce);
+  color: var(--code-entity);
 }
 .tok-punctuation {
-  color: var(--muted-foreground);
+  color: var(--code-base);
 }

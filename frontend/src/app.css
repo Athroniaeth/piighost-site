@@ -366,3 +366,34 @@
   --flag-gb-blue: #012169;
   --flag-gb-red: #c8102e;
 }
+
+/* La coloration syntaxique : GitHub Primer, repris tel quel.
+ *
+ * En hexadécimal et non en oklch, contrairement au reste du fichier, et c'est
+ * volontaire : ce sont les valeurs publiées de github.com, et les convertir
+ * effacerait ce qui permet de les vérifier contre la source. Elles ne
+ * participent pas au système de la charte, elles citent un autre système.
+ *
+ * Un seul écart : le gris des commentaires en clair. Primer le pose sur du
+ * blanc pur, où son #6e7781 tient 4.5:1 ; notre bloc de code est sur
+ * #f4f5f6 et il y tombe à 4.17, sous le seuil du corps de texte. #656d76,
+ * que Primer emploie lui-même ailleurs, rend 4.81. Tout le reste passe : le
+ * minimum est 4.62 en clair et 6.04 en sombre.
+ */
+:root {
+  --code-comment: #656d76;
+  --code-string: #0a3069;
+  --code-keyword: #cf222e;
+  --code-constant: #0550ae;
+  --code-entity: #8250df;
+  --code-base: #24292f;
+}
+
+.dark {
+  --code-comment: #8b949e;
+  --code-string: #a5d6ff;
+  --code-keyword: #ff7b72;
+  --code-constant: #79c0ff;
+  --code-entity: #d2a8ff;
+  --code-base: #c9d1d9;
+}

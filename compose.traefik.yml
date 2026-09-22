@@ -1,0 +1,90 @@
+# Mise en ligne derrière le Traefik déjà présent sur la machine, pour faire
+# regarder une direction visuelle sur le vrai site plutôt que sur une capture.
+#
+# Ce n'est pas un déploiement de production : c'est une maquette servie, elle
+# vit derrière un mot de passe et elle n'a pas vocation à rester.
+#
+#   docker compose -f compose.traefik.yml --env-file .env.deploy up -d --build
+#
+# `--env-file` n'est pas optionnel : compose ne charge de lui-même que `.env`,
+# et sans lui le `:?` de la règle Traefik arrête la commande. C'est le bon
+# comportement, l'alternative étant un conteneur qui démarre sur une règle
+# `Host()` vide et ne répond sur rien.
+#
+# `coolify` est le réseau sur lequel Traefik siège déjà ; le rejoindre suffit à
+# être joignable sans toucher à la configuration du proxy.
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    environment:
+      - API_KEY=${API_KEY:?}
+      - OPENPANEL_API=${OPENPANEL_API:-https://opapi.athroniaeth.cloud}
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - coolify
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=coolify
+      - traefik.http.services.piighost-v2.loadbalancer.server.port=8080
+
+      # Le HTTP en clair n'existe que pour répondre au défi Let's Encrypt et
+      # renvoyer tout le monde vers HTTPS.
+      - traefik.http.routers.piighost-v2-http.entryPoints=http
+      - traefik.http.routers.piighost-v2-http.rule=Host(`${SITE_DOMAIN:?}`)
+      - traefik.http.routers.piighost-v2-http.middlewares=piighost-v2-https
+      - traefik.http.routers.piighost-v2-http.service=piighost-v2
+      - traefik.http.middlewares.piighost-v2-https.redirectscheme.scheme=https
+
+      - traefik.http.routers.piighost-v2.entryPoints=https
+      - traefik.http.routers.piighost-v2.rule=Host(`${SITE_DOMAIN:?}`)
+      - traefik.http.routers.piighost-v2.service=piighost-v2
+      - traefik.http.routers.piighost-v2.tls=true
+      - traefik.http.routers.piighost-v2.tls.certresolver=letsencrypt
+      - traefik.http.routers.piighost-v2.middlewares=piighost-v2-noindex,piighost-v2-gzip
+
+      # Ouvert, sans mot de passe : ce sont les pages publiques du site, il n'y
+      # a rien ici que la sortie ne montrera pas.
+      #
+      # Mais le `robots.txt` de cette application dit `Allow: /` et annonce un
+      # sitemap de toutes les pages, et aucune ne porte de `noindex` : sans le
+      # mot de passe qui les tenait dehors, les robots indexeraient une
+      # direction visuelle non arbitrée sous ce sous-domaine, où elle ferait
+      # concurrence au vrai site et d'où elle se retire mal. L'en-tête
+      # ci-dessous l'emporte sur le `robots.txt`, page par page, sans toucher à
+      # l'application.
+      - traefik.http.middlewares.piighost-v2-noindex.headers.customresponseheaders.X-Robots-Tag=noindex,
+        nofollow
+      - traefik.http.middlewares.piighost-v2-gzip.compress=true
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      - WEB_CONCURRENCY=${WEB_CONCURRENCY:-1}
+      - ENABLE_DOCS=${ENABLE_DOCS:-false}
+      - API_KEY=${API_KEY:?}
+      - OPENPANEL_API=${OPENPANEL_API:-https://opapi.athroniaeth.cloud}
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen("http://127.0.0.1:8000/api/health")
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+    networks:
+      - coolify
+    restart: unless-stopped
+
+networks:
+  coolify:
+    external: true

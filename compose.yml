@@ -8,6 +8,7 @@ services:
     # `:?` on purpose: a missing key must stop the deployment, not ship an open API.
     environment:
       API_KEY: ${API_KEY:?set API_KEY in .env (see .env.example)}
+      OPENPANEL_API: ${OPENPANEL_API:-https://opapi.athroniaeth.cloud}
     ports:
       - "8000:8080"
     depends_on:
@@ -23,6 +24,7 @@ services:
       WEB_CONCURRENCY: ${WEB_CONCURRENCY:-1}
       # The same key the guard on /api/hello checks against.
       API_KEY: ${API_KEY:?set API_KEY in .env (see .env.example)}
+      OPENPANEL_API: ${OPENPANEL_API:-https://opapi.athroniaeth.cloud}
     # No `ports`: the API is reachable only by web, over the compose network.
     expose:
       - "8000"

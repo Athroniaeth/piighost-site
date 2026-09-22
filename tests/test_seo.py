@@ -3,7 +3,7 @@
 from litestar import Litestar
 from litestar.testing import AsyncTestClient
 
-from backend.seo import DISALLOWED, STATIC_PATHS
+from backend.seo import DISALLOWED, LOCALES, PAGES, STATIC_PATHS
 
 
 class TestSeo:
@@ -38,3 +38,29 @@ class TestSeo:
         for path in STATIC_PATHS:
             assert f"<loc>http://example.com{path}</loc>" in response.text
         assert response.text.count("<url>") == len(STATIC_PATHS)
+
+    def test_static_paths_is_every_page_in_every_language(self) -> None:
+        """routes.json drives the router, the prerenderer and this sitemap.
+
+        The three read the same file, so they cannot disagree about which pages
+        exist. What they could still disagree about is the shape of the URL, so
+        it is asserted here rather than assumed: the language comes first, the
+        home page is the bare language and not a trailing slash.
+        """
+        assert len(STATIC_PATHS) == len(PAGES) * len(LOCALES)
+        assert set(STATIC_PATHS) >= {"/fr", "/en", "/fr/projects/api"}
+        assert not any(p.endswith("/") for p in STATIC_PATHS)
+
+    async def test_the_sitemap_declares_the_language_alternates(
+        self, client: AsyncTestClient[Litestar]
+    ) -> None:
+        """Two translations, not two competing pages.
+
+        Without the alternate links an index treats /fr and /en as duplicates
+        and picks one, which loses half the site.
+        """
+        response = await client.get("/sitemap.xml", headers={"host": "example.com"})
+        for locale in LOCALES:
+            assert f'hreflang="{locale}"' in response.text
+        # Une alternative par langue et par URL.
+        assert response.text.count("xhtml:link") == len(STATIC_PATHS) * len(LOCALES)

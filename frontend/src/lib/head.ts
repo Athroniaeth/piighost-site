@@ -8,7 +8,7 @@
  * que l'onglet et l'historique disent la vérité.
  */
 
-import { ORIGINE, cheminDe, lien, LOCALES, type Locale, type NomDePage } from "./routes";
+import { ORIGINE, lien, LOCALES, LOCALE_DEFAUT, type Locale, type NomDePage } from "./routes";
 import { tr, type Cle } from "./i18n.svelte";
 
 /** Le titre et la description d'une page, dans une langue. */
@@ -25,19 +25,25 @@ export function meta(nom: NomDePage, locale: Locale): { titre: string; descripti
   const brut = tr(locale, cle.titre);
   // Le titre d'un onglet et celui d'un index ne sont pas la même chose : on
   // suffixe, sauf l'accueil dont le titre porte déjà le nom.
-  const titre = nom === "home" ? `piighost, ${brut.toLowerCase()}` : `${brut} | piighost`;
+  // Seule la première lettre s'abaisse : passer toute la phrase en minuscules
+  // transformait « LLM » en « llm ».
+  const enMinuscule = brut.charAt(0).toLowerCase() + brut.slice(1);
+  const titre = nom === "home" ? `piighost, ${enMinuscule}` : `${brut} | piighost`;
   return { titre, description: tr(locale, cle.description) };
 }
 
 /** L'adresse canonique d'une page. */
 export const canonique = (nom: NomDePage, locale: Locale) => `${ORIGINE}${lien(nom, locale)}`;
 
-/** Les variantes de langue, ce que `hreflang` doit annoncer. */
+/** Les variantes de langue, ce que `hreflang` doit annoncer.
+ *
+ *  `x-default` vise la langue par défaut, pas une URL sans préfixe : ces
+ *  dernières ne sont servies par personne, et un hreflang qui pointe vers une
+ *  404 est pire que pas de hreflang du tout. */
 export function alternatives(nom: NomDePage): { locale: Locale | "x-default"; url: string }[] {
-  const chemin = cheminDe(nom);
   return [
     ...LOCALES.map((l) => ({ locale: l, url: canonique(nom, l) })),
-    { locale: "x-default" as const, url: `${ORIGINE}${chemin === "/" ? "/" : chemin}` },
+    { locale: "x-default" as const, url: canonique(nom, LOCALE_DEFAUT) },
   ];
 }
 

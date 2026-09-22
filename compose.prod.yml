@@ -26,6 +26,7 @@ services:
       # `:?` makes it a required variable in the UI — a blank value blocks the
       # deployment instead of shipping an API with an empty key to compare against.
       - API_KEY=${API_KEY:?}
+      - OPENPANEL_API=${OPENPANEL_API:-https://opapi.athroniaeth.cloud}
     depends_on:
       api:
         condition: service_healthy
@@ -43,6 +44,7 @@ services:
       # ENABLE_DOCS=true in the project variables to turn them back on temporarily.
       - ENABLE_DOCS=${ENABLE_DOCS:-false}
       - API_KEY=${API_KEY:?}
+      - OPENPANEL_API=${OPENPANEL_API:-https://opapi.athroniaeth.cloud}
     healthcheck:
       # No curl in the image; the venv's python is on PATH. /api/health is public on
       # purpose, since this check bypasses nginx and therefore carries no key.

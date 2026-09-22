@@ -12,17 +12,38 @@ STATIC_PATHS; it is the one place the site's shape is written down, and the
 prerenderer a growing application eventually needs reads the same list.
 """
 
+import json
+
 from litestar import Request, Response, get
+
+from backend import PROJECT_ROOT
 
 XML_MEDIA_TYPE = "application/xml"
 TEXT_MEDIA_TYPE = "text/plain"
 
-STATIC_PATHS = ("/",)
-"""Every page a crawler should know about.
+_ROUTES = json.loads((PROJECT_ROOT / "routes.json").read_text(encoding="utf-8"))
 
-One entry per route the SPA answers. A route that is not here is a route search
-engines will not find, because no link on a client-rendered page survives
-without JavaScript.
+LOCALES: tuple[str, ...] = tuple(_ROUTES["locales"])
+"""The languages the site answers in, taken from routes.json."""
+
+PAGES: tuple[dict, ...] = tuple(_ROUTES["pages"])
+"""Every page, with its priority and change frequency."""
+
+
+def _url(path: str, locale: str) -> str:
+    """The address of a page in one language: `/fr/projects/api`."""
+    return f"/{locale}" if path == "/" else f"/{locale}{path}"
+
+
+STATIC_PATHS: tuple[str, ...] = tuple(
+    _url(page["chemin"], locale) for locale in LOCALES for page in PAGES
+)
+"""Every page a crawler should know about, in every language.
+
+Read from routes.json rather than written here. The same file drives the
+frontend router and the prerenderer: a page declared in one place and not the
+others is exactly the drift this project spends its time preventing. Twelve
+entries today, two languages times six pages.
 """
 
 DISALLOWED = ("/api/", "/schema")
@@ -74,12 +95,31 @@ async def robots(request: Request) -> Response[str]:
 async def sitemap(request: Request) -> Response[str]:
     """One entry per declared page, absolute, on the origin that was asked."""
     origin = origin_of(request)
-    entries = "\n".join(
-        f"<url><loc>{origin}{path}</loc></url>" for path in STATIC_PATHS
-    )
+
+    # Chaque page est déclarée dans les deux langues, et chacune pointe vers
+    # l'autre par un lien alternate : c'est ce qui dit à un index que ce sont
+    # deux traductions et non deux pages concurrentes.
+    lignes = []
+    for page in PAGES:
+        for locale in LOCALES:
+            alternates = "".join(
+                f'<xhtml:link rel="alternate" hreflang="{autre}" '
+                f'href="{origin}{_url(page["chemin"], autre)}"/>'
+                for autre in LOCALES
+            )
+            lignes.append(
+                f"<url>"
+                f"<loc>{origin}{_url(page['chemin'], locale)}</loc>"
+                f"<changefreq>{page['frequence']}</changefreq>"
+                f"<priority>{page['priorite']}</priority>"
+                f"{alternates}"
+                f"</url>"
+            )
+    entries = "\n".join(lignes)
     body = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+        'xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
         f"{entries}\n"
         "</urlset>\n"
     )

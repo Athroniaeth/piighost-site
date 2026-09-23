@@ -18,6 +18,9 @@ COPY frontend ./frontend
 # pas, ce qui est voulu partout sauf en production.
 ARG VITE_OPENPANEL_CLIENT_ID=
 ENV VITE_OPENPANEL_CLIENT_ID=${VITE_OPENPANEL_CLIENT_ID}
+# Origine des aperçus de lien, lue par prerender.mjs. Vide : piighost.dev.
+ARG SITE_ORIGIN=
+ENV SITE_ORIGIN=${SITE_ORIGIN}
 RUN pnpm -C frontend generate-types && pnpm -C frontend build
 
 # Unprivileged nginx image: runs as the `nginx` user and listens on 8080.

@@ -6,6 +6,10 @@
 #
 #   docker compose -f compose.traefik.yml --env-file .env.deploy up -d --build
 #
+# TRAEFIK_NAME préfixe les routeurs, services et middlewares : deux copies du
+# site sur la même machine (les territoires de PIIShade) ne doivent pas se
+# disputer les mêmes noms dans Traefik.
+#
 # `--env-file` n'est pas optionnel : compose ne charge de lui-même que `.env`,
 # et sans lui le `:?` de la règle Traefik arrête la commande. C'est le bon
 # comportement, l'alternative étant un conteneur qui démarre sur une règle
@@ -19,6 +23,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.web
+      args:
+        # Les aperçus de lien montrent cette copie, pas piighost.dev.
+        - SITE_ORIGIN=https://${SITE_DOMAIN:?}
     environment:
       - API_KEY=${API_KEY:?}
       - OPENPANEL_API=${OPENPANEL_API:-https://opapi.athroniaeth.cloud}
@@ -31,22 +38,22 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=coolify
-      - traefik.http.services.piighost-v2.loadbalancer.server.port=8080
+      - traefik.http.services.${TRAEFIK_NAME:-piighost-v2}.loadbalancer.server.port=8080
 
       # Le HTTP en clair n'existe que pour répondre au défi Let's Encrypt et
       # renvoyer tout le monde vers HTTPS.
-      - traefik.http.routers.piighost-v2-http.entryPoints=http
-      - traefik.http.routers.piighost-v2-http.rule=Host(`${SITE_DOMAIN:?}`)
-      - traefik.http.routers.piighost-v2-http.middlewares=piighost-v2-https
-      - traefik.http.routers.piighost-v2-http.service=piighost-v2
-      - traefik.http.middlewares.piighost-v2-https.redirectscheme.scheme=https
+      - traefik.http.routers.${TRAEFIK_NAME:-piighost-v2}-http.entryPoints=http
+      - traefik.http.routers.${TRAEFIK_NAME:-piighost-v2}-http.rule=Host(`${SITE_DOMAIN:?}`)
+      - traefik.http.routers.${TRAEFIK_NAME:-piighost-v2}-http.middlewares=${TRAEFIK_NAME:-piighost-v2}-https
+      - traefik.http.routers.${TRAEFIK_NAME:-piighost-v2}-http.service=${TRAEFIK_NAME:-piighost-v2}
+      - traefik.http.middlewares.${TRAEFIK_NAME:-piighost-v2}-https.redirectscheme.scheme=https
 
-      - traefik.http.routers.piighost-v2.entryPoints=https
-      - traefik.http.routers.piighost-v2.rule=Host(`${SITE_DOMAIN:?}`)
-      - traefik.http.routers.piighost-v2.service=piighost-v2
-      - traefik.http.routers.piighost-v2.tls=true
-      - traefik.http.routers.piighost-v2.tls.certresolver=letsencrypt
-      - traefik.http.routers.piighost-v2.middlewares=piighost-v2-noindex,piighost-v2-gzip
+      - traefik.http.routers.${TRAEFIK_NAME:-piighost-v2}.entryPoints=https
+      - traefik.http.routers.${TRAEFIK_NAME:-piighost-v2}.rule=Host(`${SITE_DOMAIN:?}`)
+      - traefik.http.routers.${TRAEFIK_NAME:-piighost-v2}.service=${TRAEFIK_NAME:-piighost-v2}
+      - traefik.http.routers.${TRAEFIK_NAME:-piighost-v2}.tls=true
+      - traefik.http.routers.${TRAEFIK_NAME:-piighost-v2}.tls.certresolver=letsencrypt
+      - traefik.http.routers.${TRAEFIK_NAME:-piighost-v2}.middlewares=${TRAEFIK_NAME:-piighost-v2}-noindex,${TRAEFIK_NAME:-piighost-v2}-gzip
 
       # Ouvert, sans mot de passe : ce sont les pages publiques du site, il n'y
       # a rien ici que la sortie ne montrera pas.
@@ -58,9 +65,9 @@ services:
       # concurrence au vrai site et d'où elle se retire mal. L'en-tête
       # ci-dessous l'emporte sur le `robots.txt`, page par page, sans toucher à
       # l'application.
-      - traefik.http.middlewares.piighost-v2-noindex.headers.customresponseheaders.X-Robots-Tag=noindex,
+      - traefik.http.middlewares.${TRAEFIK_NAME:-piighost-v2}-noindex.headers.customresponseheaders.X-Robots-Tag=noindex,
         nofollow
-      - traefik.http.middlewares.piighost-v2-gzip.compress=true
+      - traefik.http.middlewares.${TRAEFIK_NAME:-piighost-v2}-gzip.compress=true
 
   api:
     build:

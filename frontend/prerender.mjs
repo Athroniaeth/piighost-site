@@ -24,6 +24,15 @@ const SSR = "./dist-ssr/entry-server.js";
  *  schema.org ne sont connues qu'après le rendu. deploy/security-headers.conf
  *  l'inclut, Dockerfile.web la copie dans l'image. */
 const CSP = "csp.conf";
+/** L'origine annoncée aux aperçus de lien (Discord, Slack, réseaux). Une copie du
+ *  site servie ailleurs que sur piighost.dev la passe au build : sans elle, son
+ *  aperçu montrait la vignette du site en ligne, pas la sienne. Le canonique,
+ *  lui, reste piighost.dev : une copie de test ne doit pas se déclarer
+ *  l'original. */
+const PARTAGE = (process.env.SITE_ORIGIN || "https://piighost.dev").replace(
+  /\/$/,
+  "",
+);
 
 const { rendre, toutesLesUrls } = await import(SSR);
 
@@ -91,7 +100,12 @@ for (const { url, nom, locale } of toutesLesUrls()) {
   html = poser(
     html,
     /<meta property="og:url"[^>]*\/>/,
-    `<meta property="og:url" content="https://piighost.dev${url}" />`,
+    `<meta property="og:url" content="${PARTAGE}${url}" />`,
+  );
+  html = poser(
+    html,
+    /<meta property="og:image"[^>]*\/>/,
+    `<meta property="og:image" content="${PARTAGE}/og.png" />`,
   );
   const structurees = jsonld.map(structuree).join("\n    ");
   html = html.replace("</head>", `  ${tete}\n    ${structurees}\n  </head>`);

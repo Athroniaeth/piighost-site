@@ -22,6 +22,7 @@ services:
     environment:
       - API_KEY=${API_KEY:?}
       - OPENPANEL_API=${OPENPANEL_API:-https://opapi.athroniaeth.cloud}
+      - OPENPANEL_ORIGIN=${OPENPANEL_ORIGIN:-https://piighost.athroniaeth.cloud}
     depends_on:
       api:
         condition: service_healthy

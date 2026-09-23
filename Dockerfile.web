@@ -25,7 +25,7 @@ FROM nginxinc/nginx-unprivileged:1.29-alpine AS runtime
 
 # Templates are rendered by the entrypoint at startup; the filter keeps envsubst away
 # from nginx's own variables, so only ${API_KEY} is replaced.
-ENV NGINX_ENVSUBST_FILTER="^(API_KEY|OPENPANEL_API)$"
+ENV NGINX_ENVSUBST_FILTER="^(API_KEY|OPENPANEL_API|OPENPANEL_ORIGIN)$"
 COPY deploy/default.conf.template /etc/nginx/templates/default.conf.template
 # Outside templates/ on purpose: it holds no variable to substitute, and the server
 # config includes it by absolute path.

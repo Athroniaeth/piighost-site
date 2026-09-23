@@ -81,6 +81,8 @@ export type Dictionary = {
     /** Le slogan, coupé en deux pour que la seconde moitié porte la couleur. */
     sloganWork: string;
     sloganStay: string;
+    /** Le commentaire en bas de l'extrait de code du bandeau. */
+    codeComment: string;
     description: string;
     getStarted: string;
     docs: string;

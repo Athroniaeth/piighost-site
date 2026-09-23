@@ -15,7 +15,8 @@
    * rien. Et l'extrait porte l'argument central du produit, « votre code
    * d'agent ne change pas », en le montrant au lieu de l'affirmer.
    */
-  const EXTRAIT = `from langchain.agents import create_agent
+  // Le commentaire suit la langue de la page, le code reste celui du paquet.
+  const EXTRAIT = $derived(`from langchain.agents import create_agent
 from piighost.integrations.langchain import PIIAnonymizationMiddleware
 
 middleware = PIIAnonymizationMiddleware(pipeline=pipeline)
@@ -25,7 +26,7 @@ agent = create_agent(
     tools=[send_email],
     middleware=[middleware],
 )
-# le modele ne voit que des jetons ; send_email recoit les vraies valeurs`;
+# ${i18n.t.hero.codeComment}`);
 
   const MARQUES = [
     { cle: "langchain", nom: "LangChain" },

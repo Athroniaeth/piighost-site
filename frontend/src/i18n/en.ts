@@ -194,6 +194,8 @@ export const en: Dictionary = {
     name: "PIIGhost",
     sloganWork: "The model works.",
     sloganStay: "The data stays.",
+    codeComment:
+      "the model only sees tokens; send_email receives the real values",
     description:
       "piighost hides the personal data in your prompts before it reaches the model, then restores the real values in the response. Pluggable detectors, regex, NER or an LLM, and a companion OpenAI and Anthropic proxy.",
     getStarted: "Get started",

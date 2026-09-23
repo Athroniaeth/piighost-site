@@ -196,6 +196,8 @@ export const fr: Dictionary = {
     name: "PIIGhost",
     sloganWork: "Le modèle travaille.",
     sloganStay: "Les données restent.",
+    codeComment:
+      "le modèle ne voit que des jetons ; send_email reçoit les vraies valeurs",
     description:
       "piighost masque les données personnelles de vos prompts avant qu'elles n'atteignent le modèle, puis restitue les vraies valeurs dans la réponse. Détecteurs au choix, regex, NER ou LLM, et un proxy compatible OpenAI et Anthropic.",
     getStarted: "Démarrer",

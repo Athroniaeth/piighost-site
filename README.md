@@ -1,19 +1,23 @@
-# piighost-studio
+# piighost-site
 
-Le site vitrine de [piighost](https://github.com/Athroniaeth/piighost), servi
-sur `piighost.dev`. Six pages, deux langues, prérendues.
+Le site de présentation de [piighost](https://github.com/Athroniaeth/piighost),
+servi sur `piighost.dev`. Six pages, deux langues, prérendues.
 
-Reconstruction complète à partir de
+Il succède à [piighost-studio](https://github.com/Athroniaeth/piighost-studio),
+dont il a d'abord été un portage à l'identique, reconstruit à partir de
 [template-litestar-svelte](https://github.com/Athroniaeth/template-litestar-svelte).
-C'est un **portage à l'identique** du studio actuel : mêmes sections, même
-ordre, même copie, même disposition. Le playground a disparu, parce que ce site
-présente et ne fait plus tourner le produit ; c'est le seul retrait.
+Le playground n'y est plus : il est passé dans
+[piighost-hub](https://hub.piighost.dev), et ce site présente le produit sans le
+faire tourner. Le portage nu est gardé sous le tag `iso-studio`.
 
-Par dessus ce portage, **l'identité visuelle de `piighost-identite` est
-appliquée**, et rien d'autre : tokens, polices, couleurs de donnée, logo et
-icônes. Aucune section n'a été ajoutée, retirée ni réordonnée. Le portage nu est
-gardé sous le tag `iso-studio`, donc la comparaison est rejouable à tout
-moment.
+Par dessus, **l'identité visuelle de `piighost-identite` est appliquée**
+(tokens, polices, couleurs de donnée, logo et icônes), puis chaque section de
+la page d'accueil a été reprise une à une, sur planche, à partir de quatre
+variantes : le bandeau, le problème en tableau, « pourquoi piighost »,
+le fonctionnement en diagramme de séquence, l'écosystème, le démarrage rapide,
+la FAQ et l'appel final.
+
+L'ancien design reste consultable, figé, sur `v1.piighost.dev`.
 
 Litestar 2.24, Svelte 5, Vite 8, Tailwind 4, nginx, OpenPanel auto hébergé.
 

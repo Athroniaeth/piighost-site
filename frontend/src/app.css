@@ -4,7 +4,7 @@
  * brand/tokens/entites.json. Les cinq surfaces sortent du même objet : la
  * dérive 73 contre 45 relevée à l'étape 0 venait de fichiers recopiés.
  *
- * Cible : piighost-studio-v2, frontend/src/app.css, version Vite
+ * Cible : piighost-site, frontend/src/app.css, version Vite
  *
  * Direction : l'Évidence. Sur une interface, la seule couleur qui ne soit pas
  * de la donnée est --primary, plus --destructive pour les états d'erreur.

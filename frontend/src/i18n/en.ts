@@ -222,12 +222,7 @@ export const en: Dictionary = {
       },
     ],
     table: {
-      columns: [
-        "Model quality",
-        "Data in clear at the provider",
-        "What it costs",
-        "Productivity gains",
-      ],
+      columns: ["Quality", "Data exposed", "Constraint", "Gains"],
       rows: [
         {
           label: "Hosted model",
@@ -247,7 +242,7 @@ export const en: Dictionary = {
         },
       ],
       noteLead: "One limit worth knowing.",
-      note: "piighost does pseudonymisation in the GDPR sense, not anonymisation: the mapping between values and placeholders stays with you, and has to be protected like personal data.",
+      note: "piighost does pseudonymisation in the GDPR sense, not anonymisation: the mapping between values and placeholders is kept on your side for the duration of the conversation, and has to be protected like personal data.",
       yes: "yes",
       no: "no",
       option: "Option",

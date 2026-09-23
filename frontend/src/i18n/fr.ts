@@ -225,12 +225,7 @@ export const fr: Dictionary = {
       },
     ],
     table: {
-      columns: [
-        "Qualité du modèle",
-        "Données en clair chez le fournisseur",
-        "Ce que ça coûte",
-        "Gains de productivité",
-      ],
+      columns: ["Qualité", "Données exposées", "Contrainte", "Gains"],
       rows: [
         {
           label: "Modèle hébergé",
@@ -255,7 +250,7 @@ export const fr: Dictionary = {
         },
       ],
       noteLead: "Une limite à connaître.",
-      note: "piighost fait de la pseudonymisation au sens du RGPD, pas de l'anonymisation : les correspondances entre valeurs et jetons restent chez vous, et se protègent comme des données personnelles.",
+      note: "piighost fait de la pseudonymisation au sens du RGPD, pas de l'anonymisation : les correspondances entre valeurs et jetons sont conservées chez vous le temps de la conversation, et se protègent comme des données personnelles.",
       yes: "oui",
       no: "non",
       option: "Option",

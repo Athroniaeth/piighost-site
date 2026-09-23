@@ -34,71 +34,76 @@
   eyebrow={i18n.t.problem.eyebrow}
   title={i18n.t.problem.title}
 >
-  <div class="overflow-x-auto rounded-xl border bg-card p-2">
-    <table
-      class="w-full min-w-[48rem] border-separate border-spacing-0 text-left text-[0.9375rem]"
-    >
-      <thead>
-        <tr>
-          <th scope="col" class="w-[22%] border-b px-5 py-4"
-            ><span class="sr-only">{table.option}</span></th
-          >
-          {#each table.columns as colonne (colonne)}
-            <th
-              scope="col"
-              class="border-b px-5 py-4 text-[0.8125rem] font-semibold tracking-wide text-muted-foreground uppercase"
+  <div class="mx-auto max-w-6xl">
+    <div class="overflow-x-auto rounded-xl border bg-card p-2">
+      <table
+        class="w-full min-w-[48rem] border-separate border-spacing-0 text-left text-[0.9375rem]"
+      >
+        <thead>
+          <tr>
+            <th scope="col" class="w-[22%] border-b px-5 py-4"
+              ><span class="sr-only">{table.option}</span></th
             >
-              {colonne}
-            </th>
-          {/each}
-        </tr>
-      </thead>
-      <tbody>
-        {#each table.rows as ligne, r (ligne.label)}
-          {@const nous = r === DERNIERE}
-          <tr class={cn(nous && "bg-primary/7")}>
-            <th
-              scope="row"
-              class={cn(
-                "px-5 py-4 font-semibold",
-                nous ? "rounded-l-lg text-primary" : "border-b",
-              )}
-            >
-              <span class="inline-flex items-center gap-2">
-                {#if nous}<Ghost size={20} class="shrink-0" />{/if}
-                {ligne.label}
-              </span>
-            </th>
-            {#each ligne.cells as cellule, c (c)}
-              {@const oui = VERDICTS[r][c]}
-              <td
-                class={cn("px-5 py-4", nous ? "last:rounded-r-lg" : "border-b")}
+            {#each table.columns as colonne (colonne)}
+              <th
+                scope="col"
+                class="border-b px-5 py-4 text-[0.8125rem] font-semibold tracking-wide text-muted-foreground uppercase"
               >
-                <span class="inline-flex items-center gap-2">
-                  {#if oui}
-                    <Check
-                      class="size-4 shrink-0 text-primary"
-                      aria-hidden="true"
-                    />
-                    <span class="sr-only">{table.yes},</span>
-                  {:else}
-                    <X
-                      class="size-4 shrink-0 text-destructive"
-                      aria-hidden="true"
-                    />
-                    <span class="sr-only">{table.no},</span>
-                  {/if}
-                  {cellule}
-                </span>
-              </td>
+                {colonne}
+              </th>
             {/each}
           </tr>
-        {/each}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {#each table.rows as ligne, r (ligne.label)}
+            {@const nous = r === DERNIERE}
+            <tr class={cn(nous && "bg-primary/7")}>
+              <th
+                scope="row"
+                class={cn(
+                  "px-5 py-4 font-semibold",
+                  nous ? "rounded-l-lg text-primary" : "border-b",
+                )}
+              >
+                <span class="inline-flex items-center gap-2">
+                  {#if nous}<Ghost size={20} class="shrink-0" />{/if}
+                  {ligne.label}
+                </span>
+              </th>
+              {#each ligne.cells as cellule, c (c)}
+                {@const oui = VERDICTS[r][c]}
+                <td
+                  class={cn(
+                    "px-5 py-4",
+                    nous ? "last:rounded-r-lg" : "border-b",
+                  )}
+                >
+                  <span class="inline-flex items-center gap-2">
+                    {#if oui}
+                      <Check
+                        class="size-4 shrink-0 text-primary"
+                        aria-hidden="true"
+                      />
+                      <span class="sr-only">{table.yes},</span>
+                    {:else}
+                      <X
+                        class="size-4 shrink-0 text-destructive"
+                        aria-hidden="true"
+                      />
+                      <span class="sr-only">{table.no},</span>
+                    {/if}
+                    {cellule}
+                  </span>
+                </td>
+              {/each}
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-5 max-w-[90ch] text-sm text-muted-foreground">
+      <strong class="font-semibold text-foreground">{table.noteLead}</strong>
+      {table.note}
+    </p>
   </div>
-  <p class="mt-5 max-w-[90ch] text-sm text-muted-foreground">
-    <strong class="font-semibold text-foreground">{table.noteLead}</strong>
-    {table.note}
-  </p>
 </Section>

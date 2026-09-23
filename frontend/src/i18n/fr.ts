@@ -401,6 +401,13 @@ export const fr: Dictionary = {
         ],
       },
       {
+        question:
+          "Quelle différence entre anonymisation et dé-identification ?",
+        answer: [
+          "L'anonymisation est irréversible : plus personne ne peut relier les données à une personne, et elles sortent du champ du RGPD. La dé-identification de piighost est réversible, pour que vos outils et vos utilisateurs retrouvent les vraies valeurs : au sens du RGPD, c'est une pseudonymisation. La correspondance entre valeurs et jetons reste chez vous, et se protège comme des données personnelles.",
+        ],
+      },
+      {
         question: "Qu'est-ce qui est réellement envoyé au modèle ?",
         answer: [
           "Le texte dé-identifié seulement, où chaque valeur est devenue un jeton comme ",

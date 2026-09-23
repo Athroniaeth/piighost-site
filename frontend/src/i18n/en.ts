@@ -397,6 +397,13 @@ export const en: Dictionary = {
         ],
       },
       {
+        question:
+          "What is the difference between anonymization and de-identification?",
+        answer: [
+          "Anonymization is irreversible: nobody can link the data back to a person anymore, and it falls outside the GDPR. piighost's de-identification is reversible, so your tools and your users get the real values back: under the GDPR, it is pseudonymization. The mapping between values and placeholders stays on your side, and must be protected like personal data.",
+        ],
+      },
+      {
         question: "What is actually sent to the model?",
         answer: [
           "Only the de-identified text, where each value has become a placeholder like ",

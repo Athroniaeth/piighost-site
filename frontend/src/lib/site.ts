@@ -3,6 +3,9 @@ export const GITHUB_ORG = "https://github.com/Athroniaeth";
 /** The regex registry. A site of its own, so it is a link and not a route. */
 export const HUB_URL = "https://hub.piighost.dev";
 
+/** The community server, as linked from the library's README. */
+export const DISCORD_URL = "https://discord.gg/vFg9GHQR2s";
+
 export type Project = {
   slug: string;
   name: string;

@@ -153,7 +153,10 @@ export type Dictionary = {
     starOnGitHub: string;
   };
   faq: {
+    eyebrow: string;
     heading: string;
+    helpIntro: string;
+    help: { discord: string; issue: string; docs: string };
     items: { question: string; answer: FaqSegment[] }[];
   };
   philosophy: PhilosophyDict;

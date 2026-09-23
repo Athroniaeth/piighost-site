@@ -122,7 +122,10 @@ answer = engine.query("${c.question}")`,
       ajouts={[...courant.ajouts]}
     >
       {#snippet onglets()}
-        <div role="tablist" class="flex overflow-x-auto">
+        <div
+          role="tablist"
+          class="flex overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
           {#each exemples as exemple (exemple.id)}
             <button
               id="qs-{exemple.id}"

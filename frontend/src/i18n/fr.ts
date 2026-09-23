@@ -323,74 +323,78 @@ export const fr: Dictionary = {
     starOnGitHub: "Étoiler sur GitHub",
   },
   faq: {
+    eyebrow: "FAQ",
     heading: "Questions fréquentes",
+    helpIntro:
+      "Une question qui n'est pas ici ? La communauté et la documentation répondent.",
+    help: {
+      discord: "Discord",
+      issue: "Ouvrir une issue",
+      docs: "La documentation",
+    },
     items: [
       {
-        question: "Pourquoi anonymiser plutôt qu'héberger le modèle soi-même ?",
+        question: "Pourquoi anonymiser plutôt qu'héberger le modèle soi-même ?",
         answer: [
-          "Le self-host est un choix valable et offre la confidentialité la plus forte : aucun tiers ne peut lire le contenu, par construction. En contrepartie, tout bascule sur vous (la facture GPU, la sécurité, les mises à jour, la journalisation) et le modèle que vous faites tourner vous-même est en général moins bon que les meilleurs modèles hébergés. L'anonymisation préserve cette qualité : seuls des jetons comme ",
+          "L'auto-hébergement protège le mieux, mais la facture GPU, la sécurité et les mises à jour sont pour vous, et le modèle est souvent moins bon. Avec piighost, vous gardez les meilleurs modèles et seuls des jetons comme ",
           { code: "<<PERSON:1>>" },
-          " quittent votre infrastructure, donc le risque de fuite est neutralisé quel que soit le fournisseur. C'est une couche de défense, pas une solution miracle. ",
+          " sortent de chez vous. C'est une couche de défense, pas une solution miracle. ",
           {
             link: {
               href: "/philosophy",
-              text: "La page Philosophie détaille tout le compromis.",
+              text: "La page Philosophie détaille le compromis.",
             },
           },
         ],
       },
       {
-        question:
-          "De quoi ai-je besoin pour faire tourner piighost en production ?",
+        question: "De quoi ai-je besoin en production ?",
         answer: [
-          "Au minimum, la bibliothèque piighost et un pipeline. Installez-la avec les extras de vos détecteurs : ",
+          "La bibliothèque et un pipeline décrit en TOML, chargé par ",
+          { code: "load_pipeline" },
+          ". ",
           { code: "pip install 'piighost[config]'" },
-          " suffit pour un pipeline uniquement regex ; ajoutez ",
-          { code: "transformers" },
-          ", ",
+          " suffit pour des regex ; ajoutez l'extra de votre détecteur (",
           { code: "gliner2" },
+          ", ",
+          { code: "spacy" },
+          ", ",
+          { code: "transformers" },
           " ou ",
           { code: "llm" },
-          " selon le détecteur, et ",
-          { code: "cache" },
-          " pour une correspondance partagée via Redis. Enregistrez votre pipeline dans un fichier TOML et chargez-le avec ",
-          { code: "load_pipeline" },
-          ". Le NER classique et GLiNER téléchargent un modèle ONNX au premier usage et tournent sur CPU ; la regex ne demande rien de plus ; le détecteur LLM nécessite un fournisseur et une clé d'API. Quand plusieurs processus doivent partager un même point d'accès, déployez piighost-api plutôt que d'embarquer la bibliothèque.",
+          "), et ",
+          { code: "redis" },
+          " pour partager la mémoire entre processus. Plusieurs services ? Déployez piighost-api.",
         ],
       },
       {
-        question: "Puis-je utiliser piighost avec Claude Code ?",
+        question: "Puis-je utiliser piighost avec Claude Code ?",
         answer: [
-          "piighost est agnostique du modèle : il fonctionne avec Claude d'Anthropic comme avec n'importe quel fournisseur. Il agit au niveau des données : vous anonymisez le texte dans votre propre code avant que le modèle ne le voie, donc seuls des jetons comme ",
-          { code: "<<PERSON:1>>" },
-          " arrivent jusqu'à Claude, et les vraies valeurs sont restaurées dans la réponse. Enveloppez n'importe quel appel à Claude depuis Python, directement ou via LangChain, Pydantic AI ou LlamaIndex. Il n'existe pas d'extension dédiée pour la CLI Claude Code elle-même, car piighost protège les prompts et les données que vous envoyez, pas l'outil avec lequel vous les envoyez.",
+          "Oui, par ses hooks. Ils anonymisent votre prompt et les sorties d'outils, et remettent les vraies valeurs dans les entrées d'outils. Ils s'appuient sur un serveur piighost-api, installé avec ",
+          { code: "pip install 'piighost[client]'" },
+          ".",
         ],
       },
       {
-        question:
-          "Est-ce que je peux utiliser piighost avec LangChain, Pydantic AI ou LlamaIndex ?",
+        question: "Quels frameworks sont pris en charge ?",
         answer: [
-          "piighost fournit des intégrations pour LangChain, Pydantic AI et LlamaIndex. Vous enveloppez votre pipeline dans l'assistant proposé (middleware, hooks ou anonymiseur de nœuds) afin que les données personnelles soient remplacées avant l'appel au modèle et restaurées ensuite. Le modèle ne raisonne que sur des jetons comme ",
-          { code: "<<PERSON:1>>" },
-          ", jamais sur les vraies valeurs.",
+          "LangChain, Pydantic AI et LlamaIndex, par un middleware, des hooks et un anonymiseur de nœuds. Pour tout autre client, les proxies compatibles OpenAI et Anthropic de piighost-api ne demandent qu'un changement de ",
+          { code: "base_url" },
+          ".",
         ],
       },
       {
-        question:
-          "Est-ce que piighost est conforme au RGPD, et comment fonctionnent les jetons stables ?",
+        question: "piighost est-il conforme au RGPD ?",
         answer: [
-          "piighost réalise une pseudonymisation réversible au sens du RGPD, ce qui facilite la conformité mais ne remplace pas votre propre analyse juridique. Des jetons stables signifient qu'une même entité correspond toujours au même jeton (Patrick devient ",
-          { code: "<<PERSON:1>>" },
-          " partout), donc le modèle garde le contexte pendant que la vraie valeur reste hors de sa portée.",
+          "piighost fait de la pseudonymisation réversible au sens du RGPD: elle facilite la conformité sans remplacer votre analyse juridique. Les correspondances restent chez vous et se protègent comme des données personnelles.",
         ],
       },
       {
-        question:
-          "Mes données restent-elles locales ? Qu'est-ce qui est réellement envoyé au modèle ?",
+        question: "Qu'est-ce qui est réellement envoyé au modèle ?",
         answer: [
-          "Seul le texte anonymisé est envoyé au modèle, chaque valeur détectée étant remplacée par un jeton comme ",
+          "Le texte anonymisé seulement, où chaque valeur est devenue un jeton comme ",
           { code: "<<PERSON:1>>" },
-          ". La correspondance entre les jetons et les vraies valeurs reste de votre côté et n'est jamais envoyée. Après la réponse du modèle, piighost restaure localement les valeurs d'origine pour que vos utilisateurs voient les vraies données.",
+          ". La correspondance reste de votre côté le temps de la conversation, et piighost restaure les valeurs localement.",
         ],
       },
     ],

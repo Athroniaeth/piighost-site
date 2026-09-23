@@ -185,6 +185,7 @@
      drapeaux : elles ne suivent pas le thème. */
   --logo-langchain: #7fc8ff;
   --logo-pydantic: #e92063;
+  --logo-discord: #5865f2;
 }
 
 .dark {

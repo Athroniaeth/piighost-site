@@ -319,73 +319,78 @@ export const en: Dictionary = {
     starOnGitHub: "Star on GitHub",
   },
   faq: {
+    eyebrow: "FAQ",
     heading: "Frequently asked questions",
+    helpIntro:
+      "A question that is not here? The community and the documentation have answers.",
+    help: {
+      discord: "Discord",
+      issue: "Open an issue",
+      docs: "The documentation",
+    },
     items: [
       {
         question: "Why anonymize instead of self-hosting the model?",
         answer: [
-          "Self-hosting is a valid choice and gives the strongest confidentiality: no third party can read the content, by construction. The cost is that everything moves onto you (the GPU bill, security, patching, logging) and the model you can run yourself is usually weaker than the best hosted ones. Anonymizing keeps that quality: only placeholders like ",
+          "Self-hosting protects best, but the GPU bill, security and updates are on you, and the model is often weaker. With piighost you keep the best models, and only placeholders like ",
           { code: "<<PERSON:1>>" },
-          " leave your infrastructure, so the leakage risk is neutralized whichever provider you use. It is one layer, not a silver bullet. ",
+          " leave your infrastructure. It is one layer of defense, not a silver bullet. ",
           {
             link: {
               href: "/philosophy",
-              text: "The Philosophy page walks through the full tradeoff.",
+              text: "The Philosophy page walks through the tradeoff.",
             },
           },
         ],
       },
       {
-        question: "What do I need to run piighost in production?",
+        question: "What do I need in production?",
         answer: [
-          "At minimum, the piighost library and a pipeline. Install it with the extras your detectors need: ",
+          "The library and a pipeline described in TOML, loaded with ",
+          { code: "load_pipeline" },
+          ". ",
           { code: "pip install 'piighost[config]'" },
-          " is enough for a regex-only pipeline; add ",
-          { code: "transformers" },
-          ", ",
+          " is enough for regex; add your detector's extra (",
           { code: "gliner2" },
+          ", ",
+          { code: "spacy" },
+          ", ",
+          { code: "transformers" },
           " or ",
           { code: "llm" },
-          " per detector, and ",
-          { code: "cache" },
-          " for a shared Redis mapping. Save your pipeline as a TOML file and load it with ",
-          { code: "load_pipeline" },
-          ". Classic NER and GLiNER download an ONNX model on first use and run on CPU; regex needs nothing more; the LLM detector needs a provider and an API key. When several processes need one shared endpoint, deploy piighost-api instead of embedding the library.",
+          "), and ",
+          { code: "redis" },
+          " to share memory across processes. Several services? Deploy piighost-api.",
         ],
       },
       {
         question: "Can I use piighost with Claude Code?",
         answer: [
-          "piighost is model-agnostic, so it works with Anthropic's Claude the same way it works with any provider. It runs at the data layer: you anonymize text in your own code before the model sees it, so only placeholders like ",
-          { code: "<<PERSON:1>>" },
-          " ever reach Claude, and the real values are restored in the reply. Wrap any Claude call you make from Python, directly or through LangChain, Pydantic AI or LlamaIndex. There is no dedicated extension for the Claude Code CLI itself, since piighost protects the prompts and data you send, not the tool you send them with.",
+          "Yes, through its hooks. They anonymize your prompt and tool outputs, and put the real values back into tool inputs. They rely on a piighost-api server, installed with ",
+          { code: "pip install 'piighost[client]'" },
+          ".",
         ],
       },
       {
-        question:
-          "Can I use piighost with LangChain, Pydantic AI or LlamaIndex?",
+        question: "Which frameworks are supported?",
         answer: [
-          "piighost ships integrations for LangChain, Pydantic AI and LlamaIndex. You wrap your pipeline in the provided helper (middleware, hooks or a node anonymizer) so PII is replaced before the model runs and restored afterward. The model only ever reasons over placeholders like ",
-          { code: "<<PERSON:1>>" },
-          ", never the real values.",
+          "LangChain, Pydantic AI and LlamaIndex, through a middleware, hooks and a node anonymizer. For any other client, the OpenAI- and Anthropic-compatible proxies in piighost-api only need a ",
+          { code: "base_url" },
+          " change.",
         ],
       },
       {
-        question:
-          "Is piighost GDPR compliant, and how do stable placeholders work?",
+        question: "Is piighost GDPR compliant?",
         answer: [
-          "piighost performs reversible pseudonymization in the GDPR sense, which supports compliance but does not replace your own legal review. Stable placeholders mean the same entity always maps to the same token (Patrick becomes ",
-          { code: "<<PERSON:1>>" },
-          " everywhere), so the model keeps context while the real value stays out of its reach.",
+          "piighost performs reversible pseudonymization in the GDPR sense: it helps compliance without replacing your own legal analysis. The mappings stay with you and must be protected like personal data.",
         ],
       },
       {
-        question:
-          "Does my data stay local? What is actually sent to the model?",
+        question: "What is actually sent to the model?",
         answer: [
-          "Only the anonymized text is sent to the model, with every detected value replaced by a placeholder such as ",
+          "Only the anonymized text, where each value has become a placeholder like ",
           { code: "<<PERSON:1>>" },
-          ". The mapping from tokens back to real values stays on your side and is never sent. After the model responds, piighost restores the original values locally so your users see the real data.",
+          ". The mapping stays on your side for the length of the conversation, and piighost restores the values locally.",
         ],
       },
     ],

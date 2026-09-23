@@ -35,9 +35,7 @@
           </span>
           <h3 class="text-lg font-semibold">{item.title}</h3>
         </div>
-        <p
-          class="mt-4 sm:text-justify text-sm hyphens-auto text-muted-foreground"
-        >
+        <p class="mt-4 text-sm text-muted-foreground">
           {item.body}
         </p>
       </div>

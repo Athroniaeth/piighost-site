@@ -59,9 +59,7 @@
     class="mx-auto grid w-full max-w-7xl items-start gap-12 px-6 py-16 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20"
   >
     <div>
-      <p
-        class="mb-2 text-sm font-semibold uppercase tracking-wide text-primary"
-      >
+      <p class="mb-2 text-sm font-semibold tracking-wide text-primary">
         {faq.eyebrow}
       </p>
       <h2 class="text-balance text-3xl font-bold tracking-tight sm:text-4xl">

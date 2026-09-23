@@ -53,18 +53,17 @@ agent = create_agent(
           {i18n.t.hero.name}
         </span>
         <span
-          class="mt-3 block text-xl font-semibold tracking-[-0.025em] sm:text-[1.75rem] lg:whitespace-nowrap"
+          class="mt-3 block text-xl font-semibold tracking-[-0.025em] sm:text-[1.75rem]"
         >
           {i18n.t.hero.sloganWork}
-          <!-- Sous 1024 px, chaque moitié sur sa ligne : coupée par le retour
-               automatique, la phrase laissait « restent. » seul au bout. -->
-          <span class="block text-primary lg:inline"
-            >{i18n.t.hero.sloganStay}</span
-          >
+          <!-- Chaque moitié sur sa ligne, à toutes les largeurs : la phrase
+               clé de piighost est deux fois plus longue que l'ancienne, et
+               d'un seul tenant elle repoussait la fenêtre de code. -->
+          <span class="block text-primary">{i18n.t.hero.sloganStay}</span>
         </span>
       </h1>
       <p
-        class="mt-6 max-w-[46ch] sm:text-justify text-lg leading-relaxed hyphens-auto text-muted-foreground"
+        class="mt-6 max-w-[46ch] text-lg leading-relaxed text-muted-foreground"
       >
         {i18n.t.hero.description}
       </p>

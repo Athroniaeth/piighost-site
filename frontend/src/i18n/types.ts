@@ -155,6 +155,7 @@ export type Dictionary = {
     description: string;
     readTheDocs: string;
     starOnGitHub: string;
+    packageManager: string;
   };
   faq: {
     eyebrow: string;

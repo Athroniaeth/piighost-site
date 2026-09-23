@@ -290,6 +290,7 @@ export const en: Dictionary = {
     title: "One privacy layer, many projects",
     description:
       "Start with the library. Reach for the server, the chat demo, and the proofreader as you grow.",
+    learnMore: "Learn more",
     moreToCome: "More to come.",
   },
   quickStart: {

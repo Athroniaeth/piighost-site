@@ -126,6 +126,7 @@ export type Dictionary = {
     title: string;
     description: string;
     moreToCome: string;
+    learnMore: string;
   };
   quickStart: {
     eyebrow: string;

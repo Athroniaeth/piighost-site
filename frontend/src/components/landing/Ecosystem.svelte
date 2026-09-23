@@ -29,9 +29,14 @@
       <div
         class="h-full rounded-xl border border-dashed bg-transparent p-6 opacity-60"
       >
-        <h3 class="font-mono text-lg font-semibold text-muted-foreground">
-          {`<<PROJECT_NAME:${empreinte}>>`}
-        </h3>
+        <!-- Une case vide à la place du pictogramme : les titres restent
+             alignés avec ceux des vrais projets sur la même rangée. -->
+        <div class="flex items-center gap-3">
+          <span class="size-9 shrink-0 rounded-md border border-dashed"></span>
+          <h3 class="font-mono text-lg font-semibold text-muted-foreground">
+            {`<<PROJECT_NAME:${empreinte}>>`}
+          </h3>
+        </div>
         <p class="mt-4 text-sm text-muted-foreground">
           {i18n.t.ecosystem.moreToCome}
         </p>

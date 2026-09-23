@@ -293,6 +293,7 @@ export const fr: Dictionary = {
     title: "Une couche de confidentialité, plusieurs projets",
     description:
       "Commencez avec la bibliothèque. Ajoutez le serveur, la démo de chat et le correcteur de CV au fil de votre croissance.",
+    learnMore: "En savoir plus",
     moreToCome: "À venir.",
   },
   quickStart: {

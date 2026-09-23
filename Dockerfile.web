@@ -13,6 +13,11 @@ RUN corepack enable && pnpm -C frontend install --frozen-lockfile
 COPY openapi.json ./openapi.json
 COPY routes.json ./routes.json
 COPY frontend ./frontend
+# L'identifiant OpenPanel entre dans le bundle au build : Vite ne lit
+# `import.meta.env` qu'à ce moment-là. Absent, la mesure d'audience ne démarre
+# pas, ce qui est voulu partout sauf en production.
+ARG VITE_OPENPANEL_CLIENT_ID=
+ENV VITE_OPENPANEL_CLIENT_ID=${VITE_OPENPANEL_CLIENT_ID}
 RUN pnpm -C frontend generate-types && pnpm -C frontend build
 
 # Unprivileged nginx image: runs as the `nginx` user and listens on 8080.

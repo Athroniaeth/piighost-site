@@ -20,6 +20,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.web
+      args:
+        # Public par nature : il finit dans le JavaScript servi. La valeur par
+        # défaut est le client de piighost.dev, celui de l'ancien site, pour que
+        # la bascule ne coupe pas la série de mesures.
+        - VITE_OPENPANEL_CLIENT_ID=${VITE_OPENPANEL_CLIENT_ID:-66c9779d-9dfb-433c-acda-13ec88907038}
     environment:
       # Magic variable, intentionally valueless: Coolify fills it in.
       - SERVICE_FQDN_WEB_8080

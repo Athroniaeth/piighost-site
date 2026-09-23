@@ -51,7 +51,7 @@
   eyebrow={i18n.t.problem.eyebrow}
   title={i18n.t.problem.title}
 >
-  <div class="mx-auto max-w-6xl">
+  <div class="mx-auto max-w-5xl">
     <div class="overflow-x-auto rounded-xl border bg-card p-2">
       <table
         class="w-full min-w-[48rem] border-separate border-spacing-0 text-left text-[0.9375rem]"

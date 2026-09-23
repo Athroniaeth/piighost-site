@@ -27,7 +27,7 @@
     {/each}
     {#each attente as empreinte, i (i)}
       <div
-        class="h-full rounded-xl border border-dashed bg-transparent p-6 opacity-60"
+        class="hidden h-full rounded-xl border border-dashed bg-transparent p-6 opacity-60 sm:block"
       >
         <!-- Une case vide à la place du pictogramme : les titres restent
              alignés avec ceux des vrais projets sur la même rangée. -->

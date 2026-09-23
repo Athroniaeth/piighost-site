@@ -54,6 +54,8 @@ export type Dictionary = {
     language: string;
     backToTop: string;
     mainNavigation: string;
+    /** Le bouton du menu sur téléphone, lu par les lecteurs d'écran. */
+    menu: string;
   };
   projectHeader: {
     repository: string;

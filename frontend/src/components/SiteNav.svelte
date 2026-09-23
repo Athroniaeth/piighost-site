@@ -1,5 +1,7 @@
 <script lang="ts">
   import ChevronDown from "@lucide/svelte/icons/chevron-down";
+  import MenuIcone from "@lucide/svelte/icons/menu";
+  import X from "@lucide/svelte/icons/x";
   import Logo from "./Logo.svelte";
   import Lien from "./Lien.svelte";
   import ThemeToggle from "./ThemeToggle.svelte";
@@ -16,10 +18,16 @@
   const surProjet = $derived(projects.some((p) => p.slug === router.nom));
 
   let menuProjets = $state<HTMLDetailsElement | null>(null);
+  let menuMobile = $state<HTMLDetailsElement | null>(null);
 
   $effect(() => {
     if (!menuProjets) return;
     return fermerAuClicDehors(menuProjets);
+  });
+
+  $effect(() => {
+    if (!menuMobile) return;
+    return fermerAuClicDehors(menuMobile);
   });
 
   // Et sur un clic *dans* le menu : la navigation est côté client, donc sans
@@ -29,6 +37,7 @@
     // navigation, et referme le menu resté ouvert par dessus la page suivante.
     const route = router.nom;
     if (route && menuProjets) menuProjets.open = false;
+    if (route && menuMobile) menuMobile.open = false;
   });
 
   function sortant(destination: string) {
@@ -38,6 +47,12 @@
   const LIEN_NAV =
     "inline-flex h-9 items-center rounded-lg px-3 text-sm font-medium transition-colors " +
     "hover:bg-muted hover:text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
+
+  /** Une ligne du menu sur téléphone : 44 px de haut, la cible tactile que
+   *  la charte demande, et toute la largeur pour le pouce. */
+  const LIEN_MOBILE =
+    "flex min-h-11 items-center rounded-lg px-3 text-base font-medium transition-colors " +
+    "hover:bg-muted outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
 </script>
 
 <header
@@ -53,7 +68,7 @@
 
     <nav
       aria-label={i18n.t.nav.mainNavigation}
-      class="hidden items-center gap-1 md:flex"
+      class="hidden items-center gap-1 lg:flex"
     >
       <Lien vers="home" class="{LIEN_NAV} aria-[current=page]:text-primary">
         {i18n.t.nav.home}
@@ -140,6 +155,75 @@
       </Button>
       <ThemeToggle />
       <LangToggle />
+
+      <!-- Sous 1024 px, les liens de la barre n'ont pas la place : ils passent
+           dans ce menu. Même mécanique que le menu Projets, un `details`. -->
+      <details class="group lg:hidden" bind:this={menuMobile}>
+        <summary
+          class="inline-flex size-9 cursor-pointer list-none items-center justify-center rounded-lg transition-colors hover:bg-muted outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+          aria-label={i18n.t.nav.menu}
+        >
+          <MenuIcone class="size-5 group-open:hidden" />
+          <X class="hidden size-5 group-open:block" />
+        </summary>
+        <nav
+          aria-label={i18n.t.nav.mainNavigation}
+          class="absolute inset-x-0 top-16 max-h-[calc(100dvh-4rem)] overflow-y-auto border-b bg-background px-4 pb-5 pt-2"
+        >
+          <ul class="grid gap-0.5">
+            <li>
+              <Lien
+                vers="home"
+                class="{LIEN_MOBILE} aria-[current=page]:text-primary"
+                >{i18n.t.nav.home}</Lien
+              >
+            </li>
+            <li>
+              <a
+                href={getProject("piighost").docs}
+                target="_blank"
+                rel="noreferrer"
+                class={LIEN_MOBILE}
+                onclick={() => sortant("docs")}>{i18n.t.nav.docs}</a
+              >
+            </li>
+            <li>
+              <a
+                href={HUB_URL}
+                target="_blank"
+                rel="noreferrer"
+                class={LIEN_MOBILE}
+                onclick={() => sortant("hub")}>{i18n.t.nav.hub}</a
+              >
+            </li>
+            <li>
+              <Lien
+                vers="philosophy"
+                class="{LIEN_MOBILE} aria-[current=page]:text-primary"
+                >{i18n.t.nav.philosophy}</Lien
+              >
+            </li>
+          </ul>
+          <p
+            class="mt-4 px-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+          >
+            {i18n.t.nav.projects}
+          </p>
+          <ul class="mt-1 grid gap-0.5">
+            {#each projects as projet (projet.slug)}
+              <li>
+                <Lien
+                  vers={projet.slug as NomDePage}
+                  class="{LIEN_MOBILE} font-mono aria-[current=page]:text-primary"
+                >
+                  {i18n.t.nav[projet.slug as keyof typeof i18n.t.nav] ??
+                    projet.name}
+                </Lien>
+              </li>
+            {/each}
+          </ul>
+        </nav>
+      </details>
     </div>
   </div>
 </header>

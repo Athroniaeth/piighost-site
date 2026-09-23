@@ -17,6 +17,7 @@ export const en: Dictionary = {
     toggleLanguage: "Switch to French",
     language: "Language",
     backToTop: "Scroll to top",
+    menu: "Menu",
     mainNavigation: "Main navigation",
   },
   projectHeader: {
@@ -302,11 +303,15 @@ export const en: Dictionary = {
     unchanged: "The rest is your agent, unchanged",
     code: {
       anyDetector: "Any detector works: regex, NER, or an LLM.",
-      langchainResult: "The model only sees <<PERSON:1>>; lookup_city still receives \"Patrick\".",
+      langchainResult:
+        'The model only sees <<PERSON:1>>; lookup_city still receives "Patrick".',
       pydanticScope: "pii_hooks scopes every token to the thread id.",
-      pydanticResult: "The model reasons over <<PERSON:1>>; you read \"Patrick\" in the reply.",
-      llamaNodes: "Anonymize each node before it is embedded, so the index is built on tokens.",
-      llamaQuery: "The query engine anonymizes the question and restores the answer.",
+      pydanticResult:
+        'The model reasons over <<PERSON:1>>; you read "Patrick" in the reply.',
+      llamaNodes:
+        "Anonymize each node before it is embedded, so the index is built on tokens.",
+      llamaQuery:
+        "The query engine anonymizes the question and restores the answer.",
       question: "Where does Patrick live?",
       document: "Patrick lives in Paris.",
     },

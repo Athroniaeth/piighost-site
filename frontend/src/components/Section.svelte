@@ -27,7 +27,7 @@
 
 <section
   {id}
-  class="flex min-h-[calc(100dvh-4rem)] scroll-mt-16 flex-col justify-center"
+  class="flex scroll-mt-16 flex-col justify-center md:min-h-[calc(100dvh-4rem)]"
 >
   <div class="mx-auto w-full max-w-7xl px-6 py-16">
     {#if eyebrow || title || description}
@@ -54,7 +54,7 @@
           <p
             class={centerDescription
               ? "mx-auto mt-4 max-w-2xl text-center text-muted-foreground"
-              : "mx-auto mt-4 max-w-2xl text-justify hyphens-auto text-muted-foreground"}
+              : "mx-auto mt-4 max-w-2xl sm:text-justify hyphens-auto text-muted-foreground"}
           >
             {description}
           </p>

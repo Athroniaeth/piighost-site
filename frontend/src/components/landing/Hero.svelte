@@ -36,7 +36,7 @@ agent = create_agent(
 
 <section
   id="overview"
-  class="relative flex min-h-[calc(100dvh-4rem)] scroll-mt-16 items-center overflow-hidden border-b"
+  class="relative flex scroll-mt-16 items-center overflow-hidden border-b md:min-h-[calc(100dvh-4rem)]"
 >
   <div
     class="mx-auto grid w-full max-w-7xl items-center gap-14 px-6 py-16 lg:grid-cols-[1fr_1.05fr]"
@@ -59,7 +59,7 @@ agent = create_agent(
         </span>
       </h1>
       <p
-        class="mt-6 max-w-[46ch] text-justify text-lg leading-relaxed hyphens-auto text-muted-foreground"
+        class="mt-6 max-w-[46ch] sm:text-justify text-lg leading-relaxed hyphens-auto text-muted-foreground"
       >
         {i18n.t.hero.description}
       </p>

@@ -22,13 +22,14 @@
 <div class="border-b">
   <div class="feuille mx-auto max-w-3xl px-4 py-16">
     <h1 class="font-mono text-3xl font-bold sm:text-4xl">{project.name}</h1>
-    <p class="mt-4 text-justify text-lg hyphens-auto text-muted-foreground">
+    <p class="mt-4 sm:text-justify text-lg hyphens-auto text-muted-foreground">
       {tagline}
     </p>
     <div class="mt-6 flex flex-wrap gap-3">
       <Button
         variant="outline"
         size="sm"
+        class="max-sm:h-10 max-sm:px-3.5"
         href={project.repo}
         target="_blank"
         rel="noreferrer"
@@ -40,6 +41,7 @@
       {#if project.app}
         <Button
           size="sm"
+          class="max-sm:h-10 max-sm:px-3.5"
           href={project.app}
           target="_blank"
           rel="noreferrer"
@@ -53,6 +55,7 @@
         <Button
           variant="outline"
           size="sm"
+          class="max-sm:h-10 max-sm:px-3.5"
           href={project.docs}
           target="_blank"
           rel="noreferrer"
@@ -66,6 +69,7 @@
         <Button
           variant="outline"
           size="sm"
+          class="max-sm:h-10 max-sm:px-3.5"
           href={project.pypi}
           target="_blank"
           rel="noreferrer"

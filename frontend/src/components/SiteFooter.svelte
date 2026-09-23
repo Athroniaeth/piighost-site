@@ -5,7 +5,10 @@
   import { GITHUB_ORG, HUB_URL, projects } from "../lib/site";
   import type { NomDePage } from "../lib/routes";
 
-  const EXTERNE = "hover:text-foreground";
+  /** Sur téléphone, chaque lien prend 40 px de haut : une liste serrée de
+   *  liens de 20 px est la cible tactile la plus ratée d'une page. */
+  const EXTERNE =
+    "hover:text-foreground max-sm:inline-flex max-sm:min-h-10 max-sm:items-center";
 </script>
 
 <footer class="border-t">
@@ -18,7 +21,7 @@
     </div>
     <div>
       <p class="text-sm font-semibold">{i18n.t.footer.projects}</p>
-      <ul class="mt-3 space-y-2 text-sm text-muted-foreground">
+      <ul class="mt-3 space-y-2 text-sm text-muted-foreground max-sm:space-y-0">
         {#each projects as projet (projet.slug)}
           <li>
             <Lien vers={projet.slug as NomDePage} class={EXTERNE}
@@ -30,7 +33,7 @@
     </div>
     <div>
       <p class="text-sm font-semibold">{i18n.t.footer.links}</p>
-      <ul class="mt-3 space-y-2 text-sm text-muted-foreground">
+      <ul class="mt-3 space-y-2 text-sm text-muted-foreground max-sm:space-y-0">
         <li>
           <a
             class={EXTERNE}

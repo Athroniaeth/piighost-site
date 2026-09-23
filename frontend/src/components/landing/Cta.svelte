@@ -20,7 +20,7 @@
 
 <section
   id="get-started"
-  class="flex min-h-[calc(100dvh-4rem)] scroll-mt-16 flex-col justify-center"
+  class="flex scroll-mt-16 flex-col justify-center md:min-h-[calc(100dvh-4rem)]"
 >
   <div class="mx-auto w-full max-w-3xl px-6 py-20 text-center">
     <Ghost class="mx-auto mb-6 size-14 text-primary" />

@@ -41,7 +41,12 @@
     { de: 1, a: 0, gabarit: "reply", jetons: false },
   ];
 
-  const LIGNES = ["left-[12.5%]", "left-[37.5%]", "left-[62.5%]", "left-[87.5%]"];
+  const LIGNES = [
+    "left-[12.5%]",
+    "left-[37.5%]",
+    "left-[62.5%]",
+    "left-[87.5%]",
+  ];
 
   /** La flèche et sa bulle, pour chaque intervalle parcouru. */
   const INTERVALLES: Record<string, { fleche: string; bulle: string }> = {
@@ -53,14 +58,21 @@
     INTERVALLES[`${Math.min(de, a)}-${Math.max(de, a)}`];
 
   const hw = $derived(i18n.t.howItWorks);
-  const couloirs = $derived([hw.lanes.user, "piighost", hw.lanes.model, hw.lanes.tools]);
+  const couloirs = $derived([
+    hw.lanes.user,
+    "piighost",
+    hw.lanes.model,
+    hw.lanes.tools,
+  ]);
 
   /** Un gabarit rempli, en valeurs ou en jetons, découpé en morceaux. */
   function morceaux(gabarit: Gabarit, jetons: boolean) {
-    const texte = gabarit === "code" ? "send_email(to={EMAIL})" : hw.messages[gabarit];
+    const texte =
+      gabarit === "code" ? "send_email(to={EMAIL})" : hw.messages[gabarit];
     return texte.split(/(\{ID\}|\{EMAIL\})/g).map((part) => {
       const cle = part.slice(1, -1) as keyof typeof VALEURS;
-      if (!(part.startsWith("{") && cle in VALEURS)) return { texte: part, classe: "" };
+      if (!(part.startsWith("{") && cle in VALEURS))
+        return { texte: part, classe: "" };
       const v = VALEURS[cle];
       return {
         texte: jetons ? v.jeton : v.brut,
@@ -142,7 +154,7 @@
           >
             {couloirs[message.de]} → {couloirs[message.a]}
           </p>
-          <p class="mt-1 break-words text-sm leading-relaxed">
+          <p class="mt-1 break-words text-[0.9375rem] leading-relaxed">
             {@render bulle(message.gabarit, message.jetons)}
           </p>
         </li>

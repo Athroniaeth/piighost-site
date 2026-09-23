@@ -123,3 +123,15 @@ body::before {
     transparent
   );
 }
+
+/* Tant que l'écran ne laisse pas 2,5 rem de chaque côté de la colonne de
+   48 rem, la feuille déborderait : elle élargit alors la page, et un téléphone
+   dézoome. Sous 53 rem, elle devient un aplat bord à bord, sans dégradé, puisque
+   le semis ne se voit plus de part et d'autre du texte. */
+@media (width < 53rem) {
+  .feuille::before {
+    inset: 0;
+    background-image: none;
+    background-color: var(--background);
+  }
+}

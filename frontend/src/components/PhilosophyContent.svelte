@@ -16,7 +16,7 @@
 
   {#if p.intro}
     <p
-      class="mb-12 text-justify text-lg leading-relaxed hyphens-auto text-muted-foreground 2xl:text-base"
+      class="mb-12 sm:text-justify text-lg leading-relaxed hyphens-auto text-muted-foreground 2xl:text-base"
     >
       {p.intro}
     </p>
@@ -30,7 +30,7 @@
 
       {#each section.paragraphs as para, pi (pi)}
         <p
-          class="mt-4 text-justify leading-7 hyphens-auto text-muted-foreground"
+          class="mt-4 sm:text-justify leading-7 hyphens-auto text-muted-foreground"
         >
           {para}
         </p>
@@ -84,7 +84,7 @@
           {/if}
           {#each sous.paragraphs as para, pi (pi)}
             <p
-              class="mt-4 text-justify leading-7 hyphens-auto text-muted-foreground"
+              class="mt-4 sm:text-justify leading-7 hyphens-auto text-muted-foreground"
             >
               {para}
             </p>

@@ -24,7 +24,7 @@
 
       {#each section.paragraphs ?? [] as paragraphe, j (j)}
         <p
-          class="mt-4 text-justify leading-7 hyphens-auto text-muted-foreground"
+          class="mt-4 sm:text-justify leading-7 hyphens-auto text-muted-foreground"
         >
           <Inline texte={paragraphe} />
         </p>
@@ -56,7 +56,7 @@
 
       {#if section.afterCode}
         <p
-          class="mt-4 text-justify leading-7 hyphens-auto text-muted-foreground"
+          class="mt-4 sm:text-justify leading-7 hyphens-auto text-muted-foreground"
         >
           <Inline texte={section.afterCode} />
         </p>

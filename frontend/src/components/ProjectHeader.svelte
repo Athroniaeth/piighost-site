@@ -6,7 +6,7 @@
   import Button from "../ui/Button.svelte";
   import { i18n } from "../lib/i18n.svelte";
   import { track } from "../lib/analytics";
-  import type { Project } from "../lib/site";
+  import { docsPiighost, type Project } from "../lib/site";
   import type { NomDePage } from "../lib/routes";
 
   let { project }: { project: Project } = $props();
@@ -60,7 +60,9 @@
           variant="outline"
           size="sm"
           class="max-sm:h-10 max-sm:px-3.5"
-          href={project.docs}
+          href={project.slug === "piighost"
+            ? docsPiighost(i18n.locale)
+            : project.docs}
           target="_blank"
           rel="noreferrer"
           onclick={() => sortant("docs")}

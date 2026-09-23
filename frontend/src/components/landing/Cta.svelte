@@ -5,7 +5,7 @@
   import Ghost from "../Ghost.svelte";
   import GithubIcon from "../GithubIcon.svelte";
   import { i18n } from "../../lib/i18n.svelte";
-  import { GITHUB_ORG } from "../../lib/site";
+  import { GITHUB_ORG, docsPiighost } from "../../lib/site";
 
   /**
    * La page se referme sur la phrase qui l'ouvre.
@@ -49,7 +49,7 @@
     <div class="mt-7 flex flex-wrap justify-center gap-3">
       <Button
         size="xl"
-        href="https://athroniaeth.github.io/piighost/"
+        href={docsPiighost(i18n.locale)}
         target="_blank"
         rel="noreferrer"
       >

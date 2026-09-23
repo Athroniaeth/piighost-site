@@ -43,7 +43,8 @@
     for (const jeton of pythonTokens(code)) {
       jeton.text.split("\n").forEach((morceau, i) => {
         if (i > 0) sortie.push([]);
-        if (morceau) sortie[sortie.length - 1].push({ ...jeton, text: morceau });
+        if (morceau)
+          sortie[sortie.length - 1].push({ ...jeton, text: morceau });
       });
     }
     return sortie;

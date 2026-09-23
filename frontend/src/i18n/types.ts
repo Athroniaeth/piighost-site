@@ -262,6 +262,13 @@ export type Dictionary = {
   };
   seo: {
     defaultTitle: string;
+    /** Le titre d'onglet des pages projet, complet, sans suffixe. */
+    titles: {
+      piighost: string;
+      api: string;
+      chat: string;
+      proofreader: string;
+    };
     defaultDescription: string;
     philosophyDescription: string;
     pages: {

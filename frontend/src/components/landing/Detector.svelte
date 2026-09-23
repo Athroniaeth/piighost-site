@@ -72,9 +72,7 @@
       </div>
     {/each}
   </div>
-  <div
-    class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
-  >
+  <div class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
     <p class="text-sm text-muted-foreground">{i18n.t.detector.supported}</p>
     <ul class="flex flex-wrap items-center justify-center gap-6">
       {#each DETECTEURS as detecteur (detecteur.nom)}

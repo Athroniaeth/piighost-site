@@ -5,7 +5,7 @@
   import MarqueIcone from "../MarqueIcone.svelte";
   import { i18n } from "../../lib/i18n.svelte";
   import { lien } from "../../lib/routes";
-  import { getProject } from "../../lib/site";
+  import { docsPiighost } from "../../lib/site";
 
   /**
    * Le bandeau montre du code, pas une carte.
@@ -77,7 +77,7 @@ agent = create_agent(
         <Button
           size="xl"
           variant="outline"
-          href={getProject("piighost").docs}
+          href={docsPiighost(i18n.locale)}
           target="_blank"
           rel="noreferrer"
         >

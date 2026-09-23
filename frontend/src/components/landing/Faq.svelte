@@ -5,7 +5,7 @@
   import BookText from "@lucide/svelte/icons/book-text";
   import Lien from "../Lien.svelte";
   import { i18n } from "../../lib/i18n.svelte";
-  import { DISCORD_URL, getProject } from "../../lib/site";
+  import { DISCORD_URL, docsPiighost, getProject } from "../../lib/site";
   import type { NomDePage } from "../../lib/routes";
 
   /**
@@ -43,7 +43,7 @@
       cle: "docs",
       nom: faq.help.docs,
       detail: "athroniaeth.github.io",
-      href: piighost.docs ?? piighost.repo,
+      href: docsPiighost(i18n.locale),
     },
   ]);
 

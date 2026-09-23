@@ -30,22 +30,23 @@ const PAGES: Record<NomDePage, Entree> = {
     titre: t.seo.defaultTitle,
     description: t.seo.defaultDescription,
   }),
-  // Le seul titre absolu du site : il porte déjà le nom du produit, le
-  // suffixer donnerait « piighost - ... - piighost ».
+  // Les pages projet ont un titre complet, qui dit ce qu'est le projet : un
+  // gabarit « piighost-api - piighost » ne disait rien, et le titre de
+  // piighost était écrit en anglais sur la page française.
   piighost: (t) => ({
-    titre: "piighost - PII anonymization for Python",
+    titre: t.seo.titles.piighost,
     description: t.seo.pages.piighost,
   }),
   api: (t) => ({
-    titre: "piighost-api - piighost",
+    titre: t.seo.titles.api,
     description: t.seo.pages.api,
   }),
   chat: (t) => ({
-    titre: "piighost-chat - piighost",
+    titre: t.seo.titles.chat,
     description: t.seo.pages.chat,
   }),
   proofreader: (t) => ({
-    titre: "piighost-proofreader - piighost",
+    titre: t.seo.titles.proofreader,
     description: t.seo.pages.proofreader,
   }),
   philosophy: (t) => ({

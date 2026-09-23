@@ -22,14 +22,14 @@ export const en: Dictionary = {
   },
   projectHeader: {
     repository: "Repository",
-    docs: "Docs",
+    docs: "Documentation",
     pypi: "PyPI",
     app: "Live demo",
   },
   projects: {
     piighost: {
       tagline:
-        "The core library. Build PII anonymization pipelines for AI agents.",
+        "The core library. Build PII de-identification pipelines for AI agents.",
       sections: [
         {
           heading: "What it does",
@@ -42,7 +42,7 @@ export const en: Dictionary = {
         {
           heading: "Reversible by design",
           paragraphs: [
-            "piighost performs reversible de-identification. Because the mapping between a value and its placeholder is kept so the data can be restored, this is pseudonymisation under the GDPR, not permanent anonymisation. The real values stay stored for the duration of the conversation and must be protected accordingly.",
+            "piighost performs reversible de-identification. Because the mapping between a value and its placeholder is kept so the data can be restored, this is pseudonymization under the GDPR, not permanent anonymization. The real values stay stored for the duration of the conversation and must be protected accordingly.",
           ],
         },
         {
@@ -57,8 +57,8 @@ export const en: Dictionary = {
             "Pluggable detectors: regex catalogs (generic, US, EU, FR), NER (GLiNER2, spaCy, Transformers), an LLM detector, plus exact-match, composite, and chunked detectors, and you keep the one you trust (Presidio plugs in through an extra).",
             "Reversible, transparent tokens: each value becomes a stable id like `<<PERSON:1>>` and is put back automatically, so the end user never sees a token; label-only, masked, and keyed-hash factories are available too.",
             "Consistent across a conversation: the same value keeps the same token for the whole thread, backed by in-process, Redis, or SQLAlchemy memory (Redis and SQL can encrypt values at rest and hash keys).",
-            "Agent integrations with a tool boundary: LangChain middleware, Pydantic AI hooks, and LlamaIndex; the tool receives the real value while the model sees only the token, with token-by-token streaming restoration.",
-            "A customizable staged pipeline: detect, link, resolve overlaps, expand, anonymize, and an optional guard rail that refuses a reply with residual PII; swap in fuzzy matching to tolerate typos or add your own stage.",
+            "Agent integrations with a tool boundary: LangChain middleware, Pydantic AI hooks, and LlamaIndex; the tool receives the real value while the model sees only the placeholder, with streaming restoration that keeps each placeholder whole.",
+            "A customizable staged pipeline: detect, link, resolve overlaps, expand, de-identify, and an optional guard rail that refuses a reply with residual PII; swap in fuzzy matching to tolerate typos or add your own stage.",
             "Config-driven and self-hostable: build a whole pipeline from a TOML or JSON file with a CLI to validate it, run it in your process, or as a service through the companion piighost-api.",
             "Typed and observable: ships `py.typed` and a minimal core with everything heavy behind extras, plus OpenTelemetry per-stage spans with optional payload redaction.",
           ],
@@ -67,7 +67,7 @@ export const en: Dictionary = {
           heading: "Limitations and trade-offs",
           list: [
             "The token does not embed the encrypted value, on purpose. Unlike a format-preserving encryption token, piighost uses an id (`<<PERSON:1>>`) backed by a cache, so a captured token reveals nothing on its own. In return, you need a cache to hold the token-to-value mapping.",
-            "The cache stores the real values, so reversibility is pseudonymisation, not anonymisation. piighost gives you AES-GCM encryption of the values and Argon2id hashing of the keys, but the database itself must be secured in production.",
+            "The cache stores the real values, so reversibility is pseudonymization, not anonymization. piighost gives you AES-GCM encryption of the values and Argon2id hashing of the keys, but the database itself must be secured in production.",
             "No dataset anonymization. No k-anonymity, l-diversity, differential privacy, or tabular data. piighost protects live text and conversations, not a whole dataset.",
             "No checksum validation (Luhn, IBAN, NIR), by choice. The regex detector matches on shape alone so it never lets a real value mangled by OCR leak, at the cost of occasionally flagging a string that only looks like PII.",
           ],
@@ -100,11 +100,12 @@ export const en: Dictionary = {
         {
           heading: "Features",
           list: [
-            "Anonymize and deanonymize endpoints over the full pipeline.",
+            "De-identify and restore endpoints over the full pipeline.",
+            "OpenAI-compatible (under `/openai/v1`) and Anthropic-compatible proxies: an existing client only changes its `base_url`.",
             "Any piighost detector, loaded once and shared across requests.",
             "Thread-scoped memory so entities stay consistent across a conversation.",
             "API-key authentication with Argon2 hashing, scopes, and expiration.",
-            "Redis cache for shared anonymization mappings.",
+            "Redis cache for shared de-identification mappings.",
             "Pipeline configured at startup with a module:variable import path.",
           ],
         },
@@ -113,26 +114,26 @@ export const en: Dictionary = {
           code: "quickstart",
         },
         {
-          heading: "Talk to it",
+          heading: "Example request",
           code: "request",
         },
       ],
     },
     chat: {
       tagline:
-        "A demo chatbot that anonymizes messages before the LLM sees them.",
+        "A demo chatbot that de-identifies messages before the LLM sees them.",
       sections: [
         {
           heading: "What it demonstrates",
           paragraphs: [
-            "piighost-chat is a demo chatbot that shows a privacy-preserving conversation end to end. User messages are anonymized before they reach the LLM, and responses are deanonymized before they reach the user. Tools receive the real values.",
+            "piighost-chat is a demo chatbot that shows a privacy-preserving conversation end to end. User messages are de-identified before they reach the LLM, and responses are restored before they reach the user. Tools receive the real values.",
           ],
         },
         {
           heading: "The stack",
           list: [
             "A React frontend and a Litestar backend running a LangChain agent.",
-            "PIIAnonymizationMiddleware wrapping the agent: anonymize before the LLM, deanonymize after.",
+            "PIIAnonymizationMiddleware wrapping the agent: de-identify before the LLM, restore after.",
             "piighost-api for detection and highlighting, with thread-scoped memory for consistent placeholders.",
             "keyshield for API-key authentication.",
           ],
@@ -144,7 +145,7 @@ export const en: Dictionary = {
             "The user types a message.",
             "The backend calls piighost-api to detect PII; the frontend highlights the entities.",
             "The user confirms, and the message goes to the agent.",
-            "The middleware anonymizes it before the model sees it, and deanonymizes the reply.",
+            "The middleware de-identifies it before the model sees it, and restores the reply.",
           ],
         },
         {
@@ -155,12 +156,12 @@ export const en: Dictionary = {
     },
     proofreader: {
       tagline:
-        "An LLM CV proofreader that anonymizes documents before any LLM call.",
+        "An LLM CV proofreader that de-identifies documents before any LLM call.",
       sections: [
         {
           heading: "What it does",
           paragraphs: [
-            "piighost-proofreader is an LLM-powered proofreader for CVs. You upload a PDF and get an annotated list of mistakes with click-to-highlight on the rendered pages. The document is anonymized with piighost-api before any LLM call.",
+            "piighost-proofreader is an LLM-powered proofreader for CVs. You upload a PDF and get an annotated list of mistakes with click-to-highlight on the rendered pages. The document is de-identified with piighost-api before any LLM call.",
           ],
         },
         {
@@ -169,7 +170,7 @@ export const en: Dictionary = {
           list: [
             "opendataloader-pdf converts the PDF to Markdown for the LLM.",
             "PyMuPDF renders each page and emits per-word bounding boxes.",
-            "piighost-api anonymizes the Markdown before the LLM sees it.",
+            "piighost-api de-identifies the Markdown before the LLM sees it.",
             "A LangChain and LiteLLM chain runs structured-output proofreading.",
             "A locator re-anchors each mistake to a page and bounding box.",
             "Streamlit renders the pages with overlays; clicking a mistake highlights it.",
@@ -185,7 +186,7 @@ export const en: Dictionary = {
     },
   },
   footer: {
-    tagline: "Anonymize PII before it reaches the LLM.",
+    tagline: "De-identify PII before it reaches the LLM.",
     projects: "Projects",
     links: "Links",
     mit: "MIT licensed.",
@@ -195,9 +196,9 @@ export const en: Dictionary = {
     sloganWork: "The model works.",
     sloganStay: "The data stays.",
     codeComment:
-      "the model only sees tokens; send_email receives the real values",
+      "the model only sees placeholders; send_email receives the real values",
     description:
-      "piighost hides the personal data in your prompts before it reaches the model, then restores the real values in the response. Pluggable detectors, regex, NER or an LLM, and a companion OpenAI and Anthropic proxy.",
+      "piighost replaces the personal data in your prompts with placeholders before it reaches the model, then restores the real values in the response. Pluggable detectors (regex, NER or an LLM), and OpenAI- and Anthropic-compatible proxies through the piighost-api server.",
     getStarted: "Get started",
     docs: "Read the docs",
     worksWith: "Works with",
@@ -245,7 +246,7 @@ export const en: Dictionary = {
         },
       ],
       noteLead: "One limit worth knowing.",
-      note: "piighost does pseudonymisation in the GDPR sense, not anonymisation: the mapping between values and placeholders is kept on your side for the duration of the conversation, and has to be protected like personal data.",
+      note: "piighost does pseudonymization in the GDPR sense, not anonymization: the mapping between values and placeholders is kept on your side for the duration of the conversation, and has to be protected like personal data.",
       yes: "yes",
       partly: "partly",
       no: "no",
@@ -261,25 +262,25 @@ export const en: Dictionary = {
       sent: "Email sent to {EMAIL}",
       reply: "Case {ID} was sent to {EMAIL}.",
     },
-    note: "The model's column holds nothing but tokens. Even what the tools return is anonymized before the model reads it.",
+    note: "The model's column holds nothing but placeholders. Even what the tools return is de-identified before the model reads it.",
   },
   detector: {
     eyebrow: "Why piighost",
     title: "More than a PII detector",
     description:
-      "Regex and NER detectors know how to find confidential data. Anonymizing an exchange with an LLM also means replacing that data, tracking it from one message to the next, and restoring it. piighost orchestrates all of it for you.",
+      "Regex and NER detectors know how to find confidential data. De-identifying an exchange with an LLM also means replacing that data, tracking it from one message to the next, and restoring it. piighost orchestrates all of it for you.",
     items: [
       {
         title: "Composable detectors",
         body: "Regex, NER or LLM, in a single pipeline. You keep the one you trust.",
       },
       {
-        title: "Tokens that come back on their own",
+        title: "Placeholders that come back on their own",
         body: "The model reads <<PERSON:1>>, your user and your tools read the real name.",
       },
       {
-        title: "The same token all along",
-        body: "A value keeps its token from one message to the next, so the model never loses the thread.",
+        title: "The same placeholder all along",
+        body: "A value keeps its placeholder from one message to the next, so the model never loses the thread.",
       },
       {
         title: "One file, your infrastructure",
@@ -292,7 +293,7 @@ export const en: Dictionary = {
     eyebrow: "The ecosystem",
     title: "One privacy layer, many projects",
     description:
-      "Start with the library. Reach for the server, the chat demo, and the proofreader as you grow.",
+      "Start with the library. Move to the server when several services share one pipeline, and see it all at work in the chat demo and the CV proofreader.",
     learnMore: "Learn more",
     moreToCome: "More to come.",
   },
@@ -311,9 +312,9 @@ export const en: Dictionary = {
       pydanticResult:
         'The model reasons over <<PERSON:1>>; you read "Patrick" in the reply.',
       llamaNodes:
-        "Anonymize each node before it is embedded, so the index is built on tokens.",
+        "De-identify each node before it is embedded, so the index is built on tokens.",
       llamaQuery:
-        "The query engine anonymizes the question and restores the answer.",
+        "The query engine de-identifies the question and restores the answer.",
       question: "Where does Patrick live?",
       document: "Patrick lives in Paris.",
     },
@@ -338,7 +339,7 @@ export const en: Dictionary = {
     },
     items: [
       {
-        question: "Why anonymize instead of self-hosting the model?",
+        question: "Why de-identify instead of self-hosting the model?",
         answer: [
           "Self-hosting protects best, but the GPU bill, security and updates are on you, and the model is often weaker. With piighost you keep the best models, and only placeholders like ",
           { code: "<<PERSON:1>>" },
@@ -355,8 +356,10 @@ export const en: Dictionary = {
         question: "What do I need in production?",
         answer: [
           "The library and a pipeline described in TOML, loaded with ",
+          { code: "load_thread_pipeline" },
+          " for a conversation (",
           { code: "load_pipeline" },
-          ". ",
+          " for a one-off text). ",
           { code: "pip install 'piighost[config]'" },
           " is enough for regex; add your detector's extra (",
           { code: "gliner2" },
@@ -374,7 +377,7 @@ export const en: Dictionary = {
       {
         question: "Can I use piighost with Claude Code?",
         answer: [
-          "Yes, through its hooks. They anonymize your prompt and tool outputs, and put the real values back into tool inputs. They rely on a piighost-api server, installed with ",
+          "Yes, through its hooks. They de-identify your prompt and tool outputs, and put the real values back into tool inputs. They rely on a piighost-api server, installed with ",
           { code: "pip install 'piighost[client]'" },
           ".",
         ],
@@ -382,7 +385,7 @@ export const en: Dictionary = {
       {
         question: "Which frameworks are supported?",
         answer: [
-          "LangChain, Pydantic AI and LlamaIndex, through a middleware, hooks and a node anonymizer. For any other client, the OpenAI- and Anthropic-compatible proxies in piighost-api only need a ",
+          "LangChain, Pydantic AI and LlamaIndex, through a middleware, hooks and a node transform that de-identifies. For any other client, the OpenAI- and Anthropic-compatible proxies in piighost-api only need a ",
           { code: "base_url" },
           " change.",
         ],
@@ -396,7 +399,7 @@ export const en: Dictionary = {
       {
         question: "What is actually sent to the model?",
         answer: [
-          "Only the anonymized text, where each value has become a placeholder like ",
+          "Only the de-identified text, where each value has become a placeholder like ",
           { code: "<<PERSON:1>>" },
           ". The mapping stays on your side for the length of the conversation, and piighost restores the values locally.",
         ],
@@ -803,20 +806,27 @@ export const en: Dictionary = {
     ],
   },
   seo: {
-    defaultTitle: "piighost - anonymize PII before it reaches the LLM",
+    defaultTitle: "piighost - de-identify PII before it reaches the LLM",
+    titles: {
+      piighost:
+        "piighost - PII de-identification library for Python LLM agents",
+      api: "piighost-api - HTTP server and OpenAI and Anthropic proxies",
+      chat: "piighost-chat - de-identified chat demo",
+      proofreader: "piighost-proofreader - de-identified CV proofreader",
+    },
     defaultDescription:
-      "piighost is a Python library to anonymize personally identifiable information before it reaches a large language model. Detect PII with regex, NER or an LLM, swap it for stable placeholders, and restore real values for your tools.",
+      "piighost is a Python library to de-identify personally identifiable information before it reaches a large language model. Detect PII with regex, NER or an LLM, swap it for stable placeholders, and restore real values for your tools.",
     philosophyDescription:
       "The principles behind piighost: minimize the personal data that reaches a model, keep the mapping local, and stay reversible for GDPR.",
     pages: {
       piighost:
-        "The core Python library to build PII anonymization pipelines. Detect with regex, NER or an LLM, swap PII for stable placeholders, and restore real values on tool output.",
-      api: "piighost-api hosts one anonymization pipeline behind an HTTP endpoint, so any service can redact PII before it reaches a model.",
-      chat: "piighost-chat is a demo chatbot that anonymizes each message before the model sees it, then restores the real values in the reply.",
+        "The core Python library to build PII de-identification pipelines. Detect with regex, NER or an LLM, swap PII for stable placeholders, and restore real values on tool output.",
+      api: "piighost-api hosts one de-identification pipeline behind an HTTP endpoint, so any service can swap PII for placeholders before it reaches a model.",
+      chat: "piighost-chat is a demo chatbot that de-identifies each message before the model sees it, then restores the real values in the reply.",
       proofreader:
-        "piighost-proofreader is a CV proofreader that anonymizes documents before any model call, so personal data never leaves your control.",
+        "piighost-proofreader is a CV proofreader that de-identifies documents before any model call, so personal data never leaves your control.",
       playground:
-        "Compose a full PII anonymization pipeline in the browser: detect, resolve, link and anonymize, then export it as piighost config.",
+        "Compose a full PII de-identification pipeline in the browser: detect, resolve, link and de-identify, then export it as piighost config.",
       detector:
         "Test a single PII detector in your browser: regex, classic NER or GLiNER. No data leaves the page.",
     },

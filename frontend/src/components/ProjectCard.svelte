@@ -19,7 +19,9 @@
     chat: MessagesSquare,
     proofreader: FileText,
   } as const;
-  const Icone = $derived(ICONES[project.slug as keyof typeof ICONES] ?? Package);
+  const Icone = $derived(
+    ICONES[project.slug as keyof typeof ICONES] ?? Package,
+  );
 
   const tagline = $derived(
     i18n.t.projects[project.slug as keyof typeof i18n.t.projects]?.tagline ??

@@ -2,7 +2,7 @@
   import Logo from "./Logo.svelte";
   import Lien from "./Lien.svelte";
   import { i18n } from "../lib/i18n.svelte";
-  import { GITHUB_ORG, HUB_URL, projects } from "../lib/site";
+  import { GITHUB_ORG, HUB_URL, docsPiighost, projects } from "../lib/site";
   import type { NomDePage } from "../lib/routes";
 
   /** Sur téléphone, chaque lien prend 40 px de haut : une liste serrée de
@@ -53,7 +53,7 @@
         <li>
           <a
             class={EXTERNE}
-            href="https://athroniaeth.github.io/piighost/"
+            href={docsPiighost(i18n.locale)}
             target="_blank"
             rel="noreferrer">Documentation</a
           >

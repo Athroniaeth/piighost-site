@@ -11,7 +11,7 @@
   import { i18n } from "../lib/i18n.svelte";
   import { router } from "../lib/router.svelte";
   import { track } from "../lib/analytics";
-  import { GITHUB_ORG, HUB_URL, getProject, projects } from "../lib/site";
+  import { GITHUB_ORG, HUB_URL, docsPiighost, projects } from "../lib/site";
   import { fermerAuClicDehors } from "../lib/dehors";
   import type { NomDePage } from "../lib/routes";
 
@@ -70,30 +70,8 @@
       aria-label={i18n.t.nav.mainNavigation}
       class="hidden items-center gap-1 lg:flex"
     >
-      <Lien vers="home" class="{LIEN_NAV} aria-[current=page]:text-primary">
-        {i18n.t.nav.home}
-      </Lien>
-
-      <a
-        href={getProject("piighost").docs}
-        target="_blank"
-        rel="noreferrer"
-        class={LIEN_NAV}
-        onclick={() => sortant("docs")}
-      >
-        {i18n.t.nav.docs}
-      </a>
-
-      <a
-        href={HUB_URL}
-        target="_blank"
-        rel="noreferrer"
-        class={LIEN_NAV}
-        onclick={() => sortant("hub")}
-      >
-        {i18n.t.nav.hub}
-      </a>
-
+      <!-- Le contenu du site avant les liens qui ouvrent un onglet. Accueil
+           n'y est plus : le logo, à gauche, y mène déjà. -->
       <!-- `details` plutôt qu'un menu en JavaScript : l'ouverture au clavier, la
            fermeture par Échap et le repli sans script viennent du navigateur.
            La seule chose qu'il ne fait pas est se refermer sur un clic à côté,
@@ -139,6 +117,26 @@
       >
         {i18n.t.nav.philosophy}
       </Lien>
+
+      <a
+        href={docsPiighost(i18n.locale)}
+        target="_blank"
+        rel="noreferrer"
+        class={LIEN_NAV}
+        onclick={() => sortant("docs")}
+      >
+        {i18n.t.nav.docs}
+      </a>
+
+      <a
+        href={HUB_URL}
+        target="_blank"
+        rel="noreferrer"
+        class={LIEN_NAV}
+        onclick={() => sortant("hub")}
+      >
+        {i18n.t.nav.hub}
+      </a>
     </nav>
 
     <div class="flex items-center gap-1">
@@ -170,42 +168,8 @@
           aria-label={i18n.t.nav.mainNavigation}
           class="absolute inset-x-0 top-16 max-h-[calc(100dvh-4rem)] overflow-y-auto border-b bg-background px-4 pb-5 pt-2"
         >
-          <ul class="grid gap-0.5">
-            <li>
-              <Lien
-                vers="home"
-                class="{LIEN_MOBILE} aria-[current=page]:text-primary"
-                >{i18n.t.nav.home}</Lien
-              >
-            </li>
-            <li>
-              <a
-                href={getProject("piighost").docs}
-                target="_blank"
-                rel="noreferrer"
-                class={LIEN_MOBILE}
-                onclick={() => sortant("docs")}>{i18n.t.nav.docs}</a
-              >
-            </li>
-            <li>
-              <a
-                href={HUB_URL}
-                target="_blank"
-                rel="noreferrer"
-                class={LIEN_MOBILE}
-                onclick={() => sortant("hub")}>{i18n.t.nav.hub}</a
-              >
-            </li>
-            <li>
-              <Lien
-                vers="philosophy"
-                class="{LIEN_MOBILE} aria-[current=page]:text-primary"
-                >{i18n.t.nav.philosophy}</Lien
-              >
-            </li>
-          </ul>
           <p
-            class="mt-4 px-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+            class="px-3 pt-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground"
           >
             {i18n.t.nav.projects}
           </p>
@@ -221,6 +185,33 @@
                 </Lien>
               </li>
             {/each}
+          </ul>
+          <ul class="mt-4 grid gap-0.5 border-t pt-4">
+            <li>
+              <Lien
+                vers="philosophy"
+                class="{LIEN_MOBILE} aria-[current=page]:text-primary"
+                >{i18n.t.nav.philosophy}</Lien
+              >
+            </li>
+            <li>
+              <a
+                href={docsPiighost(i18n.locale)}
+                target="_blank"
+                rel="noreferrer"
+                class={LIEN_MOBILE}
+                onclick={() => sortant("docs")}>{i18n.t.nav.docs}</a
+              >
+            </li>
+            <li>
+              <a
+                href={HUB_URL}
+                target="_blank"
+                rel="noreferrer"
+                class={LIEN_MOBILE}
+                onclick={() => sortant("hub")}>{i18n.t.nav.hub}</a
+              >
+            </li>
           </ul>
         </nav>
       </details>

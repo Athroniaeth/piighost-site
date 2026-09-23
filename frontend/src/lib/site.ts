@@ -32,7 +32,6 @@ export const projects: Project[] = [
     tagline: "A REST server that hosts one piighost pipeline behind HTTP.",
     repo: `${GITHUB_ORG}/piighost-api`,
     pypi: "https://pypi.org/project/piighost-api/",
-    docs: "https://athroniaeth.github.io/piighost-api/",
   },
   {
     slug: "chat",
@@ -61,4 +60,14 @@ export function getProject(slug: string): Project {
   const p = projects.find((x) => x.slug === slug);
   if (!p) throw new Error(`unknown project: ${slug}`);
   return p;
+}
+
+/**
+ * La documentation de piighost dans la langue de la page. Elle est bilingue,
+ * la version française vit sous /fr/ : la renvoyer vers l'anglaise perdait le
+ * lecteur francophone au premier clic.
+ */
+export function docsPiighost(locale: string): string {
+  const base = getProject("piighost").docs ?? getProject("piighost").repo;
+  return locale === "fr" ? `${base}fr/` : base;
 }

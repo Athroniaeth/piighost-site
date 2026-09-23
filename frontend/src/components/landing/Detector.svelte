@@ -7,7 +7,6 @@
   import { i18n } from "../../lib/i18n.svelte";
   import { classeDe } from "../../lib/entites";
   import Regex from "@lucide/svelte/icons/regex";
-  import Sparkles from "@lucide/svelte/icons/sparkles";
   import gliner2 from "../../assets/marques/gliner2.png";
   import spacy from "../../assets/marques/spacy.png";
   import huggingface from "../../assets/marques/huggingface.svg";
@@ -21,15 +20,14 @@
    * Chaque logo est celui que le projet sert lui-même. GLiNER2 prend l'étoile
    * de Fastino, qui le publie, inversée en mode sombre puisqu'elle est noire.
    * Transformers prend le visage de Hugging Face, et Presidio le carré de
-   * Microsoft, qui est l'icône de son propre dépôt. Regex et LLM ne sont pas
-   * des marques mais des techniques : un glyphe neutre, à la couleur du texte.
+   * Microsoft, qui est l'icône de son propre dépôt. Regex n'est pas une
+   * marque mais une technique : un glyphe neutre, à la couleur du texte.
    */
   const DETECTEURS = [
     { nom: "Regex", glyphe: Regex },
     { nom: "GLiNER2", src: gliner2, inverse: true },
     { nom: "spaCy", src: spacy },
     { nom: "Transformers", src: huggingface },
-    { nom: "LLM", glyphe: Sparkles },
     { nom: "Presidio", src: presidio },
   ];
 
@@ -80,7 +78,7 @@
     <p class="text-sm text-muted-foreground">{i18n.t.detector.supported}</p>
     <ul class="flex flex-wrap items-center justify-center gap-6">
       {#each DETECTEURS as detecteur (detecteur.nom)}
-        <li class="flex items-center gap-2 font-semibold">
+        <li class="flex items-center gap-2 font-medium">
           {#if detecteur.glyphe}
             {@const Glyphe = detecteur.glyphe}
             <Glyphe class="size-6 shrink-0" aria-hidden="true" />

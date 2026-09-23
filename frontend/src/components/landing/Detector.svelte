@@ -78,7 +78,7 @@
     <p class="text-sm text-muted-foreground">{i18n.t.detector.supported}</p>
     <ul class="flex flex-wrap items-center justify-center gap-6">
       {#each DETECTEURS as detecteur (detecteur.nom)}
-        <li class="flex items-center gap-2 font-medium">
+        <li class="flex items-center gap-2">
           {#if detecteur.glyphe}
             {@const Glyphe = detecteur.glyphe}
             <Glyphe class="size-6 shrink-0" aria-hidden="true" />

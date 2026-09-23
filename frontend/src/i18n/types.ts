@@ -134,6 +134,7 @@ export type Dictionary = {
     title: string;
     description: string;
     items: Array<{ title: string; body: string }>;
+    supported: string;
   };
   ecosystem: {
     eyebrow: string;

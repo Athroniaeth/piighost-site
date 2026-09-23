@@ -283,25 +283,26 @@ export const fr: Dictionary = {
     eyebrow: "Pourquoi piighost",
     title: "Plus qu'un détecteur de PII",
     description:
-      "Repérer les données sensibles, c'est le plus facile. piighost fournit tout le reste : des détecteurs que vous composez, des jetons que vous pouvez annuler, la cohérence sur toute une conversation, et un pipeline que vous exécutez à vos conditions.",
+      "Presidio, GLiNER ou spaCy repèrent très bien les données personnelles. Le plus dur vient après, et c'est ce que fait piighost.",
     items: [
       {
-        title: "Détecteurs composables",
-        body: "Combinez des détecteurs regex, NER et LLM dans un même pipeline et gardez ceux en qui vous avez confiance. Un découpage intégré fractionne les longs documents, si bien que même les gros fichiers sont entièrement couverts.",
+        title: "Des détecteurs composables",
+        body: "Regex, NER, LLM ou Presidio, dans un même pipeline. Vous gardez celui en qui vous avez confiance.",
       },
       {
-        title: "Jetons réversibles et transparents",
-        body: "Chaque valeur devient un jeton stable, restitué automatiquement. Vos utilisateurs et vos outils voient toujours les vraies données, tandis que le modèle ne voit jamais que le jeton.",
+        title: "Des jetons qui reviennent seuls",
+        body: "Le modèle lit <<PERSON:1>>, votre utilisateur et vos outils lisent le vrai nom.",
       },
       {
-        title: "Cohérent sur toute une conversation",
-        body: "Une même valeur conserve le même jeton sur toute une conversation, à travers chaque message, appel d'outil et agent. Rien ne dérive, si bien que le modèle ne perd jamais le fil de qui est qui.",
+        title: "Le même jeton tout au long",
+        body: "Une valeur garde son jeton d'un message à l'autre, et le modèle ne perd pas le fil.",
       },
       {
-        title: "Piloté par config, auto-hébergé",
-        body: "Décrivez un pipeline entier dans un seul fichier de configuration et exécutez-le entièrement sur votre propre infrastructure. Rien ne sort de chez vous, et aucun service tiers à qui faire confiance.",
+        title: "Un fichier, votre infrastructure",
+        body: "Tout le pipeline tient dans un TOML, validé en ligne de commande, exécuté chez vous.",
       },
     ],
+    supported: "Détecteurs pris en charge",
   },
   ecosystem: {
     eyebrow: "L'écosystème",

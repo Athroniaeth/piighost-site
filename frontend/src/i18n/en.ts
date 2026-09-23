@@ -280,25 +280,26 @@ export const en: Dictionary = {
     eyebrow: "Why piighost",
     title: "More than a PII detector",
     description:
-      "Finding sensitive data is the easy part. piighost gives you everything around it: detectors you compose, placeholders you can undo, consistency across a whole conversation, and a pipeline you run on your own terms.",
+      "Presidio, GLiNER and spaCy are very good at finding personal data. The hard part comes after, and that is what piighost does.",
     items: [
       {
         title: "Composable detectors",
-        body: "Combine regex, NER, and LLM detectors in a single pipeline and keep the ones you trust. Built-in chunking splits long documents, so even large files are fully covered.",
+        body: "Regex, NER, LLM or Presidio, in a single pipeline. You keep the one you trust.",
       },
       {
-        title: "Reversible, transparent tokens",
-        body: "Every value becomes a stable placeholder and is restored automatically. Your users and your tools always see the real data, while the model only ever sees the placeholder.",
+        title: "Tokens that come back on their own",
+        body: "The model reads <<PERSON:1>>, your user and your tools read the real name.",
       },
       {
-        title: "Consistent across a conversation",
-        body: "The same value keeps the same placeholder for a whole conversation, across every message, tool call, and agent. Nothing drifts, so the model never loses track of who is who.",
+        title: "The same token all along",
+        body: "A value keeps its token from one message to the next, so the model never loses the thread.",
       },
       {
-        title: "Config-driven and self-hosted",
-        body: "Describe a whole pipeline in one config file and run it entirely on your own infrastructure. Nothing leaves your walls, and there is no extra service to trust.",
+        title: "One file, your infrastructure",
+        body: "The whole pipeline fits in a TOML file, validated from the command line, run on your side.",
       },
     ],
+    supported: "Supported detectors",
   },
   ecosystem: {
     eyebrow: "The ecosystem",

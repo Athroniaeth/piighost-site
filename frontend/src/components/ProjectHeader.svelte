@@ -7,6 +7,7 @@
   import { i18n } from "../lib/i18n.svelte";
   import { track } from "../lib/analytics";
   import type { Project } from "../lib/site";
+  import type { NomDePage } from "../lib/routes";
 
   let { project }: { project: Project } = $props();
 
@@ -16,7 +17,10 @@
   );
 
   const sortant = (destination: string) =>
-    track({ name: "outbound", props: { destination, page: project.slug } });
+    track({
+      name: "outbound",
+      props: { destination, page: project.slug as NomDePage },
+    });
 </script>
 
 <div class="border-b">

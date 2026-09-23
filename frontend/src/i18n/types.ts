@@ -101,6 +101,7 @@ export type Dictionary = {
       note: string;
       /** Lus seulement par un lecteur d'écran : l'icône porte le verdict. */
       yes: string;
+      partly: string;
       no: string;
       option: string;
     };

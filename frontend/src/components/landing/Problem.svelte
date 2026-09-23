@@ -1,6 +1,10 @@
 <script lang="ts">
   import Check from "@lucide/svelte/icons/check";
   import X from "@lucide/svelte/icons/x";
+  import Cloud from "@lucide/svelte/icons/cloud";
+  import Cpu from "@lucide/svelte/icons/cpu";
+  import Ban from "@lucide/svelte/icons/ban";
+  import Tilde from "../Tilde.svelte";
   import Section from "../Section.svelte";
   import Ghost from "../Ghost.svelte";
   import { i18n } from "../../lib/i18n.svelte";
@@ -15,14 +19,27 @@
    * s'arrêtait sur « interdire ». Celle-ci est gardée à part, dans
    * ProblemeCartes.svelte.
    *
-   * Les verdicts sont écrits ici et non dans le dictionnaire : oui ou non ne
-   * dépend pas de la langue, et les écrire deux fois les ferait dériver.
+   * Les verdicts sont écrits ici et non dans le dictionnaire : ils ne dépendent
+   * pas de la langue, et les écrire deux fois les ferait dériver.
+   *
+   * Trois états, pas deux. « En partie » dit un inconvénient mineur et réel :
+   * une bibliothèque qui tourne sur CPU a un coût, et le cacher sous une coche
+   * serait mentir. Il porte `--warning`, ajouté à la charte pour ça.
    */
-  const VERDICTS: boolean[][] = [
-    [true, false, true, true], // modèle hébergé
-    [false, true, false, false], // modèle local
-    [false, true, true, false], // interdire
-    [true, true, true, true], // piighost
+  type Verdict = "oui" | "partiel" | "non";
+  const VERDICTS: Verdict[][] = [
+    ["oui", "non", "oui", "oui"], // modèle hébergé
+    ["non", "oui", "non", "partiel"], // modèle local
+    ["non", "oui", "oui", "non"], // interdire
+    ["oui", "oui", "partiel", "oui"], // piighost
+  ];
+
+  /** L'icône de chaque méthode. Neutre pour les deux options qui marchent en
+   *  partie, rouge pour celle qui renonce, primaire pour celle qui répond. */
+  const METHODES = [
+    { icone: Cloud, ton: "text-muted-foreground" },
+    { icone: Cpu, ton: "text-muted-foreground" },
+    { icone: Ban, ton: "text-destructive" },
   ];
 
   const table = $derived(i18n.t.problem.table);
@@ -66,12 +83,20 @@
                 )}
               >
                 <span class="inline-flex items-center gap-2">
-                  {#if nous}<Ghost size={20} class="shrink-0" />{/if}
+                  {#if nous}
+                    <Ghost size={20} class="shrink-0" />
+                  {:else}
+                    {@const M = METHODES[r]}
+                    <M.icone
+                      class={cn("size-5 shrink-0", M.ton)}
+                      aria-hidden="true"
+                    />
+                  {/if}
                   {ligne.label}
                 </span>
               </th>
               {#each ligne.cells as cellule, c (c)}
-                {@const oui = VERDICTS[r][c]}
+                {@const verdict = VERDICTS[r][c]}
                 <td
                   class={cn(
                     "px-5 py-4",
@@ -79,12 +104,15 @@
                   )}
                 >
                   <span class="inline-flex items-center gap-2">
-                    {#if oui}
+                    {#if verdict === "oui"}
                       <Check
                         class="size-4 shrink-0 text-primary"
                         aria-hidden="true"
                       />
                       <span class="sr-only">{table.yes},</span>
+                    {:else if verdict === "partiel"}
+                      <Tilde class="size-4 shrink-0 text-warning" />
+                      <span class="sr-only">{table.partly},</span>
                     {:else}
                       <X
                         class="size-4 shrink-0 text-destructive"

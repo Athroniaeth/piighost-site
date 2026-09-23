@@ -229,11 +229,11 @@ export const fr: Dictionary = {
       rows: [
         {
           label: "Modèle hébergé",
-          cells: ["La meilleure", "Toutes", "Un abonnement", "Oui"],
+          cells: ["La meilleure", "Toutes", "Aucune", "Oui"],
         },
         {
           label: "Modèle local",
-          cells: ["En retrait", "Aucune", "GPU et exploitation", "Partiels"],
+          cells: ["Dégradée", "Aucune", "GPU et exploitation", "Partiels"],
         },
         {
           label: "Interdire",
@@ -241,17 +241,13 @@ export const fr: Dictionary = {
         },
         {
           label: "piighost",
-          cells: [
-            "La meilleure",
-            "Aucune, des jetons seulement",
-            "Une bibliothèque",
-            "Oui",
-          ],
+          cells: ["La meilleure", "Aucune", "Une infra CPU", "Oui"],
         },
       ],
       noteLead: "Une limite à connaître.",
       note: "piighost fait de la pseudonymisation au sens du RGPD, pas de l'anonymisation : les correspondances entre valeurs et jetons sont conservées chez vous le temps de la conversation, et se protègent comme des données personnelles.",
       yes: "oui",
+      partly: "en partie",
       no: "non",
       option: "Option",
     },

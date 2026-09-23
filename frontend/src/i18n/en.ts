@@ -226,11 +226,11 @@ export const en: Dictionary = {
       rows: [
         {
           label: "Hosted model",
-          cells: ["The best", "All of it", "A subscription", "Yes"],
+          cells: ["The best", "All of it", "None", "Yes"],
         },
         {
           label: "Local model",
-          cells: ["Behind", "None", "GPUs and operations", "Partial"],
+          cells: ["Degraded", "None", "GPUs and operations", "Partial"],
         },
         {
           label: "Ban it",
@@ -238,12 +238,13 @@ export const en: Dictionary = {
         },
         {
           label: "piighost",
-          cells: ["The best", "None, placeholders only", "A library", "Yes"],
+          cells: ["The best", "None", "CPU infrastructure", "Yes"],
         },
       ],
       noteLead: "One limit worth knowing.",
       note: "piighost does pseudonymisation in the GDPR sense, not anonymisation: the mapping between values and placeholders is kept on your side for the duration of the conversation, and has to be protected like personal data.",
       yes: "yes",
+      partly: "partly",
       no: "no",
       option: "Option",
     },

@@ -221,6 +221,37 @@ export const en: Dictionary = {
         body: "Some teams respond by banning hosted LLMs outright. That protects the data, but it also forfeits the productivity gains everyone else is capturing, and people route around the ban anyway by pasting work into personal accounts the company cannot see.",
       },
     ],
+    table: {
+      columns: [
+        "Model quality",
+        "Data in clear at the provider",
+        "What it costs",
+        "Productivity gains",
+      ],
+      rows: [
+        {
+          label: "Hosted model",
+          cells: ["The best", "All of it", "A subscription", "Yes"],
+        },
+        {
+          label: "Local model",
+          cells: ["Behind", "None", "GPUs and operations", "Partial"],
+        },
+        {
+          label: "Ban it",
+          cells: ["None", "None", "Nothing", "None, and bypassed"],
+        },
+        {
+          label: "piighost",
+          cells: ["The best", "None, placeholders only", "A library", "Yes"],
+        },
+      ],
+      noteLead: "One limit worth knowing.",
+      note: "piighost does pseudonymisation in the GDPR sense, not anonymisation: the mapping between values and placeholders stays with you, and has to be protected like personal data.",
+      yes: "yes",
+      no: "no",
+      option: "Option",
+    },
   },
   howItWorks: {
     eyebrow: "How it works",

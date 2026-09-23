@@ -88,7 +88,22 @@ export type Dictionary = {
   problem: {
     eyebrow: string;
     title: string;
+    /** Les quatre cartes de la version d'origine. Gardées pour
+     *  components/landing/ProblemeCartes.svelte, qui n'est plus rendu. */
     items: Array<{ title: string; body: string }>;
+    /** Le dilemme en tableau. Les verdicts, oui ou non, vivent dans le
+     *  composant : ils ne dépendent pas de la langue, et les écrire deux fois
+     *  les ferait dériver. Ici seulement les mots. */
+    table: {
+      columns: [string, string, string, string];
+      rows: Array<{ label: string; cells: [string, string, string, string] }>;
+      noteLead: string;
+      note: string;
+      /** Lus seulement par un lecteur d'écran : l'icône porte le verdict. */
+      yes: string;
+      no: string;
+      option: string;
+    };
   };
   howItWorks: {
     eyebrow: string;

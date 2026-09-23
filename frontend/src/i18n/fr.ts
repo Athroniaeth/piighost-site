@@ -224,6 +224,42 @@ export const fr: Dictionary = {
         body: "Certaines équipes réagissent en interdisant purement et simplement les LLM hébergés. Cela protège les données, mais cela renonce aussi aux gains de productivité que tous les autres captent, et les gens contournent l'interdiction de toute façon en collant leur travail dans des comptes personnels que l'entreprise ne voit pas.",
       },
     ],
+    table: {
+      columns: [
+        "Qualité du modèle",
+        "Données en clair chez le fournisseur",
+        "Ce que ça coûte",
+        "Gains de productivité",
+      ],
+      rows: [
+        {
+          label: "Modèle hébergé",
+          cells: ["La meilleure", "Toutes", "Un abonnement", "Oui"],
+        },
+        {
+          label: "Modèle local",
+          cells: ["En retrait", "Aucune", "GPU et exploitation", "Partiels"],
+        },
+        {
+          label: "Interdire",
+          cells: ["Aucune", "Aucune", "Rien", "Aucun, et contourné"],
+        },
+        {
+          label: "piighost",
+          cells: [
+            "La meilleure",
+            "Aucune, des jetons seulement",
+            "Une bibliothèque",
+            "Oui",
+          ],
+        },
+      ],
+      noteLead: "Une limite à connaître.",
+      note: "piighost fait de la pseudonymisation au sens du RGPD, pas de l'anonymisation : les correspondances entre valeurs et jetons restent chez vous, et se protègent comme des données personnelles.",
+      yes: "oui",
+      no: "non",
+      option: "Option",
+    },
   },
   howItWorks: {
     eyebrow: "Fonctionnement",

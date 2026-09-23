@@ -100,7 +100,10 @@ server {
     location ~ ^/(robots\.txt|sitemap\.xml)$ {
         proxy_pass http://api:8000;
         proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        # Le protocole vu par le visiteur, pas celui du conteneur : derrière
+        # Traefik, `$scheme` vaut toujours http, et le sitemap annonçait des
+        # adresses en http:// qu'un moteur suit avant d'être redirigé.
+        proxy_set_header X-Forwarded-Proto $forwarded_proto;
         proxy_set_header X-Real-IP $remote_addr;
     }
 
@@ -130,6 +133,17 @@ server {
 
     location = / {
         return 302 $langue_choisie;
+    }
+
+    # Les adresses de l'ancien site, piighost-studio, déjà indexées. Une page
+    # projet vivait à la racine de la langue, elle vit sous /projects ; le
+    # playground est parti dans le hub. Un 301 transmet le classement acquis,
+    # un 404 le perdrait, et le suivi SEO quotidien le verrait.
+    location ~ ^/(fr|en)/(piighost|api|chat|proofreader)/?$ {
+        return 301 /$1/projects/$2;
+    }
+    location ~ ^/(fr|en)/playground(/.*)?$ {
+        return 301 https://hub.piighost.dev/;
     }
 
     # Le site est prérendu : chaque URL a son propre index.html, avec son titre,

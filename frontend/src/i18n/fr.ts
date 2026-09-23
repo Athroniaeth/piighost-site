@@ -197,6 +197,8 @@ export const fr: Dictionary = {
     description:
       "piighost est une bibliothèque Python pour créer des pipelines d'anonymisation de données personnelles. Elle remplace les informations sensibles par des jetons stables que le modèle peut utiliser, puis restitue les vraies valeurs à vos outils et à vos utilisateurs. Votre code d'agent ne change pas.",
     getStarted: "Démarrer",
+    docs: "Lire la doc",
+    worksWith: "Se branche sur",
     github: "GitHub",
   },
   problem: {

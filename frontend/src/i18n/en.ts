@@ -194,6 +194,8 @@ export const en: Dictionary = {
     description:
       "piighost is a Python library for building PII anonymization pipelines. It swaps personal data for stable placeholders the model can reason about, then restores the real values for your tools and your users. Your agent code does not change.",
     getStarted: "Get started",
+    docs: "Read the docs",
+    worksWith: "Works with",
     github: "GitHub",
   },
   problem: {

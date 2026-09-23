@@ -178,6 +178,11 @@
   --flag-fr-red: #ef4135;
   --flag-us-blue: #0a3161;
   --flag-us-red: #b31942;
+
+  /* Couleurs de marque des frameworks cités. Même raison que les
+     drapeaux : elles ne suivent pas le thème. */
+  --logo-langchain: #7fc8ff;
+  --logo-pydantic: #e92063;
 }
 
 .dark {

@@ -77,6 +77,8 @@ export type Dictionary = {
     title: string;
     description: string;
     getStarted: string;
+    docs: string;
+    worksWith: string;
     github: string;
   };
   problem: {

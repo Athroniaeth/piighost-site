@@ -6,17 +6,31 @@
   import Section from "../Section.svelte";
   import { i18n } from "../../lib/i18n.svelte";
   import { classeDe } from "../../lib/entites";
+  import Regex from "@lucide/svelte/icons/regex";
+  import Sparkles from "@lucide/svelte/icons/sparkles";
+  import gliner2 from "../../assets/marques/gliner2.png";
+  import spacy from "../../assets/marques/spacy.png";
+  import huggingface from "../../assets/marques/huggingface.svg";
+  import presidio from "../../assets/marques/presidio.png";
 
   const ICONES = [Layers, RefreshCw, MessagesSquare, Server];
 
-  /** Des noms propres : ils ne se traduisent pas. */
+  /**
+   * Les détecteurs, comme les frameworks du bandeau : une marque et un nom.
+   *
+   * Chaque logo est celui que le projet sert lui-même. GLiNER2 prend l'étoile
+   * de Fastino, qui le publie, inversée en mode sombre puisqu'elle est noire.
+   * Transformers prend le visage de Hugging Face, et Presidio le carré de
+   * Microsoft, qui est l'icône de son propre dépôt. Regex et LLM ne sont pas
+   * des marques mais des techniques : un glyphe neutre, à la couleur du texte.
+   */
   const DETECTEURS = [
-    "regex",
-    "GLiNER2",
-    "spaCy",
-    "Transformers",
-    "LLM",
-    "Presidio",
+    { nom: "Regex", glyphe: Regex },
+    { nom: "GLiNER2", src: gliner2, inverse: true },
+    { nom: "spaCy", src: spacy },
+    { nom: "Transformers", src: huggingface },
+    { nom: "LLM", glyphe: Sparkles },
+    { nom: "Presidio", src: presidio },
   ];
 
   /** Un jeton cité dans le texte porte la teinte de sa catégorie. */
@@ -61,15 +75,27 @@
     {/each}
   </div>
   <div
-    class="mt-8 flex flex-wrap items-center justify-center gap-2.5 text-[0.9375rem] text-muted-foreground"
+    class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3"
   >
-    <span>{i18n.t.detector.supported}</span>
-    <ul class="flex flex-wrap justify-center gap-2">
-      {#each DETECTEURS as nom (nom)}
-        <li
-          class="rounded-md border bg-background px-2 py-0.5 font-mono text-[0.8125rem] text-foreground"
-        >
-          {nom}
+    <p class="text-sm text-muted-foreground">{i18n.t.detector.supported}</p>
+    <ul class="flex flex-wrap items-center justify-center gap-6">
+      {#each DETECTEURS as detecteur (detecteur.nom)}
+        <li class="flex items-center gap-2 font-semibold">
+          {#if detecteur.glyphe}
+            {@const Glyphe = detecteur.glyphe}
+            <Glyphe class="size-6 shrink-0" aria-hidden="true" />
+          {:else}
+            <img
+              src={detecteur.src}
+              alt=""
+              aria-hidden="true"
+              class={[
+                "size-6 shrink-0 object-contain",
+                detecteur.inverse && "dark:invert",
+              ]}
+            />
+          {/if}
+          {detecteur.nom}
         </li>
       {/each}
     </ul>

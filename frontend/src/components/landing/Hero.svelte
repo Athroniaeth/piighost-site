@@ -55,7 +55,11 @@ agent = create_agent(
           class="mt-3 block text-xl font-semibold tracking-[-0.025em] sm:text-[1.75rem] lg:whitespace-nowrap"
         >
           {i18n.t.hero.sloganWork}
-          <span class="text-primary">{i18n.t.hero.sloganStay}</span>
+          <!-- Sous 1024 px, chaque moitié sur sa ligne : coupée par le retour
+               automatique, la phrase laissait « restent. » seul au bout. -->
+          <span class="block text-primary lg:inline"
+            >{i18n.t.hero.sloganStay}</span
+          >
         </span>
       </h1>
       <p

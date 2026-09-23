@@ -7,6 +7,9 @@
    * La hauteur minimale donne le rythme d'une section par écran ;
    * `scroll-mt-16` réserve la hauteur de la barre collante, sans quoi un titre
    * visé par une ancre atterrit dessous.
+   *
+   * Un filet en bas, comme sous le bandeau : chaque section est séparée de la
+   * suivante. L'appel final n'en porte pas, le pied de page trace le sien.
    */
   let {
     id = undefined,
@@ -27,7 +30,7 @@
 
 <section
   {id}
-  class="flex scroll-mt-16 flex-col justify-center md:min-h-[calc(100dvh-4rem)]"
+  class="flex scroll-mt-16 flex-col justify-center border-b md:min-h-[calc(100dvh-4rem)]"
 >
   <div class="mx-auto w-full max-w-7xl px-6 py-16">
     {#if eyebrow || title || description}

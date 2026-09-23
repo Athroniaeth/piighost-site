@@ -53,7 +53,7 @@
 
 <section
   id="faq"
-  class="flex scroll-mt-16 flex-col justify-center md:min-h-[calc(100dvh-4rem)]"
+  class="flex scroll-mt-16 flex-col justify-center border-b md:min-h-[calc(100dvh-4rem)]"
 >
   <div
     class="mx-auto grid w-full max-w-7xl items-start gap-12 px-6 py-16 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20"

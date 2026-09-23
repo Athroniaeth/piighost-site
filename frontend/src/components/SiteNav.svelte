@@ -70,8 +70,12 @@
       aria-label={i18n.t.nav.mainNavigation}
       class="hidden items-center gap-1 lg:flex"
     >
-      <!-- Le contenu du site avant les liens qui ouvrent un onglet. Accueil
-           n'y est plus : le logo, à gauche, y mène déjà. -->
+      <!-- Accueil d'abord : le logo y mène aussi, mais un visiteur ne le devine
+           pas, et sans ce lien la page Philosophie semblait sans retour. Puis le
+           contenu du site, avant les liens qui ouvrent un onglet. -->
+      <Lien vers="home" class="{LIEN_NAV} aria-[current=page]:text-primary">
+        {i18n.t.nav.home}
+      </Lien>
       <!-- `details` plutôt qu'un menu en JavaScript : l'ouverture au clavier, la
            fermeture par Échap et le repli sans script viennent du navigateur.
            La seule chose qu'il ne fait pas est se refermer sur un clic à côté,
@@ -187,6 +191,13 @@
             {/each}
           </ul>
           <ul class="mt-4 grid gap-0.5 border-t pt-4">
+            <li>
+              <Lien
+                vers="home"
+                class="{LIEN_MOBILE} aria-[current=page]:text-primary"
+                >{i18n.t.nav.home}</Lien
+              >
+            </li>
             <li>
               <Lien
                 vers="philosophy"

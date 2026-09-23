@@ -190,9 +190,11 @@ export const en: Dictionary = {
     mit: "MIT licensed.",
   },
   hero: {
-    title: "Anonymize PII before it reaches the LLM",
+    name: "PIIGhost",
+    sloganWork: "The model works.",
+    sloganStay: "The data stays.",
     description:
-      "piighost is a Python library for building PII anonymization pipelines. It swaps personal data for stable placeholders the model can reason about, then restores the real values for your tools and your users. Your agent code does not change.",
+      "piighost hides the personal data in your prompts before it reaches the model, then restores the real values in the response. Pluggable detectors, regex, NER or an LLM, and a companion OpenAI and Anthropic proxy.",
     getStarted: "Get started",
     docs: "Read the docs",
     worksWith: "Works with",

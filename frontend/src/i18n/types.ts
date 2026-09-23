@@ -74,7 +74,11 @@ export type Dictionary = {
     mit: string;
   };
   hero: {
-    title: string;
+    /** Le nom en capitales de titre, ce que la charte prescrit hors prose. */
+    name: string;
+    /** Le slogan, coupé en deux pour que la seconde moitié porte la couleur. */
+    sloganWork: string;
+    sloganStay: string;
     description: string;
     getStarted: string;
     docs: string;

@@ -42,13 +42,24 @@ agent = create_agent(
     class="mx-auto grid w-full max-w-7xl items-center gap-14 px-6 py-16 lg:grid-cols-[1fr_1.05fr]"
   >
     <div>
-      <h1
-        class="text-4xl leading-[1.04] font-bold tracking-[-0.04em] sm:text-6xl"
-      >
-        {i18n.t.hero.title}
+      <!-- Le nom et le slogan sont dans le même h1. Affiché, c'est deux lignes
+           de tailles différentes ; lu par un robot, c'est un seul titre qui
+           porte le nom et la promesse, au lieu du nom seul. -->
+      <h1 class="tracking-[-0.035em]">
+        <span
+          class="block text-4xl font-bold sm:text-[3.25rem] sm:leading-[1.05]"
+        >
+          {i18n.t.hero.name}
+        </span>
+        <span
+          class="mt-3 block text-xl font-semibold tracking-[-0.025em] sm:text-[1.75rem] lg:whitespace-nowrap"
+        >
+          {i18n.t.hero.sloganWork}
+          <span class="text-primary">{i18n.t.hero.sloganStay}</span>
+        </span>
       </h1>
       <p
-        class="mt-7 max-w-[46ch] text-lg leading-relaxed text-muted-foreground"
+        class="mt-6 max-w-[46ch] text-justify text-lg leading-relaxed hyphens-auto text-muted-foreground"
       >
         {i18n.t.hero.description}
       </p>

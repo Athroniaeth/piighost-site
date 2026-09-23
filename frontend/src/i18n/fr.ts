@@ -192,10 +192,11 @@ export const fr: Dictionary = {
     mit: "Licence MIT.",
   },
   hero: {
-    title:
-      "Anonymisez les données personnelles avant qu'elles n'atteignent le modèle",
+    name: "PIIGhost",
+    sloganWork: "Le modèle travaille.",
+    sloganStay: "Les données restent.",
     description:
-      "piighost est une bibliothèque Python pour créer des pipelines d'anonymisation de données personnelles. Elle remplace les informations sensibles par des jetons stables que le modèle peut utiliser, puis restitue les vraies valeurs à vos outils et à vos utilisateurs. Votre code d'agent ne change pas.",
+      "piighost masque les données personnelles de vos prompts avant qu'elles n'atteignent le modèle, puis restitue les vraies valeurs dans la réponse. Détecteurs au choix, regex, NER ou LLM, et un proxy compatible OpenAI et Anthropic.",
     getStarted: "Démarrer",
     docs: "Lire la doc",
     worksWith: "Se branche sur",

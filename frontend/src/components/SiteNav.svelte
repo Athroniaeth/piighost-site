@@ -63,7 +63,7 @@
       vers="home"
       class="rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
     >
-      <Logo size={22} />
+      <Logo size={30} />
     </Lien>
 
     <nav

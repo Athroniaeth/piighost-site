@@ -312,7 +312,8 @@ export const en: Dictionary = {
     },
   },
   cta: {
-    title: "Ship AI features without shipping user data",
+    title:
+      "Ship your AI features without handing over your customers' confidential data.",
     description:
       "Install piighost, wire your detector, and keep PII out of the model.",
     readTheDocs: "Read the docs",

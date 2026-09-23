@@ -316,7 +316,7 @@ export const fr: Dictionary = {
   },
   cta: {
     title:
-      "Livrez des fonctionnalités IA sans livrer les données de vos utilisateurs",
+      "Livrez vos fonctionnalités d'IA sans donner les données confidentielles de vos clients.",
     description:
       "Installez piighost, branchez votre détecteur et gardez les données personnelles hors du modèle.",
     readTheDocs: "Lire la documentation",

@@ -38,9 +38,7 @@
         {#if eyebrow || title}
           <div class="text-center">
             {#if eyebrow}
-              <p
-                class="mb-2 text-sm font-semibold uppercase tracking-wide text-primary"
-              >
+              <p class="mb-2 text-sm font-semibold tracking-wide text-primary">
                 {eyebrow}
               </p>
             {/if}
@@ -57,7 +55,7 @@
           <p
             class={centerDescription
               ? "mx-auto mt-4 max-w-2xl text-center text-muted-foreground"
-              : "mx-auto mt-4 max-w-2xl sm:text-justify hyphens-auto text-muted-foreground"}
+              : "mx-auto mt-4 max-w-2xl text-muted-foreground"}
           >
             {description}
           </p>

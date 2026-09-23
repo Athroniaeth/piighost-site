@@ -6,7 +6,7 @@
 
 <article class="feuille mx-auto max-w-3xl px-4 py-16">
   <header class="mb-12 text-center">
-    <p class="mb-2 text-sm font-semibold uppercase tracking-wide text-primary">
+    <p class="mb-2 text-sm font-semibold tracking-wide text-primary">
       {p.eyebrow}
     </p>
     <h1 class="text-4xl font-bold tracking-tight sm:text-5xl 2xl:text-4xl">
@@ -16,7 +16,7 @@
 
   {#if p.intro}
     <p
-      class="mb-12 sm:text-justify text-lg leading-relaxed hyphens-auto text-muted-foreground 2xl:text-base"
+      class="mb-12 text-lg leading-relaxed text-muted-foreground 2xl:text-base"
     >
       {p.intro}
     </p>
@@ -29,9 +29,7 @@
       </h2>
 
       {#each section.paragraphs as para, pi (pi)}
-        <p
-          class="mt-4 sm:text-justify leading-7 hyphens-auto text-muted-foreground"
-        >
+        <p class="mt-4 leading-7 text-muted-foreground">
           {para}
         </p>
       {/each}
@@ -83,9 +81,7 @@
             </h3>
           {/if}
           {#each sous.paragraphs as para, pi (pi)}
-            <p
-              class="mt-4 sm:text-justify leading-7 hyphens-auto text-muted-foreground"
-            >
+            <p class="mt-4 leading-7 text-muted-foreground">
               {para}
             </p>
           {/each}

@@ -99,8 +99,8 @@
         {#each couloirs as nom, i (i)}
           <p
             class={[
-              "flex items-center justify-center gap-1.5 text-[0.8125rem] font-semibold uppercase tracking-wide",
-              i === 1 ? "text-primary" : "text-muted-foreground",
+              "flex items-center justify-center gap-1.5 text-[0.8125rem] font-semibold tracking-wide",
+              i === 1 ? "text-primary" : "text-muted-foreground uppercase",
             ]}
           >
             {#if i === 1}<Ghost class="size-4" />{/if}{nom}

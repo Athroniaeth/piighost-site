@@ -193,8 +193,8 @@ export const en: Dictionary = {
   },
   hero: {
     name: "PIIGhost",
-    sloganWork: "The model works.",
-    sloganStay: "The data stays.",
+    sloganWork: "Everything the model can do.",
+    sloganStay: "Nothing it doesn't need to know.",
     codeComment:
       "the model only sees placeholders; send_email receives the real values",
     description:
@@ -326,6 +326,7 @@ export const en: Dictionary = {
       "Install piighost, wire your detector, and keep PII out of the model.",
     readTheDocs: "Read the docs",
     starOnGitHub: "Star on GitHub",
+    packageManager: "Package manager",
   },
   faq: {
     eyebrow: "FAQ",

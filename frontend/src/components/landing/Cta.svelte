@@ -14,8 +14,20 @@
    * section se pose sur le semis de points au lieu d'un bandeau gris : la fin
    * de page appartient au même fond que le reste. La commande d'installation
    * est copiable, c'est le premier geste qu'on attend du lecteur arrivé là.
+   *
+   * Deux onglets, uv par défaut : c'est l'outil que le démarrage rapide et la
+   * page projet emploient déjà, pip reste à un clic. Le bouton copier suit
+   * l'onglet actif. Le nom du paquet reste piighost tant que la bibliothèque
+   * n'est pas renommée.
    */
-  const COMMANDE = "pip install piighost";
+  const OUTILS = [
+    { id: "uv", commande: "uv add piighost" },
+    { id: "pip", commande: "pip install piighost" },
+  ] as const;
+  let outil = $state<(typeof OUTILS)[number]["id"]>("uv");
+  const commande = $derived(
+    OUTILS.find((o) => o.id === outil)?.commande ?? OUTILS[0].commande,
+  );
 </script>
 
 <section
@@ -38,13 +50,33 @@
       {i18n.t.cta.description}
     </p>
     <div
-      class="mx-auto mt-7 inline-flex items-center gap-3 rounded-lg border bg-card py-1 pl-4 pr-1 font-mono text-sm"
+      class="mx-auto mt-7 inline-flex items-center gap-3 rounded-lg border bg-card p-1 pr-1 font-mono text-sm"
     >
-      <span
-        ><span class="mr-2 text-muted-foreground" aria-hidden="true">$</span
-        >{COMMANDE}</span
+      <div
+        role="tablist"
+        aria-label={i18n.t.cta.packageManager}
+        class="flex gap-0.5 rounded-md bg-muted p-0.5"
       >
-      <CopyButton value={COMMANDE} class="size-8" />
+        {#each OUTILS as o (o.id)}
+          <button
+            type="button"
+            role="tab"
+            aria-selected={outil === o.id}
+            class={[
+              "rounded px-2.5 py-1 text-xs transition-colors",
+              outil === o.id
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground",
+            ]}
+            onclick={() => (outil = o.id)}>{o.id}</button
+          >
+        {/each}
+      </div>
+      <span role="tabpanel"
+        ><span class="mr-2 text-muted-foreground" aria-hidden="true">$</span
+        >{commande}</span
+      >
+      <CopyButton value={commande} class="size-8" />
     </div>
     <div class="mt-7 flex flex-wrap justify-center gap-3">
       <Button

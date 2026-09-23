@@ -23,9 +23,7 @@
       <h2 class="text-2xl font-semibold tracking-tight">{section.heading}</h2>
 
       {#each section.paragraphs ?? [] as paragraphe, j (j)}
-        <p
-          class="mt-4 sm:text-justify leading-7 hyphens-auto text-muted-foreground"
-        >
+        <p class="mt-4 leading-7 text-muted-foreground">
           <Inline texte={paragraphe} />
         </p>
       {/each}
@@ -55,9 +53,7 @@
       {/if}
 
       {#if section.afterCode}
-        <p
-          class="mt-4 sm:text-justify leading-7 hyphens-auto text-muted-foreground"
-        >
+        <p class="mt-4 leading-7 text-muted-foreground">
           <Inline texte={section.afterCode} />
         </p>
       {/if}

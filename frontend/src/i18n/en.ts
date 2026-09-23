@@ -252,29 +252,13 @@ export const en: Dictionary = {
   howItWorks: {
     eyebrow: "How it works",
     title: "A layer between your agent and the model",
-    tabs: {
-      detect: "Detect",
-      anonymize: "Anonymize",
-      tools: "Tool calls",
-      deanonymize: "Deanonymize",
+    lanes: { user: "User", model: "Model", tools: "Tools" },
+    messages: {
+      send: "Send case {ID} to {EMAIL}",
+      sent: "Email sent to {EMAIL}",
+      reply: "Case {ID} was sent to {EMAIL}.",
     },
-    detectCaption:
-      "piighost runs your detectors over the message and reports every PII span it finds: names, emails, identifiers, anything the model does not need to see. Overlapping detections from multiple detectors are arbitrated by confidence before anything is replaced.",
-    anonymizeCaption:
-      "Each PII value gets a stable counter scoped to its type. The three people in this message become <<PERSON:1>>, <<PERSON:2>>, and <<PERSON:3>>; the two distinct emails become <<EMAIL:1>> and <<EMAIL:2>>. The same value keeps the same identifier across every later message, every tool call, and every retry.",
-    toolsCaption:
-      "The model never sees real data, so its tool calls come back written with placeholders too. piighost restores the real values inside the arguments before your function runs, so the email actually goes to <<EMAIL:1>>'s real address with the real case <<ID:1>>. Anything the tool returns is anonymized again before the model reads it.",
-    deanonymizeCaption:
-      "The final response is restored before it reaches the user. Notice the model wrote <<PERSON:2>> and <<PERSON:3>>, and piighost mapped each one back to the right name. Your agent code never has to manage that bookkeeping.",
-    labels: {
-      userMessage: "User message",
-      fromUser: "From the user",
-      llmSees: "What the LLM sees",
-      toolCall: "Tool call from the model",
-      toolRuns: "What your tool actually runs",
-      llmResponse: "LLM response",
-      userSees: "What the user sees",
-    },
+    note: "The model's column holds nothing but tokens. Even what the tools return is anonymized before the model reads it.",
   },
   detector: {
     eyebrow: "Why piighost",

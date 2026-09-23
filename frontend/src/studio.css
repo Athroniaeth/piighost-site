@@ -19,23 +19,6 @@ html {
   }
 }
 
-/* L'avancement de l'onglet courant dans « comment ça marche ». La durée est
-   écrite ici plutôt que dans un attribut `style`, que la CSP refuserait ; elle
-   doit rester égale à DIAPO_MS dans HowItWorks.svelte. */
-@keyframes hiw-progress {
-  from {
-    transform: scaleX(0);
-  }
-  to {
-    transform: scaleX(1);
-  }
-}
-
-.hiw-progress {
-  transform-origin: left;
-  animation: hiw-progress 10000ms linear forwards;
-}
-
 /* La coloration syntaxique. Le studio appelle shiki au rendu serveur, qui émet
    des styles en ligne que la CSP refuse : la tokenisation vit donc dans
    lib/highlight.ts et les couleurs sont des classes.

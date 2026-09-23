@@ -109,25 +109,10 @@ export type Dictionary = {
   howItWorks: {
     eyebrow: string;
     title: string;
-    tabs: {
-      detect: string;
-      anonymize: string;
-      tools: string;
-      deanonymize: string;
-    };
-    detectCaption: string;
-    anonymizeCaption: string;
-    toolsCaption: string;
-    deanonymizeCaption: string;
-    labels: {
-      userMessage: string;
-      fromUser: string;
-      llmSees: string;
-      toolCall: string;
-      toolRuns: string;
-      llmResponse: string;
-      userSees: string;
-    };
+    lanes: { user: string; model: string; tools: string };
+    /** `{ID}` et `{EMAIL}` sont remplis en valeurs ou en jetons. */
+    messages: { send: string; sent: string; reply: string };
+    note: string;
   };
   detector: {
     eyebrow: string;

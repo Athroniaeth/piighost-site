@@ -1,213 +1,154 @@
 <script lang="ts">
   import Section from "../Section.svelte";
-  import Echange from "../Echange.svelte";
-  import Segments from "../Segments.svelte";
-  import Tabs from "../../ui/Tabs.svelte";
+  import Ghost from "../Ghost.svelte";
   import { classeDe } from "../../lib/entites";
-  import { ent, txt, type Entite, type Segment } from "../../lib/flux.svelte";
   import { i18n } from "../../lib/i18n.svelte";
 
   /**
-   * Les quatre temps du mécanisme, un par onglet, qui défilent tout seuls tant
-   * que la section est à l'écran.
+   * Un diagramme de séquence en quatre couloirs : l'utilisateur, piighost, le
+   * modèle et les outils.
    *
-   * L'observateur d'intersection est ce qui évite qu'une section invisible
-   * tourne dans le vide, et l'arrêt sur préférence de mouvement réduit est la
-   * même garantie que dans les boîtes elles-mêmes.
+   * Tout est visible d'un coup, sans onglet ni défilement : l'argument est
+   * que la colonne du modèle ne contient que des jetons, et il ne se voit que
+   * si toute la conversation est sous les yeux. Le retour de l'outil y figure
+   * exprès : c'est le passage où une fuite se glisse le plus facilement, et
+   * piighost le réanonymise avant que le modèle ne le lise.
+   *
+   * La CSP refuse les attributs `style`, donc les positions sont des classes
+   * écrites en toutes lettres, une par couloir et par intervalle.
    */
-  const ORDRE = ["detect", "anonymize", "tools", "deanonymize"] as const;
-  // Doit rester égal à la durée de .hiw-progress dans studio.css.
-  const DIAPO_MS = 10000;
+  type Couloir = 0 | 1 | 2 | 3;
+  type Gabarit = "send" | "sent" | "reply" | "code";
 
-  const P1: Entite = { brut: "Patrick Dupont", jeton: "<<PERSON:1>>" };
-  const P2: Entite = { brut: "Marie Lambert", jeton: "<<PERSON:2>>" };
-  const P3: Entite = { brut: "Jean Moreau", jeton: "<<PERSON:3>>" };
-  const E1: Entite = { brut: "patrick.dupont@acme.com", jeton: "<<EMAIL:1>>" };
-  const E2: Entite = { brut: "marie.lambert@acme.com", jeton: "<<EMAIL:2>>" };
-  const ID1: Entite = { brut: "#ACME-9123", jeton: "<<ID:1>>" };
+  const VALEURS = {
+    ID: { brut: "#ACME-9123", jeton: "<<ID:1>>" },
+    EMAIL: { brut: "marie.lambert@acme.com", jeton: "<<EMAIL:1>>" },
+  } as const;
 
-  const ENTITES_ANONYMISE = [P1, P2, P3, E1, E2, ID1];
-  const SEGMENTS_ANONYMISE: Segment[] = [
-    txt("Hi, this is "),
-    ent(0),
-    txt(". Could you forward this to "),
-    ent(1),
-    txt(" and "),
-    ent(2),
-    txt("? My email is "),
-    ent(3),
-    txt(", and you can also cc "),
-    ent(4),
-    txt(". The case ID is "),
-    ent(5),
-    txt("."),
+  const MESSAGES: Array<{
+    de: Couloir;
+    a: Couloir;
+    gabarit: Gabarit;
+    jetons: boolean;
+  }> = [
+    { de: 0, a: 1, gabarit: "send", jetons: false },
+    { de: 1, a: 2, gabarit: "send", jetons: true },
+    { de: 2, a: 1, gabarit: "code", jetons: true },
+    { de: 1, a: 3, gabarit: "code", jetons: false },
+    { de: 3, a: 1, gabarit: "sent", jetons: false },
+    { de: 1, a: 2, gabarit: "sent", jetons: true },
+    { de: 2, a: 1, gabarit: "reply", jetons: true },
+    { de: 1, a: 0, gabarit: "reply", jetons: false },
   ];
 
-  const ENTITES_OUTILS = [E1, ID1, P2, P3];
-  const SEGMENTS_OUTILS: Segment[] = [
-    txt("send_email(\n  to="),
-    ent(0),
-    txt(',\n  subject="Case '),
-    ent(1),
-    txt('",\n  body="Forwarding to '),
-    ent(2),
-    txt(" and "),
-    ent(3),
-    txt('",\n)'),
-  ];
+  const LIGNES = ["left-[12.5%]", "left-[37.5%]", "left-[62.5%]", "left-[87.5%]"];
 
-  const ENTITES_RESTITUE = [P2, P3, ID1, E1, E2];
-  const SEGMENTS_RESTITUE: Segment[] = [
-    txt("I have forwarded your message to "),
-    ent(0),
-    txt(" and "),
-    ent(1),
-    txt(" with the case "),
-    ent(2),
-    txt(". A confirmation will be sent to "),
-    ent(3),
-    txt(" and copied to "),
-    ent(4),
-    txt("."),
-  ];
-
-  /** Une légende où les jetons portent la teinte de leur catégorie, comme
-   *  dans les boîtes juste au dessus. */
-  const morceaux = (texte: string) =>
-    texte.split(/(<<[^>]+>>)/g).map((part) => ({
-      texte: part,
-      classe: part.startsWith("<<")
-        ? `rounded px-1 font-mono ${classeDe(part)}`
-        : "",
-    }));
-
-  let actif = $state<string>("detect");
-  let cadre = $state<HTMLDivElement | null>(null);
-  let visible = $state(false);
-  let reduit = $state(false);
-
-  $effect(() => {
-    if (!cadre) return;
-    const observateur = new IntersectionObserver(
-      ([e]) => (visible = e.isIntersecting),
-      {
-        threshold: 0.5,
-      },
-    );
-    observateur.observe(cadre);
-    return () => observateur.disconnect();
-  });
-
-  $effect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const maj = () => (reduit = mq.matches);
-    maj();
-    mq.addEventListener("change", maj);
-    return () => mq.removeEventListener("change", maj);
-  });
-
-  const defile = $derived(visible && !reduit);
-
-  $effect(() => {
-    if (!defile) return;
-    const courant = actif;
-    const minuteur = setTimeout(() => {
-      const i = ORDRE.indexOf(courant as (typeof ORDRE)[number]);
-      actif = ORDRE[(i + 1) % ORDRE.length];
-    }, DIAPO_MS);
-    return () => clearTimeout(minuteur);
-  });
+  /** La flèche et sa bulle, pour chaque intervalle parcouru. */
+  const INTERVALLES: Record<string, { fleche: string; bulle: string }> = {
+    "0-1": { fleche: "left-[12.5%] w-[25%]", bulle: "left-[25%]" },
+    "1-2": { fleche: "left-[37.5%] w-[25%]", bulle: "left-[50%]" },
+    "1-3": { fleche: "left-[37.5%] w-[50%]", bulle: "left-[62.5%]" },
+  };
+  const intervalle = (de: Couloir, a: Couloir) =>
+    INTERVALLES[`${Math.min(de, a)}-${Math.max(de, a)}`];
 
   const hw = $derived(i18n.t.howItWorks);
-  const onglets = $derived(ORDRE.map((id) => ({ id, label: hw.tabs[id] })));
+  const couloirs = $derived([hw.lanes.user, "piighost", hw.lanes.model, hw.lanes.tools]);
+
+  /** Un gabarit rempli, en valeurs ou en jetons, découpé en morceaux. */
+  function morceaux(gabarit: Gabarit, jetons: boolean) {
+    const texte = gabarit === "code" ? "send_email(to={EMAIL})" : hw.messages[gabarit];
+    return texte.split(/(\{ID\}|\{EMAIL\})/g).map((part) => {
+      const cle = part.slice(1, -1) as keyof typeof VALEURS;
+      if (!(part.startsWith("{") && cle in VALEURS)) return { texte: part, classe: "" };
+      const v = VALEURS[cle];
+      return {
+        texte: jetons ? v.jeton : v.brut,
+        classe: `rounded px-1 font-mono text-[0.85em] ${classeDe(v.jeton)}`,
+      };
+    });
+  }
 </script>
 
-{#snippet legende(texte: string)}
-  <p class="text-sm text-muted-foreground">
-    {#each morceaux(texte) as morceau, i (i)}<span class={morceau.classe}
-        >{morceau.texte}</span
-      >{/each}
-  </p>
+{#snippet bulle(gabarit: Gabarit, jetons: boolean)}
+  <span class={gabarit === "code" ? "font-mono text-[0.75rem]" : ""}
+    >{#each morceaux(gabarit, jetons) as m, i (i)}{#if m.classe}<span
+          class={m.classe}>{m.texte}</span
+        >{:else}{m.texte}{/if}{/each}</span
+  >
 {/snippet}
 
 <Section id="how-it-works" eyebrow={hw.eyebrow} title={hw.title}>
-  <div bind:this={cadre}>
-    <Tabs
-      {onglets}
-      bind:actif
-      class="mx-auto max-w-3xl"
-      listClass="grid-cols-2 sm:grid-cols-4"
-    >
-      {#snippet children(courant)}
-        <div class="mt-3 h-1 w-full overflow-hidden rounded-full bg-muted">
-          {#if defile}
-            {#key `${courant}-${visible}`}
-              <div class="hiw-progress h-full bg-primary"></div>
-            {/key}
-          {/if}
-        </div>
+  <div class="mx-auto max-w-5xl">
+    <!-- Le diagramme, à partir de 768 px. Il est décoratif pour un lecteur
+         d'écran, qui lit la liste ci-dessous, la même conversation. -->
+    <div class="hidden md:block" aria-hidden="true">
+      <div class="grid grid-cols-4 text-center">
+        {#each couloirs as nom, i (i)}
+          <p
+            class={[
+              "flex items-center justify-center gap-1.5 text-[0.8125rem] font-semibold uppercase tracking-wide",
+              i === 1 ? "text-primary" : "text-muted-foreground",
+            ]}
+          >
+            {#if i === 1}<Ghost class="size-4" />{/if}{nom}
+          </p>
+        {/each}
+      </div>
+      <div class="relative mt-3">
+        <div
+          class="absolute -inset-y-1 left-[52%] w-[21%] rounded-xl bg-primary/5"
+        ></div>
+        {#each LIGNES as ligne, i (i)}
+          <div
+            class={[
+              "absolute inset-y-0",
+              ligne,
+              i === 1 ? "w-0.5 bg-primary/50" : "w-px bg-border",
+            ]}
+          ></div>
+        {/each}
+        {#each MESSAGES as message, i (i)}
+          {@const iv = intervalle(message.de, message.a)}
+          <div class="relative h-[4.4rem]">
+            <div
+              class={[
+                "absolute top-[2.95rem] border-t-[1.5px] border-muted-foreground after:absolute after:-top-[5px] after:border-y-[4.5px] after:border-y-transparent after:content-['']",
+                iv.fleche,
+                message.a > message.de
+                  ? "after:-right-px after:border-l-[7px] after:border-l-muted-foreground"
+                  : "after:-left-px after:border-r-[7px] after:border-r-muted-foreground",
+              ]}
+            ></div>
+            <div
+              class={[
+                "absolute top-[0.9rem] -translate-x-1/2 whitespace-nowrap rounded-md border bg-card px-2.5 py-1 text-[0.8125rem] leading-snug",
+                iv.bulle,
+              ]}
+            >
+              {@render bulle(message.gabarit, message.jetons)}
+            </div>
+          </div>
+        {/each}
+      </div>
+    </div>
 
-        <!-- Hauteur réservée, mais contenu en haut : les quatre onglets n'ont
-             pas la même hauteur et ils défilent seuls, donc la réserve évite que
-             la section saute toutes les dix secondes. Le centrage vertical, lui,
-             ajoutait une centaine de pixels de vide sous les onglets. -->
-        <div class="relative mt-6 flex min-h-[24rem] flex-col justify-start">
-          {#if courant === "detect"}
-            <div class="space-y-4">
-              <div class="rounded-lg border bg-card p-4 shadow-sm">
-                <p
-                  class="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground"
-                >
-                  {hw.labels.userMessage}
-                </p>
-                <p
-                  class="break-words text-justify font-mono text-sm leading-relaxed"
-                >
-                  <Segments
-                    entites={ENTITES_ANONYMISE}
-                    segments={SEGMENTS_ANONYMISE}
-                    remplacees={0}
-                  />
-                </p>
-              </div>
-              {@render legende(hw.detectCaption)}
-            </div>
-          {:else if courant === "anonymize"}
-            <div class="space-y-4">
-              <Echange
-                entites={ENTITES_ANONYMISE}
-                segments={SEGMENTS_ANONYMISE}
-                etiquetteBrute={hw.labels.fromUser}
-                etiquetteJeton={hw.labels.llmSees}
-              />
-              {@render legende(hw.anonymizeCaption)}
-            </div>
-          {:else if courant === "tools"}
-            <div class="space-y-4">
-              <Echange
-                entites={ENTITES_OUTILS}
-                segments={SEGMENTS_OUTILS}
-                etiquetteBrute={hw.labels.toolRuns}
-                etiquetteJeton={hw.labels.toolCall}
-                demarreEnJetons
-                justifie={false}
-              />
-              {@render legende(hw.toolsCaption)}
-            </div>
-          {:else}
-            <div class="space-y-4">
-              <Echange
-                entites={ENTITES_RESTITUE}
-                segments={SEGMENTS_RESTITUE}
-                etiquetteBrute={hw.labels.userSees}
-                etiquetteJeton={hw.labels.llmResponse}
-                demarreEnJetons
-              />
-              {@render legende(hw.deanonymizeCaption)}
-            </div>
-          {/if}
-        </div>
-      {/snippet}
-    </Tabs>
+    <!-- En dessous de 768 px, et pour les lecteurs d'écran : la liste. -->
+    <ol class="grid gap-3 md:sr-only">
+      {#each MESSAGES as message, i (i)}
+        <li class="rounded-lg border bg-card px-4 py-3">
+          <p
+            class="text-xs font-semibold uppercase tracking-wide text-muted-foreground"
+          >
+            {couloirs[message.de]} → {couloirs[message.a]}
+          </p>
+          <p class="mt-1 break-words text-sm leading-relaxed">
+            {@render bulle(message.gabarit, message.jetons)}
+          </p>
+        </li>
+      {/each}
+    </ol>
+
+    <p class="mt-6 text-center text-sm text-muted-foreground">{hw.note}</p>
   </div>
 </Section>

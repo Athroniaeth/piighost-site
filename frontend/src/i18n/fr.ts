@@ -255,29 +255,13 @@ export const fr: Dictionary = {
   howItWorks: {
     eyebrow: "Fonctionnement",
     title: "Une couche entre votre agent et le modèle",
-    tabs: {
-      detect: "Détecter",
-      anonymize: "Anonymiser",
-      tools: "Appels d'outils",
-      deanonymize: "Désanonymiser",
+    lanes: { user: "Utilisateur", model: "Modèle", tools: "Outils" },
+    messages: {
+      send: "Envoie le dossier {ID} à {EMAIL}",
+      sent: "Mail envoyé à {EMAIL}",
+      reply: "Le dossier {ID} a été envoyé à {EMAIL}.",
     },
-    detectCaption:
-      "piighost exécute vos détecteurs sur le message et indique chaque donnée personnelle trouvée : noms, e-mails, identifiants, tout ce que le modèle n'a pas besoin de voir. Les détections qui se chevauchent entre plusieurs détecteurs sont arbitrées par niveau de confiance avant tout remplacement.",
-    anonymizeCaption:
-      "Chaque donnée personnelle reçoit un compteur stable, propre à son type. Les trois personnes de ce message deviennent <<PERSON:1>>, <<PERSON:2>> et <<PERSON:3>> ; les deux adresses e-mail distinctes deviennent <<EMAIL:1>> et <<EMAIL:2>>. La même valeur garde le même identifiant dans chaque message suivant, chaque appel d'outil et chaque réessai.",
-    toolsCaption:
-      "Le modèle ne voit jamais les vraies données : ses appels d'outils reviennent donc eux aussi écrits avec des jetons. piighost restitue les vraies valeurs dans les arguments avant que votre fonction ne s'exécute, si bien que l'e-mail part réellement vers la vraie adresse de <<EMAIL:1>> avec le vrai dossier <<ID:1>>. Tout ce que l'outil renvoie est réanonymisé avant que le modèle ne le lise.",
-    deanonymizeCaption:
-      "La réponse finale est restituée avant d'atteindre l'utilisateur. Le modèle a écrit <<PERSON:2>> et <<PERSON:3>>, et piighost remet le bon nom en face de chaque jeton. Votre code d'agent n'a jamais à gérer cette comptabilité.",
-    labels: {
-      userMessage: "Message utilisateur",
-      fromUser: "De l'utilisateur",
-      llmSees: "Ce que voit le modèle",
-      toolCall: "Appel d'outil émis par le modèle",
-      toolRuns: "Ce que votre outil exécute réellement",
-      llmResponse: "Réponse du modèle",
-      userSees: "Ce que voit l'utilisateur",
-    },
+    note: "La colonne du modèle ne contient que des jetons. Même ce que renvoient les outils est anonymisé avant qu'il ne le lise.",
   },
   detector: {
     eyebrow: "Pourquoi piighost",

@@ -2,7 +2,7 @@
   import ArrowUpRight from "@lucide/svelte/icons/arrow-up-right";
   import Accordion from "../../ui/Accordion.svelte";
   import GithubIcon from "../GithubIcon.svelte";
-  import Ghost from "../Ghost.svelte";
+  import BookText from "@lucide/svelte/icons/book-text";
   import Lien from "../Lien.svelte";
   import { i18n } from "../../lib/i18n.svelte";
   import { DISCORD_URL, getProject } from "../../lib/site";
@@ -13,8 +13,9 @@
    *
    * La colonne de gauche donne une suite à qui n'a pas trouvé sa réponse :
    * la communauté, le suivi des problèmes, la documentation. Chaque lien porte
-   * la marque du lieu où il mène, comme les frameworks du bandeau ; la
-   * documentation est celle de piighost, elle prend donc le fantôme.
+   * la marque du lieu où il mène, comme les frameworks du bandeau. La
+   * documentation n'est pas un autre site mais celle de piighost : elle prend
+   * un pictogramme neutre, un manuel, à la couleur du texte.
    *
    * Une réponse se lit en trois sortes de morceaux : du texte, un jeton de
    * code, un lien interne. Le dictionnaire les donne dans cet ordre.
@@ -86,7 +87,7 @@
               {:else if aide.cle === "github"}
                 <GithubIcon class="size-5 shrink-0" />
               {:else}
-                <Ghost class="size-5 shrink-0 text-primary" />
+                <BookText class="size-5 shrink-0" aria-hidden="true" />
               {/if}
               {aide.nom}
               <span

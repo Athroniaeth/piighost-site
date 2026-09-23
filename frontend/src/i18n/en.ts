@@ -280,7 +280,7 @@ export const en: Dictionary = {
     eyebrow: "Why piighost",
     title: "More than a PII detector",
     description:
-      "Presidio, GLiNER and spaCy are very good at finding personal data. The hard part comes after, and that is what piighost does.",
+      "Regex and NER detectors know how to find confidential data. Anonymizing an exchange with an LLM also means replacing that data, tracking it from one message to the next, and restoring it. piighost orchestrates all of it for you.",
     items: [
       {
         title: "Composable detectors",

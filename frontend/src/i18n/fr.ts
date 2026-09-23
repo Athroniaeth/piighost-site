@@ -283,7 +283,7 @@ export const fr: Dictionary = {
     eyebrow: "Pourquoi piighost",
     title: "Plus qu'un détecteur de PII",
     description:
-      "Presidio, GLiNER ou spaCy repèrent très bien les données personnelles. Le plus dur vient après, et c'est ce que fait piighost.",
+      "Les détecteurs regex et NER savent repérer les données confidentielles. Anonymiser un échange avec un LLM demande en plus de les remplacer, de les suivre d'un message à l'autre et de les restituer. piighost orchestre tout cela pour vous.",
     items: [
       {
         title: "Des détecteurs composables",

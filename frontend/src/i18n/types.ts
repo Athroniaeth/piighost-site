@@ -132,6 +132,19 @@ export type Dictionary = {
     eyebrow: string;
     title: string;
     description: string;
+    added: string;
+    unchanged: string;
+    /** Les commentaires et les chaînes d'exemple des extraits. */
+    code: {
+      anyDetector: string;
+      langchainResult: string;
+      pydanticScope: string;
+      pydanticResult: string;
+      llamaNodes: string;
+      llamaQuery: string;
+      question: string;
+      document: string;
+    };
   };
   cta: {
     title: string;

@@ -16,7 +16,7 @@
    * d'agent ne change pas », en le montrant au lieu de l'affirmer.
    */
   const EXTRAIT = `from langchain.agents import create_agent
-from piighost.middleware import PIIAnonymizationMiddleware
+from piighost.integrations.langchain import PIIAnonymizationMiddleware
 
 middleware = PIIAnonymizationMiddleware(pipeline=pipeline)
 

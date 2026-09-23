@@ -301,6 +301,18 @@ export const fr: Dictionary = {
     title: "Branchez-le sur votre framework d'agent",
     description:
       "Ajoutez piighost au framework que vous utilisez déjà. Votre code d'agent reste le même.",
+    added: "Ajouté par piighost",
+    unchanged: "Le reste est votre agent, inchangé",
+    code: {
+      anyDetector: "N'importe quel détecteur convient : regex, NER ou LLM.",
+      langchainResult: "Le modèle ne voit que <<PERSON:1>>, lookup_city reçoit « Patrick ».",
+      pydanticScope: "pii_hooks rattache chaque jeton à l'identifiant du fil.",
+      pydanticResult: "Le modèle raisonne sur <<PERSON:1>>, vous lisez « Patrick » dans la réponse.",
+      llamaNodes: "Chaque nœud est anonymisé avant d'être vectorisé : l'index est bâti sur des jetons.",
+      llamaQuery: "Le moteur de requête anonymise la question et restitue la réponse.",
+      question: "Où habite Patrick ?",
+      document: "Patrick habite à Paris.",
+    },
   },
   cta: {
     title:

@@ -298,6 +298,18 @@ export const en: Dictionary = {
     title: "Drop it into your agent framework",
     description:
       "Add piighost to the framework you already use. Your agent code stays the same.",
+    added: "Added by piighost",
+    unchanged: "The rest is your agent, unchanged",
+    code: {
+      anyDetector: "Any detector works: regex, NER, or an LLM.",
+      langchainResult: "The model only sees <<PERSON:1>>; lookup_city still receives \"Patrick\".",
+      pydanticScope: "pii_hooks scopes every token to the thread id.",
+      pydanticResult: "The model reasons over <<PERSON:1>>; you read \"Patrick\" in the reply.",
+      llamaNodes: "Anonymize each node before it is embedded, so the index is built on tokens.",
+      llamaQuery: "The query engine anonymizes the question and restores the answer.",
+      question: "Where does Patrick live?",
+      document: "Patrick lives in Paris.",
+    },
   },
   cta: {
     title: "Ship AI features without shipping user data",

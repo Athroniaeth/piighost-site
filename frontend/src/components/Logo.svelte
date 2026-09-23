@@ -2,19 +2,18 @@
   import Ghost from "./Ghost.svelte";
 
   /**
-   * Le verrouillage horizontal : le fantôme sur la primaire, le mot sur le
-   * texte.
-   *
-   * Le symbole ne porte pas une couleur de marque à lui, il porte celle des
-   * actions. C'est ce qui le garde compatible avec la règle de la charte sur
-   * une page qui affiche de la donnée — la seule couleur qui n'en soit pas est
-   * `--primary` — tout en lui rendant la présence qu'un symbole en gris n'a
-   * pas. Deux couleurs suffisent : une troisième ferait un logo bavard.
+   * Le verrouillage de PIIShade, territoire « piighost.dev v3 ». Le mot est
+   * en minuscules ; il grandit dans la barre de navigation (size 30).
    */
   let { size = 20 }: { size?: number } = $props();
 </script>
 
-<span class="inline-flex items-center gap-2 font-semibold tracking-[-0.035em]">
-  <Ghost {size} class="text-primary" />
-  <span class="text-[1.265rem]">piighost</span>
+<span class="inline-flex items-center gap-2">
+  <Ghost {size} class="text-foreground" />
+  <span
+    class={[
+      size >= 28 ? "text-[1.6rem]" : "text-[1.3rem]",
+      "font-bold tracking-[-0.035em]",
+    ]}>piighost</span
+  >
 </span>

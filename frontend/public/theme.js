@@ -5,10 +5,11 @@
  * Volontairement sans module ni defer : il doit s'exécuter avant la peinture. */
 (function () {
   try {
-    if (localStorage.getItem("piighost-theme") === "dark") {
+    if (localStorage.getItem("piighost-theme") !== "light") {
       document.documentElement.classList.add("dark");
     }
   } catch (_) {
-    /* stockage refusé, navigation privée stricte : on reste en clair. */
+    /* stockage refusé, navigation privée stricte : sombre, le mode par défaut. */
+    document.documentElement.classList.add("dark");
   }
 })();

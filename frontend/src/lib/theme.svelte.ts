@@ -1,5 +1,5 @@
 /**
- * Clair par défaut, sombre sur demande, mémorisé.
+ * Sombre par défaut, clair sur demande, mémorisé.
  *
  * La préférence du système est ignorée volontairement : un site vitrine et ses
  * outils doivent se ressembler sur une capture d'écran et sur l'écran du

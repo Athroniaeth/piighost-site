@@ -4,8 +4,8 @@
   "description": "Anonymize PII before it reaches the LLM. A Python library for reversible PII anonymization pipelines.",
   "start_url": "/en/",
   "display": "standalone",
-  "background_color": "#f6f8f9",
-  "theme_color": "#f6f8f9",
+  "background_color": "#080d0f",
+  "theme_color": "#080d0f",
   "icons": [
     { "src": "/favicon.ico", "sizes": "any", "type": "image/x-icon" },
     { "src": "/favicon.svg", "type": "image/svg+xml" },

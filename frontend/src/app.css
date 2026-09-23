@@ -1,4 +1,8 @@
-/* Tokens piighost. NE PAS ÉDITER À LA MAIN.
+/* Territoire « piighost.dev v3 », appliqué par identite/outils/appliquer-territoire.py
+ * sur les valeurs générées ci-dessous : les couleurs sont celles de
+ * piighost.dev, inchangées ; seuls les polices et le rayon changent.
+ *
+ * Tokens piighost. NE PAS ÉDITER À LA MAIN.
  *
  * Généré par brand/outils/tokens.mjs depuis brand/tokens/tokens.json et
  * brand/tokens/entites.json. Les cinq surfaces sortent du même objet : la
@@ -17,8 +21,9 @@
  * hébergées pour la même raison.
  */
 
-@import "@fontsource-variable/instrument-sans";
-@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/schibsted-grotesk";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
 @import "tailwindcss";
 
 /* La palette d'attribution vit dans un module TypeScript, pas dans un
@@ -106,12 +111,10 @@
   --sidebar-ring: oklch(0.51 0.23 277);
   --destructive-foreground: oklch(0.99 0.002 27);
   --font-sans:
-    "Instrument Sans Variable", "Instrument Sans", system-ui, sans-serif;
-  --font-mono:
-    "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, SFMono-Regular,
-    monospace;
+    "Schibsted Grotesk Variable", "Schibsted Grotesk", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
   --font-heading: var(--font-sans);
-  --radius: 0.5rem;
+  --radius: 0.25rem;
 
   /* Couleurs de donnée. */
   --chart-1: oklch(0.62 0.16 27);

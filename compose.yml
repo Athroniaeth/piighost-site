@@ -9,7 +9,6 @@ services:
     environment:
       API_KEY: ${API_KEY:?set API_KEY in .env (see .env.example)}
       OPENPANEL_API: ${OPENPANEL_API:-https://opapi.athroniaeth.cloud}
-      OPENPANEL_ORIGIN: ${OPENPANEL_ORIGIN:-https://piighost.athroniaeth.cloud}
     ports:
       - "8000:8080"
     depends_on:

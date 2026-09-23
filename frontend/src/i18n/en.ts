@@ -11,7 +11,7 @@ export const en: Dictionary = {
     home: "Home",
     playground: "Playground",
     docs: "Documentation",
-    hub: "Hub",
+    hub: "Registry",
     github: "GitHub",
     toggleTheme: "Toggle theme",
     toggleLanguage: "Switch to French",
@@ -198,7 +198,7 @@ export const en: Dictionary = {
     codeComment:
       "the model only sees placeholders; send_email receives the real values",
     description:
-      "piighost replaces the personal data in your prompts with placeholders before it reaches the model, then restores the real values in the response. Pluggable detectors (regex, NER or an LLM), and OpenAI- and Anthropic-compatible proxies through the piighost-api server.",
+      "piighost replaces the confidential data in your prompts with placeholders before it reaches the model, then restores the real values in the response. Pluggable detectors (regex, NER or an LLM), and OpenAI- and Anthropic-compatible proxies through the piighost-api server.",
     getStarted: "Get started",
     docs: "Read the docs",
     worksWith: "Works with",
@@ -510,9 +510,9 @@ export const en: Dictionary = {
   },
   philosophy: {
     eyebrow: "Philosophy",
-    title: "Why Anonymize?",
+    title: "Why de-identify?",
     intro:
-      "A factual account of how cloud LLMs handle your data, what legal and technical protections are (and are not) in place, and why anonymizing before sending is the only control you hold in your own hands.",
+      "A factual account of how cloud models handle your data, which legal and technical protections are (and are not) in place, and what de-identification changes: it is a control that stays entirely in your hands.",
     sections: [
       {
         id: "how-cloud-llm-works",
@@ -640,9 +640,9 @@ export const en: Dictionary = {
             ],
           },
           {
-            heading: "Why anonymization breaks this graph",
+            heading: "Why de-identification breaks this graph",
             paragraphs: [
-              "A PII sent in cleartext becomes a node in a potential graph: it can be crossed with social networks, prior breaches, public registries or commercial databases, to re-identify, enrich or target. A placeholder has no aggregation value. Anonymizing before sending cuts the common root of every secondary-use chain described above.",
+              "A PII sent in cleartext becomes a node in a potential graph: it can be crossed with social networks, prior breaches, public registries or commercial databases, to re-identify, enrich or target. A placeholder has no aggregation value. De-identifying before sending cuts the common root of every secondary-use chain described above.",
             ],
           },
         ],
@@ -700,7 +700,7 @@ export const en: Dictionary = {
               "Moving the servers physically to Europe changes almost nothing legally. As soon as the operating entity is under US jurisdiction, the CLOUD Act applies regardless of where the hard drives sit.",
               "Switching jurisdiction by moving to a European provider (Mistral, OVHcloud AI, Scaleway, Aleph Alpha) drops the CLOUD Act risk by default, unless the provider has a controlled US subsidiary. The GDPR applies fully and European authorities can sanction. This does not make the provider blind to the content: it retains full technical access, protection remains contractual and state-based.",
               "Finally, running the model locally on your own infrastructure (Ollama, vLLM, llama.cpp or equivalent) removes the third party entirely: no provider has technical access to the content, by construction. It is the maximum protection on the confidentiality front. The trade-off is that all responsibility shifts onto you: physical and logical security, encryption at rest, access management, updates, logging.",
-              "The choice of provider still matters for many things: latency, cost, model quality, overall GDPR compliance, integration ecosystem. But for the specific risk of PII leakage, anonymization neutralizes that choice. If only placeholders leave your infrastructure, a US provider receives nothing exploitable about your sensitive data.",
+              "The choice of provider still matters for many things: latency, cost, model quality, overall GDPR compliance, integration ecosystem. But for the specific risk of PII leakage, de-identification neutralizes that choice. If only placeholders leave your infrastructure, a US provider receives nothing exploitable about your sensitive data.",
             ],
           },
         ],
@@ -793,12 +793,12 @@ export const en: Dictionary = {
       },
       {
         id: "what-anonymization-does-not-solve",
-        heading: "What anonymization does not solve",
+        heading: "What de-identification does not solve",
         paragraphs: [
-          "Anonymization is a layer in a defense-in-depth posture, not a silver bullet.",
+          "De-identification is a layer in a defense-in-depth posture, not a silver bullet.",
         ],
         list: [
-          "It does not make an LLM compliant with every regulatory regime. Some data (identifiably linkable health data, defense-classified material) must not leave the infrastructure, even in anonymized form.",
+          "It does not make an LLM compliant with every regulatory regime. Some data (identifiably linkable health data, defense-classified material) must not leave the infrastructure, even in de-identified form.",
           "It depends on detector quality. A PII that is not detected passes through in cleartext. This is an engineering concern, not a conceptual flaw.",
           "It does not replace other good practices: encryption at rest, audited logging, access management, team training.",
         ],
@@ -817,7 +817,7 @@ export const en: Dictionary = {
     defaultDescription:
       "piighost is a Python library to de-identify personally identifiable information before it reaches a large language model. Detect PII with regex, NER or an LLM, swap it for stable placeholders, and restore real values for your tools.",
     philosophyDescription:
-      "The principles behind piighost: minimize the personal data that reaches a model, keep the mapping local, and stay reversible for GDPR.",
+      "How a cloud model handles your data, what the law does and does not protect, and what de-identification changes.",
     pages: {
       piighost:
         "The core Python library to build PII de-identification pipelines. Detect with regex, NER or an LLM, swap PII for stable placeholders, and restore real values on tool output.",

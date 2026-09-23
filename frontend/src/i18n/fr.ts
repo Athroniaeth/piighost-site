@@ -11,7 +11,7 @@ export const fr: Dictionary = {
     home: "Accueil",
     playground: "Playground",
     docs: "Documentation",
-    hub: "Hub",
+    hub: "Registre",
     github: "GitHub",
     toggleTheme: "Changer le thème",
     toggleLanguage: "Passer en anglais",
@@ -200,7 +200,7 @@ export const fr: Dictionary = {
     codeComment:
       "le modèle ne voit que des jetons ; send_email reçoit les vraies valeurs",
     description:
-      "piighost remplace les données personnelles de vos prompts par des jetons avant qu'elles n'atteignent le modèle, puis restitue les vraies valeurs dans la réponse. Détecteurs au choix (regex, NER ou LLM), et des proxys compatibles OpenAI et Anthropic avec le serveur piighost-api.",
+      "piighost remplace les données confidentielles de vos prompts par des jetons avant qu'elles n'atteignent le modèle, puis restitue les vraies valeurs dans la réponse. Détecteurs au choix (regex, NER ou LLM), et des proxys compatibles OpenAI et Anthropic avec le serveur piighost-api.",
     getStarted: "Démarrer",
     docs: "Lire la documentation",
     worksWith: "Se branche sur",
@@ -518,9 +518,9 @@ export const fr: Dictionary = {
   },
   philosophy: {
     eyebrow: "Philosophie",
-    title: "Pourquoi anonymiser ?",
+    title: "Pourquoi dé-identifier ?",
     intro:
-      "Un exposé factuel sur la manière dont les modèles cloud traitent vos données, sur les protections juridiques et techniques en place (et celles qui manquent), et sur la raison pour laquelle anonymiser avant d'envoyer est le seul contrôle qui reste entièrement entre vos mains.",
+      "Un exposé factuel sur la manière dont les modèles cloud traitent vos données, sur les protections juridiques et techniques en place (et celles qui manquent), et sur ce que la dé-identification change : c'est un contrôle qui reste entièrement entre vos mains.",
     sections: [
       {
         id: "how-cloud-llm-works",
@@ -649,9 +649,9 @@ export const fr: Dictionary = {
             ],
           },
           {
-            heading: "Pourquoi l'anonymisation casse ce graphe",
+            heading: "Pourquoi la dé-identification casse ce graphe",
             paragraphs: [
-              "Une donnée personnelle envoyée en clair devient un nœud dans un graphe potentiel : on peut la croiser avec des réseaux sociaux, des fuites antérieures, des registres publics ou des bases commerciales, pour ré-identifier, enrichir ou cibler. Un jeton de remplacement n'a aucune valeur d'agrégation. Anonymiser avant d'envoyer coupe la racine commune de chaque chaîne d'usage secondaire décrite plus haut.",
+              "Une donnée personnelle envoyée en clair devient un nœud dans un graphe potentiel : on peut la croiser avec des réseaux sociaux, des fuites antérieures, des registres publics ou des bases commerciales, pour ré-identifier, enrichir ou cibler. Un jeton de remplacement n'a aucune valeur d'agrégation. Dé-identifier avant d'envoyer coupe la racine commune de chaque chaîne d'usage secondaire décrite plus haut.",
             ],
           },
         ],
@@ -709,7 +709,7 @@ export const fr: Dictionary = {
               "Déplacer physiquement les serveurs en Europe ne change presque rien sur le plan juridique. Dès lors que l'entité exploitante est sous juridiction américaine, le CLOUD Act s'applique, peu importe où sont les disques durs.",
               "Changer de juridiction en passant à un fournisseur européen (Mistral, OVHcloud AI, Scaleway, Aleph Alpha) fait tomber par défaut le risque CLOUD Act, sauf si le fournisseur possède une filiale américaine sous contrôle. Le RGPD s'applique pleinement et les autorités européennes peuvent sanctionner. Cela ne rend pas le fournisseur aveugle au contenu : il garde un accès technique complet, la protection reste contractuelle et étatique.",
               "Enfin, faire tourner le modèle en local sur votre propre infrastructure (Ollama, vLLM, llama.cpp ou équivalent) supprime le tiers de l'équation : aucun fournisseur n'a accès technique au contenu, par construction. C'est la protection maximale côté confidentialité. La contrepartie, c'est que toute la responsabilité bascule sur vous : sécurité physique et logique, chiffrement au repos, gestion des accès, mises à jour, journalisation.",
-              "Le choix du fournisseur reste important pour beaucoup de choses : latence, coût, qualité du modèle, conformité RGPD globale, écosystème d'intégration. Mais pour le risque spécifique de fuite de données personnelles, l'anonymisation neutralise ce choix. Si seuls des jetons quittent votre infrastructure, un fournisseur américain ne reçoit rien d'exploitable sur vos données sensibles.",
+              "Le choix du fournisseur reste important pour beaucoup de choses : latence, coût, qualité du modèle, conformité RGPD globale, écosystème d'intégration. Mais pour le risque spécifique de fuite de données personnelles, la dé-identification neutralise ce choix. Si seuls des jetons quittent votre infrastructure, un fournisseur américain ne reçoit rien d'exploitable sur vos données sensibles.",
             ],
           },
         ],
@@ -802,12 +802,12 @@ export const fr: Dictionary = {
       },
       {
         id: "what-anonymization-does-not-solve",
-        heading: "Ce que l'anonymisation ne résout pas",
+        heading: "Ce que la dé-identification ne résout pas",
         paragraphs: [
-          "L'anonymisation est une couche dans une posture de défense en profondeur, pas une solution miracle.",
+          "La dé-identification est une couche dans une posture de défense en profondeur, pas une solution miracle.",
         ],
         list: [
-          "Elle ne rend pas un LLM conforme à tous les régimes réglementaires. Certaines données (données de santé re-liables, matériel classifié défense) ne doivent pas quitter l'infrastructure, même sous forme anonymisée.",
+          "Elle ne rend pas un LLM conforme à tous les régimes réglementaires. Certaines données (données de santé re-liables, matériel classifié défense) ne doivent pas quitter l'infrastructure, même sous forme dé-identifiée.",
           "Elle dépend de la qualité du détecteur. Une donnée personnelle non détectée passe en clair. C'est un sujet d'ingénierie, pas un défaut conceptuel.",
           "Elle ne remplace pas les autres bonnes pratiques : chiffrement au repos, journalisation auditée, gestion des accès, formation des équipes.",
         ],
@@ -827,7 +827,7 @@ export const fr: Dictionary = {
     defaultDescription:
       "piighost est une bibliothèque Python pour dé-identifier les informations personnelles avant qu'elles n'atteignent un grand modèle de langage. Détectez les PII par regex, NER ou LLM, remplacez-les par des jetons stables, puis restaurez les vraies valeurs pour vos outils.",
     philosophyDescription:
-      "Les principes de piighost : minimiser les données personnelles transmises au modèle, garder la correspondance en local, et rester réversible pour le RGPD.",
+      "Comment un modèle cloud traite vos données, ce que le droit protège ou non, et ce que la dé-identification change.",
     pages: {
       piighost:
         "La bibliothèque Python pour construire des pipelines de dé-identification de PII. Détectez par regex, NER ou LLM, remplacez les PII par des jetons stables, et restaurez les vraies valeurs en sortie d'outil.",

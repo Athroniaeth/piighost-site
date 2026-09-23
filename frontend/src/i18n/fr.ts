@@ -287,7 +287,7 @@ export const fr: Dictionary = {
     items: [
       {
         title: "Des détecteurs composables",
-        body: "Regex, NER, LLM ou Presidio, dans un même pipeline. Vous gardez celui en qui vous avez confiance.",
+        body: "Regex, NER ou LLM, dans un même pipeline. Vous gardez celui en qui vous avez confiance.",
       },
       {
         title: "Des jetons qui reviennent seuls",

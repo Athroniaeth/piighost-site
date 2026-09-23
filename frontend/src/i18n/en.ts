@@ -284,7 +284,7 @@ export const en: Dictionary = {
     items: [
       {
         title: "Composable detectors",
-        body: "Regex, NER, LLM or Presidio, in a single pipeline. You keep the one you trust.",
+        body: "Regex, NER or LLM, in a single pipeline. You keep the one you trust.",
       },
       {
         title: "Tokens that come back on their own",

@@ -1,8 +1,4 @@
-/* Territoire « piighost.dev v3 », appliqué par identite/outils/appliquer-territoire.py
- * sur les valeurs générées ci-dessous : les couleurs sont celles de
- * piighost.dev, inchangées ; seuls les polices et le rayon changent.
- *
- * Tokens piighost. NE PAS ÉDITER À LA MAIN.
+/* Tokens piighost. NE PAS ÉDITER À LA MAIN.
  *
  * Généré par brand/outils/tokens.mjs depuis brand/tokens/tokens.json et
  * brand/tokens/entites.json. Les cinq surfaces sortent du même objet : la
@@ -15,7 +11,8 @@
  * --primary est aussi la couleur de la marque depuis le 22 septembre 2026 : le
  * corail est retiré, le fantôme se reconnaît à sa forme.
  *
- * Clair par défaut, sombre en classe sur <html>, jamais déduit du système.
+ * Sombre par défaut depuis l'identité v3, clair en option. La classe .dark est
+ * posée sur <html> par theme.js avant la peinture, jamais déduite du système.
  * Tout est une vraie feuille de style, jamais un style en ligne : la CSP de
  * production est style-src 'self' sans unsafe-inline. Les polices sont auto
  * hébergées pour la même raison.
@@ -91,27 +88,26 @@
   --primary: oklch(0.51 0.23 277);
   --primary-foreground: oklch(0.99 0.002 277);
   --secondary: oklch(0.945 0.003 220);
-  --secondary-foreground: oklch(0.24 0.01 220);
+  --secondary-foreground: oklch(0.24 0.010 220);
   --muted: oklch(0.952 0.002 220);
-  --muted-foreground: oklch(0.5 0.008 220);
+  --muted-foreground: oklch(0.50 0.008 220);
   --accent: oklch(0.945 0.003 220);
-  --accent-foreground: oklch(0.24 0.01 220);
+  --accent-foreground: oklch(0.24 0.010 220);
   --destructive: oklch(0.52 0.17 27);
   --warning: oklch(0.62 0.134 70);
   --border: oklch(0.862 0.005 220);
-  --input: oklch(0.65 0.007 220);
+  --input: oklch(0.650 0.007 220);
   --ring: oklch(0.51 0.23 277);
   --sidebar: oklch(0.962 0.002 220);
   --sidebar-foreground: oklch(0.17 0.012 220);
   --sidebar-primary: oklch(0.51 0.23 277);
   --sidebar-primary-foreground: oklch(0.99 0.002 277);
   --sidebar-accent: oklch(0.932 0.003 220);
-  --sidebar-accent-foreground: oklch(0.24 0.01 220);
-  --sidebar-border: oklch(0.85 0.005 220);
+  --sidebar-accent-foreground: oklch(0.24 0.010 220);
+  --sidebar-border: oklch(0.850 0.005 220);
   --sidebar-ring: oklch(0.51 0.23 277);
   --destructive-foreground: oklch(0.99 0.002 27);
-  --font-sans:
-    "Schibsted Grotesk Variable", "Schibsted Grotesk", system-ui, sans-serif;
+  --font-sans: "Schibsted Grotesk Variable", "Schibsted Grotesk", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
   --font-heading: var(--font-sans);
   --radius: 0.25rem;
@@ -193,30 +189,30 @@
 
 .dark {
   color-scheme: dark;
-  --background: oklch(0.155 0.01 220);
+  --background: oklch(0.155 0.010 220);
   --foreground: oklch(0.962 0.002 220);
   --card: oklch(0.198 0.011 220);
   --card-foreground: oklch(0.962 0.002 220);
   --popover: oklch(0.198 0.011 220);
   --popover-foreground: oklch(0.962 0.002 220);
   --primary: oklch(0.62 0.19 277);
-  --primary-foreground: oklch(0.155 0.01 220);
-  --secondary: oklch(0.262 0.01 220);
+  --primary-foreground: oklch(0.155 0.010 220);
+  --secondary: oklch(0.262 0.010 220);
   --secondary-foreground: oklch(0.962 0.002 220);
-  --muted: oklch(0.262 0.01 220);
+  --muted: oklch(0.262 0.010 220);
   --muted-foreground: oklch(0.715 0.009 220);
-  --accent: oklch(0.262 0.01 220);
+  --accent: oklch(0.262 0.010 220);
   --accent-foreground: oklch(0.962 0.002 220);
-  --destructive: oklch(0.7 0.155 27);
+  --destructive: oklch(0.70 0.155 27);
   --warning: oklch(0.76 0.14 75);
   --border: oklch(0.99 0.002 220 / 16%);
   --input: oklch(0.99 0.002 220 / 38%);
   --ring: oklch(0.62 0.19 277);
-  --sidebar: oklch(0.178 0.01 220);
+  --sidebar: oklch(0.178 0.010 220);
   --sidebar-foreground: oklch(0.962 0.002 220);
   --sidebar-primary: oklch(0.62 0.19 277);
-  --sidebar-primary-foreground: oklch(0.155 0.01 220);
-  --sidebar-accent: oklch(0.262 0.01 220);
+  --sidebar-primary-foreground: oklch(0.155 0.010 220);
+  --sidebar-accent: oklch(0.262 0.010 220);
   --sidebar-accent-foreground: oklch(0.962 0.002 220);
   --sidebar-border: oklch(0.99 0.002 220 / 16%);
   --sidebar-ring: oklch(0.62 0.19 277);
@@ -294,105 +290,33 @@
 /* Racine typographique variable. Toute l'échelle est en rem, donc remonter la
    racine agit comme un zoom du navigateur. Relevé dans globals.css:144-153 du
    studio, repris tel quel : c'est une contrainte, pas un choix. */
-@media (min-width: 1920px) {
-  html {
-    font-size: 18px;
-  }
-}
-@media (min-width: 2560px) {
-  html {
-    font-size: 21px;
-  }
-}
+@media (min-width: 1920px) { html { font-size: 18px; } }
+@media (min-width: 2560px) { html { font-size: 21px; } }
 
 /* Une valeur détectée porte la teinte de sa catégorie et l'intensité de son
    état : `-valeur` tant qu'elle est en clair, `-jeton` une fois remplacée.
    Voir brand/tokens/README.md. */
-.entite-01-valeur {
-  background-color: var(--entite-01-valeur-fond);
-  color: var(--entite-01-valeur-texte);
-}
-.entite-01-jeton {
-  background-color: var(--entite-01-jeton-fond);
-  color: var(--entite-01-jeton-texte);
-}
-.entite-01-puce {
-  background-color: var(--entite-01-puce);
-}
-.entite-02-valeur {
-  background-color: var(--entite-02-valeur-fond);
-  color: var(--entite-02-valeur-texte);
-}
-.entite-02-jeton {
-  background-color: var(--entite-02-jeton-fond);
-  color: var(--entite-02-jeton-texte);
-}
-.entite-02-puce {
-  background-color: var(--entite-02-puce);
-}
-.entite-03-valeur {
-  background-color: var(--entite-03-valeur-fond);
-  color: var(--entite-03-valeur-texte);
-}
-.entite-03-jeton {
-  background-color: var(--entite-03-jeton-fond);
-  color: var(--entite-03-jeton-texte);
-}
-.entite-03-puce {
-  background-color: var(--entite-03-puce);
-}
-.entite-04-valeur {
-  background-color: var(--entite-04-valeur-fond);
-  color: var(--entite-04-valeur-texte);
-}
-.entite-04-jeton {
-  background-color: var(--entite-04-jeton-fond);
-  color: var(--entite-04-jeton-texte);
-}
-.entite-04-puce {
-  background-color: var(--entite-04-puce);
-}
-.entite-05-valeur {
-  background-color: var(--entite-05-valeur-fond);
-  color: var(--entite-05-valeur-texte);
-}
-.entite-05-jeton {
-  background-color: var(--entite-05-jeton-fond);
-  color: var(--entite-05-jeton-texte);
-}
-.entite-05-puce {
-  background-color: var(--entite-05-puce);
-}
-.entite-06-valeur {
-  background-color: var(--entite-06-valeur-fond);
-  color: var(--entite-06-valeur-texte);
-}
-.entite-06-jeton {
-  background-color: var(--entite-06-jeton-fond);
-  color: var(--entite-06-jeton-texte);
-}
-.entite-06-puce {
-  background-color: var(--entite-06-puce);
-}
-.entite-07-valeur {
-  background-color: var(--entite-07-valeur-fond);
-  color: var(--entite-07-valeur-texte);
-}
-.entite-07-jeton {
-  background-color: var(--entite-07-jeton-fond);
-  color: var(--entite-07-jeton-texte);
-}
-.entite-07-puce {
-  background-color: var(--entite-07-puce);
-}
-.entite-08-valeur {
-  background-color: var(--entite-08-valeur-fond);
-  color: var(--entite-08-valeur-texte);
-}
-.entite-08-jeton {
-  background-color: var(--entite-08-jeton-fond);
-  color: var(--entite-08-jeton-texte);
-}
-.entite-08-puce {
-  background-color: var(--entite-08-puce);
-}
+.entite-01-valeur { background-color: var(--entite-01-valeur-fond); color: var(--entite-01-valeur-texte); }
+.entite-01-jeton  { background-color: var(--entite-01-jeton-fond);  color: var(--entite-01-jeton-texte); }
+.entite-01-puce   { background-color: var(--entite-01-puce); }
+.entite-02-valeur { background-color: var(--entite-02-valeur-fond); color: var(--entite-02-valeur-texte); }
+.entite-02-jeton  { background-color: var(--entite-02-jeton-fond);  color: var(--entite-02-jeton-texte); }
+.entite-02-puce   { background-color: var(--entite-02-puce); }
+.entite-03-valeur { background-color: var(--entite-03-valeur-fond); color: var(--entite-03-valeur-texte); }
+.entite-03-jeton  { background-color: var(--entite-03-jeton-fond);  color: var(--entite-03-jeton-texte); }
+.entite-03-puce   { background-color: var(--entite-03-puce); }
+.entite-04-valeur { background-color: var(--entite-04-valeur-fond); color: var(--entite-04-valeur-texte); }
+.entite-04-jeton  { background-color: var(--entite-04-jeton-fond);  color: var(--entite-04-jeton-texte); }
+.entite-04-puce   { background-color: var(--entite-04-puce); }
+.entite-05-valeur { background-color: var(--entite-05-valeur-fond); color: var(--entite-05-valeur-texte); }
+.entite-05-jeton  { background-color: var(--entite-05-jeton-fond);  color: var(--entite-05-jeton-texte); }
+.entite-05-puce   { background-color: var(--entite-05-puce); }
+.entite-06-valeur { background-color: var(--entite-06-valeur-fond); color: var(--entite-06-valeur-texte); }
+.entite-06-jeton  { background-color: var(--entite-06-jeton-fond);  color: var(--entite-06-jeton-texte); }
+.entite-06-puce   { background-color: var(--entite-06-puce); }
+.entite-07-valeur { background-color: var(--entite-07-valeur-fond); color: var(--entite-07-valeur-texte); }
+.entite-07-jeton  { background-color: var(--entite-07-jeton-fond);  color: var(--entite-07-jeton-texte); }
+.entite-07-puce   { background-color: var(--entite-07-puce); }
+.entite-08-valeur { background-color: var(--entite-08-valeur-fond); color: var(--entite-08-valeur-texte); }
+.entite-08-jeton  { background-color: var(--entite-08-jeton-fond);  color: var(--entite-08-jeton-texte); }
+.entite-08-puce   { background-color: var(--entite-08-puce); }

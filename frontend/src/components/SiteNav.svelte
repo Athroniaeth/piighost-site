@@ -59,9 +59,11 @@
   class="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur"
 >
   <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
+    <!-- flex : un lien en ligne réserve la place des jambages sous le logo et le
+         remontait d'un pixel ; en boîte flexible il est centré dans la barre. -->
     <Lien
       vers="home"
-      class="rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+      class="flex items-center rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
     >
       <Logo size={30} />
     </Lien>

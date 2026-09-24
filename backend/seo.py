@@ -53,6 +53,29 @@ Not a security measure — robots.txt is a request, not a guard. It keeps a
 crawler's budget on the pages that are meant to be read.
 """
 
+AI_CRAWLERS = (
+    "GPTBot",
+    "OAI-SearchBot",
+    "ChatGPT-User",
+    "ClaudeBot",
+    "anthropic-ai",
+    "Claude-SearchBot",
+    "Claude-User",
+    "PerplexityBot",
+    "Perplexity-User",
+    "Google-Extended",
+    "Googlebot",
+    "Bingbot",
+    "CCBot",
+)
+"""Crawlers named one by one, each allowed the site and kept off the API.
+
+The wildcard group already lets them in. They are listed anyway because a
+crawler that finds a group with its own name obeys that group alone, and
+because an explicit Allow is how a site says it wants to be read by answer
+engines, not merely tolerated. The previous site listed the same names.
+"""
+
 CACHE = "public, max-age=3600"
 """An hour. These change when the application does, not by the minute."""
 
@@ -78,9 +101,12 @@ def origin_of(request: Request) -> str:
 )
 async def robots(request: Request) -> Response[str]:
     """Allow the site, keep the API out, and point at the sitemap."""
-    lines = ["User-agent: *", "Allow: /"]
-    lines += [f"Disallow: {path}" for path in DISALLOWED]
-    lines += ["", f"Sitemap: {origin_of(request)}/sitemap.xml", ""]
+    lines: list[str] = []
+    for agent in (*AI_CRAWLERS, "*"):
+        lines += [f"User-agent: {agent}", "Allow: /"]
+        lines += [f"Disallow: {path}" for path in DISALLOWED]
+        lines.append("")
+    lines += [f"Sitemap: {origin_of(request)}/sitemap.xml", ""]
     return Response(
         "\n".join(lines), media_type=TEXT_MEDIA_TYPE, headers={"Cache-Control": CACHE}
     )

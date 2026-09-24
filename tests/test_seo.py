@@ -3,7 +3,7 @@
 from litestar import Litestar
 from litestar.testing import AsyncTestClient
 
-from backend.seo import DISALLOWED, LOCALES, PAGES, STATIC_PATHS
+from backend.seo import AI_CRAWLERS, DISALLOWED, LOCALES, PAGES, STATIC_PATHS
 
 
 class TestSeo:
@@ -17,6 +17,22 @@ class TestSeo:
         assert "Sitemap: http://preview.example/sitemap.xml" in response.text
         for path in DISALLOWED:
             assert f"Disallow: {path}" in response.text
+
+    async def test_robots_names_each_ai_crawler_with_the_same_rules(
+        self, client: AsyncTestClient[Litestar]
+    ) -> None:
+        """A crawler with its own group ignores the wildcard one.
+
+        So every named group has to carry the Disallow lines too, or naming a
+        crawler would open the API to it.
+        """
+        response = await client.get("/robots.txt", headers={"host": "example.com"})
+        groups = response.text.split("\n\n")
+        for agent in (*AI_CRAWLERS, "*"):
+            group = next(g for g in groups if g.startswith(f"User-agent: {agent}\n"))
+            assert "Allow: /" in group
+            for path in DISALLOWED:
+                assert f"Disallow: {path}" in group
 
     async def test_robots_honours_the_proxy_scheme(
         self, client: AsyncTestClient[Litestar]

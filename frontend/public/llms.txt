@@ -1,0 +1,30 @@
+# piighost
+
+> piighost is an open-source Python library that keeps personally identifiable information (PII) out of LLM prompts. It replaces each sensitive value with a placeholder before the text reaches the model, then restores the real values in the response.
+
+Key facts:
+- Language: Python 3.11+, MIT licence
+- Detectors: regex, NER (GLiNER2, spaCy, Transformers, Presidio) or an LLM, composed in one pipeline
+- Placeholders: stable across a whole conversation, so `john.doe@example.com` stays `<<EMAIL:1>>` from one message to the next
+- Reversible: this is de-identification (pseudonymisation), the value-to-placeholder mapping stays on your side
+- Tools can receive the real values while the model only sees placeholders
+- Configuration: the whole pipeline fits in one TOML file, validated from the command line
+- Integrations: LangChain, Pydantic AI, LlamaIndex, Claude Code hooks
+- OpenAI- and Anthropic-compatible proxies through the piighost-api server
+
+## Site
+
+- [Home](https://piighost.dev/en): what piighost does and how it plugs into an agent
+- [piighost](https://piighost.dev/en/projects/piighost): the core library
+- [piighost-api](https://piighost.dev/en/projects/api): a REST server hosting one pipeline behind HTTP
+- [piighost-chat](https://piighost.dev/en/projects/chat): a demo chatbot that de-identifies messages before the LLM sees them
+- [piighost-proofreader](https://piighost.dev/en/projects/proofreader): a CV proofreader that de-identifies documents before any LLM call
+- [Why de-identify?](https://piighost.dev/en/philosophy): how cloud models handle your data, and what de-identification changes
+- The same pages exist in French under https://piighost.dev/fr
+
+## Resources
+
+- [Documentation](https://athroniaeth.github.io/piighost/): guides and API reference
+- [Package (PyPI)](https://pypi.org/project/piighost/): `pip install piighost` or `uv add piighost`
+- [Source (GitHub)](https://github.com/Athroniaeth/piighost)
+- [Regex hub](https://hub.piighost.dev): a registry of tested de-identification regexes, see https://hub.piighost.dev/llms.txt

@@ -79,13 +79,13 @@
       class="inline-block min-w-full"
       >{#each lignes as ligne, n (n)}<span
           class={[
-            "block px-5",
+            "block min-h-lh px-5",
             marquees.has(n + 1) &&
               "bg-primary/15 shadow-[inset_3px_0_0_var(--primary)]",
           ]}
           >{#each ligne as jeton, index (index)}<span class="tok-{jeton.kind}"
               >{jeton.text}</span
-            >{/each}{#if ligne.length === 0}{" "}{/if}</span
+            >{/each}</span
         >{/each}</code
     ></pre>
 </div>

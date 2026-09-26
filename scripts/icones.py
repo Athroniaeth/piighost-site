@@ -64,14 +64,21 @@ def rendre(
         destination.parent.mkdir(parents=True, exist_ok=True)
         subprocess.run(
             [
-                str(CHROME), "--headless", "--no-sandbox", "--disable-gpu",
-                "--force-color-profile=srgb", "--hide-scrollbars",
+                str(CHROME),
+                "--headless",
+                "--no-sandbox",
+                "--disable-gpu",
+                "--force-color-profile=srgb",
+                "--hide-scrollbars",
                 "--default-background-color=00000000",
                 f"--window-size={taille},{hauteur or taille}",
                 "--virtual-time-budget=4000",
-                f"--screenshot={destination}", str(chemin),
+                f"--screenshot={destination}",
+                str(chemin),
             ],
-            check=False, capture_output=True, timeout=90,
+            check=False,
+            capture_output=True,
+            timeout=90,
         )
     if not destination.exists() or destination.stat().st_size == 0:
         sys.exit(f"rendu échoué : {destination}")
@@ -89,7 +96,12 @@ def assembler_ico(pngs: list[pathlib.Path], destination: pathlib.Path) -> None:
                 "<BBBBHHII",
                 0 if largeur >= 256 else largeur,
                 0 if hauteur >= 256 else hauteur,
-                0, 0, 1, 32, len(octets), decalage,
+                0,
+                0,
+                1,
+                32,
+                len(octets),
+                decalage,
             )
         )
         donnees.append(octets)

@@ -25,45 +25,77 @@ THEMES = {
         "nom": "VS Code",
         "detail": "Light+ et Dark+, le thème par défaut de l'éditeur",
         "clair": {
-            "comment": "#008000", "string": "#a31515", "keyword": "#0000ff",
-            "boolean": "#0000ff", "number": "#098658", "function": "#795e26",
-            "punctuation": "#000000", "text": "#001080",
+            "comment": "#008000",
+            "string": "#a31515",
+            "keyword": "#0000ff",
+            "boolean": "#0000ff",
+            "number": "#098658",
+            "function": "#795e26",
+            "punctuation": "#000000",
+            "text": "#001080",
         },
         "sombre": {
-            "comment": "#6a9955", "string": "#ce9178", "keyword": "#569cd6",
-            "boolean": "#569cd6", "number": "#b5cea8", "function": "#dcdcaa",
-            "punctuation": "#d4d4d4", "text": "#9cdcfe",
+            "comment": "#6a9955",
+            "string": "#ce9178",
+            "keyword": "#569cd6",
+            "boolean": "#569cd6",
+            "number": "#b5cea8",
+            "function": "#dcdcaa",
+            "punctuation": "#d4d4d4",
+            "text": "#9cdcfe",
         },
     },
     "github": {
         "nom": "GitHub",
         "detail": "Primer, les couleurs de github.com",
         "clair": {
-            "comment": "#6e7781", "string": "#0a3069", "keyword": "#cf222e",
-            "boolean": "#0550ae", "number": "#0550ae", "function": "#8250df",
-            "punctuation": "#24292f", "text": "#24292f",
+            "comment": "#6e7781",
+            "string": "#0a3069",
+            "keyword": "#cf222e",
+            "boolean": "#0550ae",
+            "number": "#0550ae",
+            "function": "#8250df",
+            "punctuation": "#24292f",
+            "text": "#24292f",
         },
         "sombre": {
-            "comment": "#8b949e", "string": "#a5d6ff", "keyword": "#ff7b72",
-            "boolean": "#79c0ff", "number": "#79c0ff", "function": "#d2a8ff",
-            "punctuation": "#c9d1d9", "text": "#c9d1d9",
+            "comment": "#8b949e",
+            "string": "#a5d6ff",
+            "keyword": "#ff7b72",
+            "boolean": "#79c0ff",
+            "number": "#79c0ff",
+            "function": "#d2a8ff",
+            "punctuation": "#c9d1d9",
+            "text": "#c9d1d9",
         },
     },
     "actuel": {
         "nom": "Actuel",
         "detail": "les pastilles d'entités réemployées, ce qui tourne aujourd'hui",
         "clair": {
-            "comment": "var(--muted-foreground)", "string": "var(--entite-04-puce)",
-            "keyword": "var(--entite-06-puce)", "boolean": "var(--entite-06-puce)",
-            "number": "var(--entite-01-puce)", "function": "var(--entite-05-puce)",
-            "punctuation": "var(--muted-foreground)", "text": "var(--foreground)",
+            "comment": "var(--muted-foreground)",
+            "string": "var(--entite-04-puce)",
+            "keyword": "var(--entite-06-puce)",
+            "boolean": "var(--entite-06-puce)",
+            "number": "var(--entite-01-puce)",
+            "function": "var(--entite-05-puce)",
+            "punctuation": "var(--muted-foreground)",
+            "text": "var(--foreground)",
         },
         "sombre": None,  # mêmes noms de tokens, les valeurs suivent .dark
     },
 }
 
-KINDS = ["comment", "string", "keyword", "boolean", "number", "function",
-         "punctuation", "text"]
+KINDS = [
+    "comment",
+    "string",
+    "keyword",
+    "boolean",
+    "number",
+    "function",
+    "punctuation",
+    "text",
+]
 
 
 def regles(cle: str, theme: dict) -> str:
@@ -81,11 +113,11 @@ def main() -> None:
     fragment = FRAGMENT.read_text(encoding="utf-8")
     styles = "\n".join(regles(c, t) for c, t in THEMES.items())
     blocs = "\n".join(
-        f'''    <section class="col">
+        f"""    <section class="col">
       <h3>{t["nom"]}</h3>
       <p class="sub">{t["detail"]}</p>
       <pre class="code t-{c}">{fragment}</pre>
-    </section>'''
+    </section>"""
         for c, t in THEMES.items()
     )
     page = f"""<!doctype html>

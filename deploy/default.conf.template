@@ -143,7 +143,7 @@ server {
         return 301 /$1/projects/$2;
     }
     location ~ ^/(fr|en)/playground(/.*)?$ {
-        return 301 https://hub.piighost.dev/;
+        return 301 https://catalog.piighost.dev/;
     }
 
     # Le site est prérendu : chaque URL a son propre index.html, avec son titre,

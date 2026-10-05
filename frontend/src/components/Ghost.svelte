@@ -1,8 +1,14 @@
 <script lang="ts">
   /**
-   * Le symbole de PIIShade, territoire « piighost.dev v3 », en currentColor.
+   * Le symbole de PIIShade, territoire « piighost.dev v3 ».
    *
-   * Le fantôme en silhouette pleine, couleur du texte, ses yeux « ^^ » et son ombre portée en hachures, couleur d'action : shade veut dire ombre et esprit.
+   * Le fantôme en silhouette pleine, ses yeux « ^^ » et son ombre portée en hachures, couleur d'action : shade veut dire ombre et esprit.
+   *
+   * La silhouette et les yeux suivent le mode par deux tokens,
+   * --marque-silhouette et --marque-yeux : couleur du texte et primaire sur
+   * fond sombre, violet nuit et blanc cassé sur fond clair. Ils sont imposés
+   * quelle que soit la classe passée : une silhouette primaire, toute violette,
+   * se lirait comme un bout de doigt.
    *
    * Le fichier garde son nom : six composants l'appellent. L'identifiant du
    * clipPath est unique par instance, sinon le premier symbole de la page
@@ -36,11 +42,11 @@
   /><path
     transform="translate(-0.9 -0.4)"
     d="M6 25V12a10 10 0 0 1 20 0v13q-3.333 5.6-6.667 0-3.333 5.6-6.666 0-3.333 5.6-6.667 0Z"
-    fill="var(--foreground)"
+    fill="var(--marque-silhouette)"
   /><path
     d="M9.9 14.2 11.9 12 13.9 14.2M16.3 14.2 18.3 12 20.3 14.2"
     fill="none"
-    stroke="var(--primary)"
+    stroke="var(--marque-yeux)"
     stroke-width="1.9"
     stroke-linecap="round"
     stroke-linejoin="round"

@@ -11,7 +11,7 @@ export const en: Dictionary = {
     home: "Home",
     playground: "Playground",
     docs: "Documentation",
-    hub: "Registry",
+    hub: "Catalog",
     github: "GitHub",
     toggleTheme: "Toggle theme",
     toggleLanguage: "Switch to French",

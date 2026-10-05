@@ -38,15 +38,7 @@ export type FaqSegment =
 
 export type Dictionary = {
   nav: {
-    piighost: string;
-    api: string;
-    chat: string;
-    proofreader: string;
-    projects: string;
-    philosophy: string;
-    home: string;
     playground: string;
-    docs: string;
     hub: string;
     github: string;
     toggleTheme: string;

@@ -3,8 +3,10 @@
 FROM node:22-slim AS builder
 
 WORKDIR /app
-# Manifest and lockfile alone first, to keep the install cached.
+# Manifest and lockfile alone first, to keep the install cached. The vendored
+# @piighost/ui tarball is a `file:` dependency, so the install needs it too.
 COPY frontend/package.json frontend/pnpm-lock.yaml ./frontend/
+COPY frontend/vendor ./frontend/vendor
 RUN corepack enable && pnpm -C frontend install --frozen-lockfile
 
 # routes.json vit à la racine parce que trois consommateurs le lisent : le

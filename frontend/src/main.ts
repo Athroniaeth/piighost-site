@@ -1,7 +1,6 @@
 import { hydrate, mount } from "svelte";
 import App from "./App.svelte";
 import "./app.css";
-import "./studio.css";
 import { initAnalytics } from "./lib/analytics";
 
 const target = document.getElementById("app");

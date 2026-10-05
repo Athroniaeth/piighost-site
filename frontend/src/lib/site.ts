@@ -1,7 +1,12 @@
 export const GITHUB_ORG = "https://github.com/Athroniaeth";
 
-/** The regex registry. A site of its own, so it is a link and not a route. */
-export const HUB_URL = "https://catalog.piighost.dev";
+/**
+ * The catalog of pattern groups, in the page's language. A site of its own, so
+ * it is a link and not a route.
+ */
+export function catalogUrl(locale: string): string {
+  return `https://catalog.piighost.dev/${locale === "fr" ? "fr" : "en"}/`;
+}
 
 /** The community server, as linked from the library's README. */
 export const DISCORD_URL = "https://discord.gg/vFg9GHQR2s";
@@ -24,7 +29,7 @@ export const projects: Project[] = [
       "The core library. Build PII anonymization pipelines for AI agents.",
     repo: `${GITHUB_ORG}/piighost`,
     pypi: "https://pypi.org/project/piighost/",
-    docs: "https://athroniaeth.github.io/piighost/",
+    docs: "https://docs.piighost.dev/",
   },
   {
     slug: "api",
@@ -64,10 +69,10 @@ export function getProject(slug: string): Project {
 
 /**
  * La documentation de piighost dans la langue de la page. Elle est bilingue,
- * la version française vit sous /fr/ : la renvoyer vers l'anglaise perdait le
- * lecteur francophone au premier clic.
+ * chaque langue sous son préfixe, /fr/ ou /en/ : la racine choisit pour le
+ * lecteur, un lien du site sait déjà dans quelle langue il lit.
  */
 export function docsPiighost(locale: string): string {
   const base = getProject("piighost").docs ?? getProject("piighost").repo;
-  return locale === "fr" ? `${base}fr/` : base;
+  return `${base}${locale === "fr" ? "fr" : "en"}/`;
 }

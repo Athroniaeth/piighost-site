@@ -44,7 +44,7 @@ const application = () => ({
   description: DESC,
   url: `${ORIGINE}/en/projects/piighost`,
   downloadUrl: PYPI,
-  softwareHelp: "https://athroniaeth.github.io/piighost/",
+  softwareHelp: "https://docs.piighost.dev/",
   offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
 });
 

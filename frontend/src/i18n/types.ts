@@ -39,7 +39,7 @@ export type FaqSegment =
 export type Dictionary = {
   nav: {
     playground: string;
-    hub: string;
+    catalog: string;
     github: string;
     toggleTheme: string;
     toggleLanguage: string;

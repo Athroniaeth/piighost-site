@@ -3,7 +3,7 @@ import type { Dictionary } from "./types";
 export const fr: Dictionary = {
   nav: {
     playground: "Playground",
-    hub: "Catalogue",
+    catalog: "Catalogue",
     github: "GitHub",
     toggleTheme: "Changer le thème",
     toggleLanguage: "Passer en anglais",

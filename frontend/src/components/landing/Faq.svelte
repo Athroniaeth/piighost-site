@@ -42,7 +42,7 @@
     {
       cle: "docs",
       nom: faq.help.docs,
-      detail: "athroniaeth.github.io",
+      detail: "docs.piighost.dev",
       href: docsPiighost(i18n.locale),
     },
   ]);

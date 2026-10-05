@@ -19,7 +19,7 @@
     "@fontsource/ibm-plex-mono": "^5.3.0",
     "@lucide/svelte": "^1.47.0",
     "@openpanel/web": "^1.4.1",
-    "@piighost/ui": "file:vendor/piighost-ui-0.2.3.tgz",
+    "@piighost/ui": "file:vendor/piighost-ui-0.2.4.tgz",
     "svelte": "5.57.0",
     "zod": "4.5.4"
   },

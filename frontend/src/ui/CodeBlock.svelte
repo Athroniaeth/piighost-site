@@ -40,9 +40,11 @@
   class={cn("group relative overflow-hidden rounded-lg border bg-muted", extra)}
 >
   <CopyButton value={code} class="absolute right-2 top-2 size-7" />
+  <!-- On a phone the lines overflow and scroll under the copy button: the
+       button gets a band of its own above the code. -->
   <pre
     class={cn(
-      "overflow-x-auto p-4 font-mono text-sm leading-relaxed",
+      "overflow-x-auto p-4 font-mono text-sm leading-relaxed max-sm:pt-11",
       wrap && "whitespace-pre-wrap break-all",
     )}><code
       >{#if tokens}{#each tokens as token, index (index)}<span

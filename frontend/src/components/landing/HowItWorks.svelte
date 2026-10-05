@@ -92,9 +92,10 @@
 
 <Section id="how-it-works" eyebrow={hw.eyebrow} title={hw.title}>
   <div class="mx-auto max-w-5xl">
-    <!-- Le diagramme, à partir de 768 px. Il est décoratif pour un lecteur
+    <!-- Le diagramme, à partir de 1024 px : plus étroit, la dernière bulle
+         sortait du cadre. Il est décoratif pour un lecteur
          d'écran, qui lit la liste ci-dessous, la même conversation. -->
-    <div class="hidden md:block" aria-hidden="true">
+    <div class="hidden lg:block" aria-hidden="true">
       <div class="grid grid-cols-4 text-center">
         {#each couloirs as nom, i (i)}
           <p
@@ -145,8 +146,8 @@
       </div>
     </div>
 
-    <!-- En dessous de 768 px, et pour les lecteurs d'écran : la liste. -->
-    <ol class="grid gap-3 md:sr-only">
+    <!-- En dessous de 1024 px, et pour les lecteurs d'écran : la liste. -->
+    <ol class="grid gap-3 lg:sr-only">
       {#each MESSAGES as message, i (i)}
         <li class="rounded-lg border bg-card px-4 py-3">
           <p

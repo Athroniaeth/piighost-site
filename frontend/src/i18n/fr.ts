@@ -47,12 +47,12 @@ export const fr: Dictionary = {
           heading: "Ce qu'elle apporte en plus",
           list: [
             "Détecteurs enfichables : catalogues d'expressions régulières (générique, US, UE, FR), NER (GLiNER2, spaCy, Transformers), un détecteur LLM, plus des détecteurs par correspondance exacte, composites et par découpage, et vous gardez celui en qui vous avez confiance (Presidio se branche via un extra).",
-            "Jetons réversibles et transparents : chaque valeur devient un identifiant stable comme `<<PERSON:1>>` et est remise automatiquement, si bien que l'utilisateur final ne voit jamais de jeton ; des fabriques par étiquette seule, masquées et à hachage à clé sont aussi disponibles.",
+            "Jetons réversibles et transparents : chaque valeur devient un identifiant stable comme `<<PERSON:1>>` et est remise automatiquement, si bien que l'utilisateur final ne voit jamais de jeton ; des fabriques par étiquette seule, masquées et à hachage à clé sont aussi disponibles.",
             "Cohérence sur toute la conversation : une même valeur conserve le même jeton sur tout le fil, appuyée sur une mémoire en processus, Redis ou SQLAlchemy (Redis et SQL peuvent chiffrer les valeurs au repos et hacher les clés).",
             "Intégrations d'agents avec frontière d'outils : middleware LangChain, hooks Pydantic AI et LlamaIndex ; l'outil reçoit la vraie valeur pendant que le modèle ne voit que le jeton, avec une restitution au fil du flux (streaming) qui garde chaque jeton entier.",
             "Un pipeline par étapes personnalisable : détecter, lier, résoudre les chevauchements, étendre, dé-identifier, et un garde-fou optionnel qui refuse une réponse contenant des PII résiduelles ; remplacez par de la correspondance floue pour tolérer les fautes de frappe ou ajoutez votre propre étape.",
             "Piloté par configuration et auto-hébergeable : construisez un pipeline entier depuis un fichier TOML ou JSON, avec une CLI pour le valider, exécutez-le dans votre processus, ou en tant que service via le compagnon piighost-api.",
-            "Typé et observable : livre `py.typed` et un cœur minimal avec tout le lourd derrière des extras, plus des spans OpenTelemetry par étape avec expurgation optionnelle des charges utiles.",
+            "Typé et observable : livre `py.typed` et un cœur minimal avec tout le lourd derrière des extras, plus des spans OpenTelemetry par étape avec expurgation optionnelle des charges utiles.",
           ],
         },
         {
@@ -302,10 +302,10 @@ export const fr: Dictionary = {
     code: {
       anyDetector: "N'importe quel détecteur convient : regex, NER ou LLM.",
       langchainResult:
-        "Le modèle ne voit que <<PERSON:1>>, lookup_city reçoit « Patrick ».",
+        "Le modèle ne voit que <<PERSON:1>>, lookup_city reçoit « Patrick ».",
       pydanticScope: "pii_hooks rattache chaque jeton à l'identifiant du fil.",
       pydanticResult:
-        "Le modèle raisonne sur <<PERSON:1>>, vous lisez « Patrick » dans la réponse.",
+        "Le modèle raisonne sur <<PERSON:1>>, vous lisez « Patrick » dans la réponse.",
       llamaNodes:
         "Chaque nœud est dé-identifié avant d'être vectorisé : l'index est bâti sur des jetons.",
       llamaQuery:
@@ -466,7 +466,7 @@ export const fr: Dictionary = {
     },
     llmDeploymentNote:
       "Le détecteur LLM tourne au déploiement, pas dans le navigateur.",
-    patternsLabel: "Motifs (un par ligne : LABEL = regex)",
+    patternsLabel: "Motifs (un par ligne : LABEL = regex)",
     patternsHint: "Chaque ligne associe un label à une expression régulière.",
     pipelineNameLabel: "Nom de la pipeline",
     emptyPipeline:
@@ -527,7 +527,7 @@ export const fr: Dictionary = {
         heading: "Comment fonctionne un modèle cloud",
         paragraphs: [
           "Un modèle comme ChatGPT, Claude ou Mistral Le Chat n'est pas un logiciel qui tourne sur votre ordinateur. C'est un service distant. Votre question quitte votre machine, traverse Internet, atteint les serveurs du fournisseur, y est traitée, et une réponse vous revient.",
-          "L'interface peut être locale, le modèle ne l'est pas. Même si vous utilisez une application de bureau, une extension de navigateur ou un plugin d'IDE, le modèle ne s'exécute pas sur votre machine. Seule l'interface s'y exécute. Le calcul a lieu dans le cloud du fournisseur. Le terme « LLM local » désigne uniquement l'inférence sur votre propre matériel, via des outils comme Ollama ou llama.cpp.",
+          "L'interface peut être locale, le modèle ne l'est pas. Même si vous utilisez une application de bureau, une extension de navigateur ou un plugin d'IDE, le modèle ne s'exécute pas sur votre machine. Seule l'interface s'y exécute. Le calcul a lieu dans le cloud du fournisseur. Le terme « LLM local » désigne uniquement l'inférence sur votre propre matériel, via des outils comme Ollama ou llama.cpp.",
           "Ce chemin a plusieurs conséquences souvent sous-estimées :",
         ],
         list: [
@@ -541,7 +541,7 @@ export const fr: Dictionary = {
         id: "limits-of-contractual-promise",
         heading: "Les limites d'une promesse contractuelle",
         paragraphs: [
-          "Partons de l'hypothèse la plus favorable : les grands fournisseurs (OpenAI, Anthropic, Google, Mistral et d'autres) veulent sincèrement protéger les données de leurs utilisateurs. Leurs politiques de confidentialité formalisent des engagements (« nous n'entraînons pas sur vos données API », « nous supprimons après 30 jours », « nous rejetons les requêtes abusives »), et ces engagements sont en général tenus.",
+          "Partons de l'hypothèse la plus favorable : les grands fournisseurs (OpenAI, Anthropic, Google, Mistral et d'autres) veulent sincèrement protéger les données de leurs utilisateurs. Leurs politiques de confidentialité formalisent des engagements (« nous n'entraînons pas sur vos données API », « nous supprimons après 30 jours », « nous rejetons les requêtes abusives »), et ces engagements sont en général tenus.",
           "Ce n'est pas suffisant, car un engagement contractuel peut tomber pour trois raisons distinctes, dont aucune ne relève de la mauvaise foi du fournisseur.",
         ],
         subsections: [
@@ -557,7 +557,7 @@ export const fr: Dictionary = {
           {
             heading: "Vos données utilisées pour l'entraînement",
             paragraphs: [
-              "« Si c'est gratuit, c'est vous le produit. » Le vieil adage du web commercial s'applique aussi aux LLM. Faire tourner l'inférence sur un grand modèle coûte cher : chaque réponse mobilise des GPU en temps réel et le fournisseur paie cette facture à chaque requête. Pourtant, OpenAI, Google et d'autres proposent des paliers gratuits très généreux. Les raisons commerciales classiques (acquisition d'utilisateurs, effet de standard de fait) n'expliquent qu'une partie de ce modèle économique. Ces paliers gratuits alimentent aussi la collecte de données d'entraînement.",
+              "« Si c'est gratuit, c'est vous le produit. » Le vieil adage du web commercial s'applique aussi aux LLM. Faire tourner l'inférence sur un grand modèle coûte cher : chaque réponse mobilise des GPU en temps réel et le fournisseur paie cette facture à chaque requête. Pourtant, OpenAI, Google et d'autres proposent des paliers gratuits très généreux. Les raisons commerciales classiques (acquisition d'utilisateurs, effet de standard de fait) n'expliquent qu'une partie de ce modèle économique. Ces paliers gratuits alimentent aussi la collecte de données d'entraînement.",
               "Sur les paliers gratuits grand public, vos conversations peuvent servir à améliorer le modèle de plusieurs façons : les retours explicites (pouce levé ou baissé, reformulation, régénération) servent de signal d'apprentissage par renforcement, les échanges peuvent être relus par des annotateurs humains pour identifier les modes d'échec, et le corpus complet des conversations peut servir de matière première pour construire les jeux de données des itérations suivantes.",
               "Les offres payantes (API, ChatGPT Enterprise, Claude Team, etc.) excluent en général vos données de l'entraînement par défaut. Sur les paliers gratuits, en revanche, l'option de désinscription est souvent enfouie dans les paramètres, parfois désactivée par défaut, et la politique peut évoluer au fil du temps.",
             ],
@@ -577,7 +577,7 @@ export const fr: Dictionary = {
         id: "legal-not-enough",
         heading: "Juridique : le droit ne suffit pas non plus",
         paragraphs: [
-          "Face à ce tableau technique, la réaction instinctive est de se tourner vers le droit : choisir un fournisseur « conforme RGPD », vérifier les certifications, exiger des clauses contractuelles. Cette approche est utile mais incomplète, pour deux raisons : le droit américain ménage des voies d'accès légales aux données, et le droit européen n'a pas encore produit de garde-fou éprouvé appliqué aux LLM.",
+          "Face à ce tableau technique, la réaction instinctive est de se tourner vers le droit : choisir un fournisseur « conforme RGPD », vérifier les certifications, exiger des clauses contractuelles. Cette approche est utile mais incomplète, pour deux raisons : le droit américain ménage des voies d'accès légales aux données, et le droit européen n'a pas encore produit de garde-fou éprouvé appliqué aux LLM.",
         ],
         subsections: [
           {
@@ -602,7 +602,7 @@ export const fr: Dictionary = {
               "Microsoft Irlande : la juridiction l'emporte sur la géographie",
             paragraphs: [
               "Entre 2013 et 2018, les autorités américaines ont demandé à Microsoft, via un mandat émis sous le Stored Communications Act, la remise des données d'un client stockées sur ses serveurs en Irlande. Microsoft a résisté jusqu'à la Cour suprême. La procédure n'a jamais été tranchée sur le fond, parce que le Congrès a adopté le CLOUD Act en mars 2018 pour clarifier la réponse : oui, les entreprises américaines doivent fournir les données où qu'elles soient stockées.",
-              "Conséquence directe : l'hébergement européen par un fournisseur américain n'offre aucune étanchéité juridique face aux États-Unis. Le marketing « vos données restent en Europe » masque cette asymétrie.",
+              "Conséquence directe : l'hébergement européen par un fournisseur américain n'offre aucune étanchéité juridique face aux États-Unis. Le marketing « vos données restent en Europe » masque cette asymétrie.",
             ],
           },
           {
@@ -625,7 +625,7 @@ export const fr: Dictionary = {
           {
             heading: "Surveillance de masse",
             paragraphs: [
-              "Une conversation avec un LLM ressemble techniquement à un e-mail ou à une discussion : du texte horodaté, attaché à un compte identifiable. Elle relève du même périmètre de collecte que les autres communications électroniques couvertes par FISA 702, renouvelé pour deux ans en avril 2024 par RISAA, et dont le renouvellement est de nouveau en débat au Congrès en avril 2026. Des rapports déclassifiés du PCLOB documentent plusieurs centaines de milliers de sélecteurs (identifiants de cible) actifs chaque année, et la collecte « about » (suspendue en 2017, puis ré-autorisée) élargit mécaniquement le périmètre à des communications qui ne sont ni adressées à la cible, ni envoyées par elle, mais qui la mentionnent.",
+              "Une conversation avec un LLM ressemble techniquement à un e-mail ou à une discussion : du texte horodaté, attaché à un compte identifiable. Elle relève du même périmètre de collecte que les autres communications électroniques couvertes par FISA 702, renouvelé pour deux ans en avril 2024 par RISAA, et dont le renouvellement est de nouveau en débat au Congrès en avril 2026. Des rapports déclassifiés du PCLOB documentent plusieurs centaines de milliers de sélecteurs (identifiants de cible) actifs chaque année, et la collecte « about » (suspendue en 2017, puis ré-autorisée) élargit mécaniquement le périmètre à des communications qui ne sont ni adressées à la cible, ni envoyées par elle, mais qui la mentionnent.",
             ],
           },
           {
@@ -660,7 +660,7 @@ export const fr: Dictionary = {
         id: "provider-spectrum",
         heading: "Où vous placer sur le spectre des fournisseurs ?",
         paragraphs: [
-          "Le choix n'est pas binaire entre « cloud américain » et « rien ». Il existe un continuum, du plus exposé au plus isolé, et chaque palier modifie à la fois le risque juridique et la part de responsabilité qui retombe sur vous.",
+          "Le choix n'est pas binaire entre « cloud américain » et « rien ». Il existe un continuum, du plus exposé au plus isolé, et chaque palier modifie à la fois le risque juridique et la part de responsabilité qui retombe sur vous.",
         ],
         table: {
           headers: [
@@ -754,7 +754,7 @@ export const fr: Dictionary = {
           rows: [
             [
               "Promesse contractuelle",
-              "« Nous ne lisons pas vos données »",
+              "« Nous ne lisons pas vos données »",
               "Contournable par une injonction (NYT c. OpenAI)",
             ],
             [
@@ -774,7 +774,7 @@ export const fr: Dictionary = {
             ],
             [
               "Hébergement régional",
-              "« Centres de données en Europe »",
+              "« Centres de données en Europe »",
               "Neutralisé par le CLOUD Act si le fournisseur est américain",
             ],
           ],
@@ -795,7 +795,7 @@ export const fr: Dictionary = {
           {
             heading: "",
             paragraphs: [
-              "C'est la différence entre « nous promettons de ne pas regarder » et « nous sommes techniquement incapables de regarder ». Le second est toujours plus solide que le premier.",
+              "C'est la différence entre « nous promettons de ne pas regarder » et « nous sommes techniquement incapables de regarder ». Le second est toujours plus solide que le premier.",
             ],
           },
         ],

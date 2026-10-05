@@ -36,7 +36,6 @@ export const projects: Project[] = [
     name: "piighost-api",
     tagline: "A REST server that hosts one piighost pipeline behind HTTP.",
     repo: `${GITHUB_ORG}/piighost-api`,
-    pypi: "https://pypi.org/project/piighost-api/",
   },
   {
     slug: "chat",

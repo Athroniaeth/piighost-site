@@ -29,10 +29,10 @@ agent = create_agent(
 )`);
 
   const REQUETE = `POST /v1/anonymize
-{ "text": "Email Patrick at patrick@acme.com" }
+{ "text": "Appelez le 06 12 34 56 78 ou écrivez à jean@exemple.fr", "thread_id": "demo" }
 
-200 OK
-{ "anonymized_text": "Email <<PERSON:1>> at <<EMAIL:1>>", "entities": [ ... ] }`;
+201 Created
+{ "anonymized_text": "Appelez le <<FR_PHONE:1>> ou écrivez à <<EMAIL:1>>", "entities": [ ... ] }`;
 
   const project = $derived(getProject(slug));
 </script>
@@ -45,8 +45,8 @@ agent = create_agent(
 {/snippet}
 {#snippet apiQuickstart()}
   <CodeBlock
-    code={`uv add piighost-api
-piighost-api serve pipeline:pipeline --port 8000`}
+    code={`docker run -p 8000:8000 -e PIIGHOST_ALLOW_ANONYMOUS=true \\
+  ghcr.io/athroniaeth/piighost-api:latest`}
     language="bash"
   />
 {/snippet}

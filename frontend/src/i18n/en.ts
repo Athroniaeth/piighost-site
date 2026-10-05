@@ -98,7 +98,7 @@ export const en: Dictionary = {
             "Thread-scoped memory so entities stay consistent across a conversation.",
             "API-key authentication with Argon2 hashing, scopes, and expiration.",
             "Redis cache for shared de-identification mappings.",
-            "Pipeline configured at startup with a module:variable import path.",
+            "Pipeline described by a TOML file or a catalog configuration, loaded at startup.",
           ],
         },
         {

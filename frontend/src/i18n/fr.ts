@@ -99,7 +99,7 @@ export const fr: Dictionary = {
             "Mémoire à portée de fil pour que les entités restent cohérentes sur une conversation.",
             "Authentification par clé d'API avec hachage Argon2, portées et expiration.",
             "Cache Redis pour les correspondances de dé-identification partagées.",
-            "Pipeline configuré au démarrage avec un chemin d'import module:variable.",
+            "Pipeline décrit par un fichier TOML ou une configuration du catalogue, chargé au démarrage.",
           ],
         },
         {

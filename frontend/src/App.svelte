@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SiteNav from "./components/SiteNav.svelte";
+  import SiteHeader from "./components/SiteHeader.svelte";
   import SiteFooter from "./components/SiteFooter.svelte";
   import BackToTop from "./components/BackToTop.svelte";
   import Home from "./pages/Home.svelte";
@@ -28,7 +28,7 @@
 </script>
 
 <div class="flex min-h-dvh flex-col">
-  <SiteNav />
+  <SiteHeader />
   <main id="contenu" class="flex-1">
     {#if router.introuvable}
       <Introuvable />

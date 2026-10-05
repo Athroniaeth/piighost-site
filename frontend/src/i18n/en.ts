@@ -2,15 +2,7 @@ import type { Dictionary } from "./types";
 
 export const en: Dictionary = {
   nav: {
-    piighost: "piighost",
-    api: "piighost-api",
-    chat: "piighost-chat",
-    proofreader: "piighost-proofreader",
-    projects: "Projects",
-    philosophy: "Philosophy",
-    home: "Home",
     playground: "Playground",
-    docs: "Documentation",
     hub: "Catalog",
     github: "GitHub",
     toggleTheme: "Toggle theme",

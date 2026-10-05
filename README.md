@@ -53,11 +53,11 @@ backend/               Litestar, sert /api, robots.txt et sitemap.xml
 frontend/
   src/lib/             routeur, i18n, thème, tokens d'audience, en-têtes
   src/ui/              les composants de base, repris de piighost-design
-  src/components/      la navigation, le pied de page, la démonstration
+  src/components/      la barre partagée branchée, le pied de page, la démonstration
   src/pages/           les six pages
   src/i18n/            les dictionnaires, repris tels quels du studio
-  src/app.css          les tokens du studio, repris tels quels
-  src/studio.css       ce que Tailwind ne couvre pas : collage, coloration
+  src/app.css          importe @piighost/ui/styles.css, tokens et règles communes
+  vendor/              l'archive de @piighost/ui, tant qu'elle n'est pas publiée
   prerender.mjs        un HTML par URL, puis csp.conf, après le build
 deploy/                nginx : arbre prérendu, /api, /api/op, en-têtes
 ```
@@ -92,16 +92,30 @@ pas par le goût, et chacun est commenté à son emplacement.
 
 ## L'identité visuelle ne se modifie pas ici
 
-`frontend/src/app.css` est **généré**. Sa source est
-`piighost-identite/brand/tokens/tokens.json`, et sa production est vérifiée :
-44 paires de contraste du socle et 32 paires d'entités sont contrôlées à chaque
+Les tokens, les polices et les règles communes (coloration syntaxique, semis de
+points, feuille de lecture) viennent de **`@piighost/ui`**, la bibliothèque que
+partagent toutes les surfaces : `frontend/src/app.css` ne fait que l'importer.
+Sa feuille `theme.css` est la cible `ui-theme.css` du générateur de
+`piighost-identite`, dont la source est `brand/tokens/tokens.json` : 44 paires
+de contraste du socle et 32 paires d'entités y sont contrôlées à chaque
 génération, et le générateur refuse d'écrire si une seule échoue.
 
+La barre de navigation est elle aussi celle de la bibliothèque, `SiteNav`,
+branchée sur le routeur, la langue et la mesure du site dans
+`src/components/SiteHeader.svelte`.
+
+Tant que la bibliothèque n'est pas publiée, son archive est versionnée dans
+`frontend/vendor/`. Changer un token, c'est le changer dans `piighost-identite`,
+reconstruire `@piighost/ui`, puis remplacer l'archive :
+
 ```bash
-node brand/outils/tokens.mjs
-cp brand/tokens/cibles/studio-app.css <ici>/frontend/src/app.css
-python3 brand/outils/rasteriser.py      # les icônes et le .ico
+cp ../piighost-ui/piighost-ui-X.Y.Z.tgz frontend/vendor/
+# puis la dépendance "@piighost/ui": "file:vendor/piighost-ui-X.Y.Z.tgz"
+cd frontend && pnpm install
 ```
+
+Les icônes et le `.ico` sortent toujours de
+`python3 brand/outils/rasteriser.py`, dans `piighost-identite`.
 
 Trois règles de la charte se voient dans le code de ce dépôt :
 

@@ -27,4 +27,4 @@ Key facts:
 - [Documentation](https://athroniaeth.github.io/piighost/): guides and API reference
 - [Package (PyPI)](https://pypi.org/project/piighost/): `pip install piighost` or `uv add piighost`
 - [Source (GitHub)](https://github.com/Athroniaeth/piighost)
-- [Regex hub](https://hub.piighost.dev): a registry of tested de-identification regexes, see https://hub.piighost.dev/llms.txt
+- [Catalog](https://catalog.piighost.dev): the catalog of tested de-identification regexes and pipeline configurations, see https://catalog.piighost.dev/llms.txt

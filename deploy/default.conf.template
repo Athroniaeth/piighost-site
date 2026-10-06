@@ -131,7 +131,11 @@ server {
         access_log off;
     }
 
+    # `Vary` dit à un cache que la réponse dépend de la langue demandée. Sans
+    # lui, un cache intermédiaire pouvait servir /fr à un visiteur anglophone,
+    # ou l'inverse, selon la première réponse qu'il avait gardée.
     location = / {
+        add_header Vary "Accept-Language" always;
         return 302 $langue_choisie;
     }
 
@@ -142,8 +146,24 @@ server {
     location ~ ^/(fr|en)/(piighost|api|chat|proofreader)/?$ {
         return 301 /$1/projects/$2;
     }
+    # Directement dans la langue de la page : la racine du catalogue refaisait
+    # un 302 vers /en/, et un visiteur français arrivait en anglais après deux
+    # sauts.
     location ~ ^/(fr|en)/playground(/.*)?$ {
-        return 301 https://catalog.piighost.dev/;
+        return 301 https://catalog.piighost.dev/$1/;
+    }
+
+    # Une seule adresse par page, celle du canonique, sans barre finale ni
+    # index.html. `try_files` servait aussi /en/ et /en/index.html en 200, et la
+    # barre de navigation partagée lie /en/ : chaque lien depuis la doc et le
+    # catalogue visait un doublon. Le 301 rassemble les liens sur l'URL
+    # canonique. Ces deux blocs viennent après les redirections ci-dessus, parce
+    # que nginx retient la première expression qui correspond.
+    location ~ ^/(fr|en)(/.*)?/index\.html$ {
+        return 301 /$1$2$is_args$args;
+    }
+    location ~ ^/(fr|en)(/.*)?/$ {
+        return 301 /$1$2$is_args$args;
     }
 
     # Le site est prérendu : chaque URL a son propre index.html, avec son titre,

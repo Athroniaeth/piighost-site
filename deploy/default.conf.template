@@ -57,7 +57,7 @@ server {
     gzip on;
     gzip_vary on;
     gzip_min_length 1024;
-    gzip_types text/plain text/css application/javascript application/json image/svg+xml;
+    gzip_types text/plain text/css application/javascript application/json image/svg+xml application/xml application/atom+xml;
 
     # Vite hashe le nom de chaque asset, donc le contenu d'une URL ne change jamais.
     location /assets/ {
@@ -105,6 +105,26 @@ server {
         # adresses en http:// qu'un moteur suit avant d'être redirigé.
         proxy_set_header X-Forwarded-Proto $forwarded_proto;
         proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    # Les flux Atom du blog, un par langue, écrits par l'API à partir des mêmes
+    # fichiers Markdown que les pages, comme le sitemap. Une regex, donc
+    # retenue avant le `location /` qui servirait sinon une 404 statique.
+    location ~ ^/(fr|en)/blog/feed\.xml$ {
+        proxy_pass http://api:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $forwarded_proto;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    # Les images des articles, copiées de public/blog/<slug>/. Leur nom n'est
+    # pas haché, donc un jour de cache et non un an : une image remplacée sous
+    # le même nom se voit le lendemain.
+    location /blog/ {
+        include /etc/nginx/security-headers.conf;
+
+        add_header Cache-Control "public, max-age=86400" always;
+        try_files $uri =404;
     }
 
     location = /favicon.ico {
@@ -169,7 +189,9 @@ server {
     # Le site est prérendu : chaque URL a son propre index.html, avec son titre,
     # sa description et son canonique. `$uri/index.html` sert ce fichier ; le
     # repli sur /index.html ne concerne plus que les URL inconnues, où
-    # l'application affiche sa page 404.
+    # l'application affiche sa page 404. Un article du blog est une URL comme
+    # les autres : /fr/blog/<slug> existe si le prérendu l'a écrit, et un slug
+    # inconnu ou un brouillon répond 404.
     #
     # `no-cache` sur ce HTML, sinon un navigateur garderait les anciens noms
     # d'assets hachés et ne verrait jamais un déploiement.

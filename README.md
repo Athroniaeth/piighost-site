@@ -1,7 +1,7 @@
 # piighost-site
 
 Le site de présentation de [piighost](https://github.com/Athroniaeth/piighost),
-servi sur `piighost.dev`. Sept pages, deux langues, prérendues.
+servi sur `piighost.dev`. Sept pages et un blog, deux langues, prérendus.
 
 Il succède à [piighost-studio](https://github.com/Athroniaeth/piighost-studio),
 dont il a d'abord été un portage à l'identique, reconstruit à partir de
@@ -77,6 +77,38 @@ just dev                 # API et Vite ensemble
 uv run pytest            # les tests du backend
 cd frontend && pnpm build   # build, prérendu et vérification des types
 ```
+
+## Écrire un article du blog
+
+Un article est un fichier Markdown par langue, avec le même slug :
+
+```
+frontend/src/content/blog/fr/<slug>.md
+frontend/src/content/blog/en/<slug>.md
+frontend/public/blog/<slug>/<image>.png    citée en assets/<image>.png
+```
+
+L'en-tête YAML porte `title`, `description`, `date` (AAAA-MM-JJ), `lang`,
+`slug`, `tags`, `author` et `draft`, plus `updated` si l'article change après
+sa publication. Le corps commence à `##`, parce que le titre de la page vient
+de l'en-tête.
+
+Le build refuse un article dont l'en-tête contredit son dossier ou son nom, une
+image absente ou distante, et un titre `#`. Le Markdown devient au build
+l'arbre que rend `Content` de `@piighost/ui` (`frontend/blog/build.ts`). Le HTML
+brut y est refusé, et aucun style en ligne n'est écrit.
+
+Un brouillon (`draft: true`) n'existe nulle part en production : ni page, ni
+index, ni sitemap, ni flux, ni images. Pour le relire :
+
+```bash
+cd frontend && BLOG_DRAFTS=1 pnpm build    # ou BLOG_DRAFTS=1 pnpm dev
+BLOG_DRAFTS=1 just dev-api                 # le sitemap et les flux avec les brouillons
+```
+
+Le sitemap et les flux Atom (`/{fr,en}/blog/feed.xml`) sont écrits par l'API
+(`backend/blog.py`, `backend/seo.py`), qui lit les mêmes en-têtes. Les balises
+`hreflang` ne sont posées que si l'article existe dans les deux langues.
 
 ## Ce que le portage a dû changer, et pourquoi
 

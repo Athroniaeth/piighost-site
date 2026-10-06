@@ -28,7 +28,14 @@ Key facts:
 - [piighost-proofreader](https://piighost.dev/en/projects/proofreader): a CV proofreader that de-identifies documents before any LLM call
 - [caviardage](https://piighost.dev/en/projects/caviardage): a browser app that redacts a Word deed without the document leaving the tab, live at https://caviardage.piighost.dev/
 - [Why de-identify?](https://piighost.dev/en/philosophy): how cloud models handle your data, and what de-identification changes
+- [Blog](https://piighost.dev/en/blog): articles on de-identifying personal data before an LLM, with sources and measurements
 - The same pages exist in French under https://piighost.dev/fr
+
+## Blog
+
+- [Blog](https://piighost.dev/en/blog): every article, newest first, with its date, reading time and tags
+- [Atom feed](https://piighost.dev/en/blog/feed.xml): the articles as a feed
+- The blog and its feed exist in French under https://piighost.dev/fr/blog and https://piighost.dev/fr/blog/feed.xml
 
 ## Docs
 

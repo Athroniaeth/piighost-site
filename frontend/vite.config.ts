@@ -3,6 +3,7 @@ import { svelte } from "@sveltejs/vite-plugin-svelte";
 import litestar from "litestar-vite-plugin";
 
 import tailwindcss from "@tailwindcss/vite";
+import { blog } from "./blog/plugin.ts";
 
 // Dev proxy target: the Litestar API started separately (`just dev-api`).
 const API_TARGET = process.env.API_URL || "http://127.0.0.1:8000";
@@ -38,12 +39,17 @@ export default defineConfig({
         headers: { "X-API-Key": API_KEY },
       },
       "/schema": { target: API_TARGET, changeOrigin: true },
+      // Les flux du blog, écrits par l'API comme le sitemap. nginx fait de même
+      // en production.
+      "^/(fr|en)/blog/feed\\.xml$": { target: API_TARGET, changeOrigin: true },
     },
   },
   plugins: [
     tailwindcss(),
 
     svelte(),
+    // Les articles Markdown de src/content/blog, rendus au build.
+    blog(),
     // Kept for type generation only; it no longer serves the frontend.
     litestar({
       input: ["src/main.ts", "src/tailwind.css"],

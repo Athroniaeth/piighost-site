@@ -11,6 +11,7 @@ export const fr: Dictionary = {
     backToTop: "Remonter en haut",
     menu: "Menu",
     mainNavigation: "Navigation principale",
+    blog: "Blog",
   },
   projectHeader: {
     repository: "Dépôt",
@@ -551,6 +552,24 @@ export const fr: Dictionary = {
     phHashLength: "Longueur du hash",
     phMaskChar: "Caractère de masque",
   },
+  blog: {
+    eyebrow: "Blog",
+    title: "Le blog de piighost",
+    intro:
+      "Des articles sur la dé-identification des données personnelles avant un LLM. Ce que j’ai mesuré, ce que piighost fait, et ce qu’il ne fait pas.",
+    empty: "Aucun article publié pour l’instant.",
+    readingTime: "{n} min de lecture",
+    updated: "mis à jour le {date}",
+    tags: "Étiquettes",
+    allArticles: "Tous les articles",
+    feed: "Flux Atom",
+    feedTitle: "Le blog de piighost",
+    otherLanguage: "Read this article in English",
+    draft: "Brouillon",
+    breadcrumb: "Fil d’Ariane",
+    copy: "Copier",
+    copied: "Copié",
+  },
   philosophy: {
     eyebrow: "Philosophie",
     title: "Pourquoi dé-identifier ?",
@@ -861,6 +880,7 @@ export const fr: Dictionary = {
       caviardage: "caviardage - caviarder un acte Word dans le navigateur",
       philosophy:
         "Pourquoi dé-identifier ses données avant un LLM ? - piighost",
+      blog: "Le blog de piighost - dé-identifier les données avant un LLM",
     },
     defaultDescription:
       "piighost masque les données personnelles avant un LLM, puis restaure les vraies valeurs. Pseudonymisation réversible, souvent appelée anonymisation.",
@@ -879,6 +899,7 @@ export const fr: Dictionary = {
         "Composez un pipeline complet de dé-identification de PII dans le navigateur : détecter, résoudre, lier et dé-identifier, puis exportez-le en configuration piighost.",
       detector:
         "Testez un détecteur de PII dans votre navigateur : regex, NER classique ou GLiNER. Aucune donnée ne quitte la page.",
+      blog: "Des articles sur la dé-identification des données personnelles avant un LLM. Des mesures sourcées, ce que piighost fait, ce qu’il ne fait pas, et les alternatives.",
     },
     ogImageAlt:
       "Le logo et le nom de piighost, au-dessus de la devise « Tout ce que le modèle sait faire, rien de ce qu’il n’a pas à savoir. » et de la ligne « Dé-identification réversible pour les agents LLM, en Python ».",

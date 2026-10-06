@@ -17,6 +17,7 @@
     { "nom": "chat",        "chemin": "/projects/chat",         "priorite": 0.7, "frequence": "monthly" },
     { "nom": "proofreader", "chemin": "/projects/proofreader",  "priorite": 0.7, "frequence": "monthly" },
     { "nom": "caviardage",  "chemin": "/projects/caviardage",   "priorite": 0.7, "frequence": "monthly" },
-    { "nom": "philosophy",  "chemin": "/philosophy",            "priorite": 0.6, "frequence": "monthly" }
+    { "nom": "philosophy",  "chemin": "/philosophy",            "priorite": 0.6, "frequence": "monthly" },
+    { "nom": "blog",        "chemin": "/blog",                  "priorite": 0.6, "frequence": "weekly" }
   ]
 }

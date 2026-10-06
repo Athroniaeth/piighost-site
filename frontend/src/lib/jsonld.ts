@@ -14,7 +14,15 @@
 
 import type { FaqSegment } from "../i18n/types";
 import { dictionaries } from "../i18n";
-import { ORIGINE, lien, type Locale, type NomDePage } from "./routes";
+import {
+  ORIGINE,
+  lien,
+  lienDe,
+  type Locale,
+  type NomDePage,
+  type Route,
+} from "./routes";
+import { articlesDe, trouver, type ArticleMeta } from "./blog.svelte";
 import {
   DISCORD_URL,
   GITHUB_ORG,
@@ -219,11 +227,73 @@ const faq = (locale: Locale) => ({
   })),
 });
 
+/** L'éditeur d'un billet : l'organisation, nommée et avec son logo, parce
+ *  que les moteurs attendent ces deux champs sur l'éditeur d'un article. */
+const editeur = () => ({
+  "@type": "Organization",
+  "@id": ID_ORGANISATION,
+  name: NOM,
+  logo: { "@type": "ImageObject", url: LOGO },
+});
+
+/** Un billet, tel que le décrivent sa page et la liste du blog. Sa page
+ *  ajoute l'éditeur, la liste le porte une fois pour tous. */
+const billet = (a: ArticleMeta) => {
+  const url = `${ORIGINE}${lienDe({ nom: "blog", locale: a.lang, article: a.slug })}`;
+  return {
+    "@type": "BlogPosting",
+    headline: a.title,
+    description: a.description,
+    datePublished: a.date,
+    dateModified: a.updated,
+    inLanguage: a.lang,
+    url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    image: `${ORIGINE}/og-${a.lang}.png`,
+    author: { "@type": "Person", name: a.author, url: GITHUB_ORG },
+    keywords: a.tags.join(", "),
+  };
+};
+
+/** L'index du blog, avec la liste de ses billets dans la langue de la page. */
+const blogIndex = (locale: Locale) => {
+  const t = dictionaries[locale];
+  return {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: t.blog.title,
+    description: t.seo.pages.blog,
+    url: `${ORIGINE}${lien("blog", locale)}`,
+    inLanguage: locale,
+    publisher: editeur(),
+    blogPost: articlesDe(locale).map(billet),
+  };
+};
+
 /** Ce qu'une page déclare. L'organisation et le site sont sur toutes, comme
  *  dans la mise en page du site actuel. */
-export function donneesStructurees(nom: NomDePage, locale: Locale): object[] {
+export function donneesStructurees(route: Route): object[] {
+  const { nom, locale } = route;
   const communes = [organisation(locale), siteWeb(locale)];
+  const ouvert = route.article ? trouver(locale, route.article) : undefined;
+  if (ouvert) {
+    return [
+      ...communes,
+      {
+        "@context": "https://schema.org",
+        ...billet(ouvert),
+        publisher: editeur(),
+      },
+      filAriane([
+        { name: ACCUEIL[locale], item: `${ORIGINE}${lien("home", locale)}` },
+        { name: "Blog", item: `${ORIGINE}${lien("blog", locale)}` },
+        { name: ouvert.title, item: `${ORIGINE}${lienDe(route)}` },
+      ]),
+    ];
+  }
   switch (nom) {
+    case "blog":
+      return [...communes, blogIndex(locale), arianeDe(nom, "Blog", locale)];
     case "home":
       return [...communes, faq(locale)];
     case "piighost":
@@ -242,7 +312,7 @@ export function donneesStructurees(nom: NomDePage, locale: Locale): object[] {
     default:
       return [
         ...communes,
-        projet(nom, locale),
+        projet(nom as Projet, locale),
         arianeDe(nom, getProject(nom).name, locale),
       ];
   }

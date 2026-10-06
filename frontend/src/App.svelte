@@ -4,6 +4,8 @@
   import BackToTop from "./components/BackToTop.svelte";
   import Home from "./pages/Home.svelte";
   import Philosophy from "./pages/Philosophy.svelte";
+  import Blog from "./pages/Blog.svelte";
+  import Article from "./pages/Article.svelte";
   import Projet from "./pages/Projet.svelte";
   import Introuvable from "./pages/Introuvable.svelte";
   import { router } from "./lib/router.svelte";
@@ -25,10 +27,14 @@
   // l'onglet garderait le titre de la première page visitée.
   $effect(() => {
     if (router.introuvable) return;
-    appliquer(router.nom, router.locale);
+    appliquer(router.route);
     track({
       name: "page_view",
-      props: { page: router.nom, locale: router.locale },
+      props: {
+        page: router.nom,
+        locale: router.locale,
+        ...(router.article && { article: router.article }),
+      },
     });
   });
 </script>
@@ -42,6 +48,10 @@
       <Home />
     {:else if router.nom === "philosophy"}
       <Philosophy />
+    {:else if router.nom === "blog" && router.article}
+      <Article slug={router.article} />
+    {:else if router.nom === "blog"}
+      <Blog />
     {:else if estProjet(router.nom)}
       <Projet slug={router.nom} />
     {/if}

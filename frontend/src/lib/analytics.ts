@@ -19,7 +19,10 @@ import { OpenPanel } from "@openpanel/web";
 import type { Locale, NomDePage } from "./routes";
 
 export type AnalyticsEvent =
-  | { name: "page_view"; props: { page: NomDePage; locale: Locale } }
+  | {
+      name: "page_view";
+      props: { page: NomDePage; locale: Locale; article?: string };
+    }
   | { name: "language_switched"; props: { from: Locale; to: Locale } }
   | { name: "theme_toggled"; props: { to: "light" | "dark" } }
   | { name: "outbound"; props: { destination: string; page: NomDePage } }

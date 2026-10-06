@@ -11,6 +11,7 @@ export const en: Dictionary = {
     backToTop: "Scroll to top",
     menu: "Menu",
     mainNavigation: "Main navigation",
+    blog: "Blog",
   },
   projectHeader: {
     repository: "Repository",
@@ -543,6 +544,24 @@ export const en: Dictionary = {
     phHashLength: "Hash length",
     phMaskChar: "Mask character",
   },
+  blog: {
+    eyebrow: "Blog",
+    title: "The piighost blog",
+    intro:
+      "Articles on de-identifying personal data before an LLM. What I measured, what piighost does, and what it does not do.",
+    empty: "No articles published yet.",
+    readingTime: "{n} min read",
+    updated: "updated {date}",
+    tags: "Tags",
+    allArticles: "All articles",
+    feed: "Atom feed",
+    feedTitle: "The piighost blog",
+    otherLanguage: "Lire cet article en français",
+    draft: "Draft",
+    breadcrumb: "Breadcrumb",
+    copy: "Copy",
+    copied: "Copied",
+  },
   philosophy: {
     eyebrow: "Philosophy",
     title: "Why de-identify?",
@@ -850,6 +869,7 @@ export const en: Dictionary = {
       proofreader: "piighost-proofreader - de-identified CV proofreader",
       caviardage: "caviardage - redact a Word deed in the browser",
       philosophy: "Why de-identify data before an LLM? - piighost",
+      blog: "The piighost blog - de-identifying data before an LLM",
     },
     defaultDescription:
       "piighost de-identifies PII in Python before the LLM sees it, then restores the real values. Reversible pseudonymization, often called anonymization.",
@@ -868,6 +888,7 @@ export const en: Dictionary = {
         "Compose a full PII de-identification pipeline in the browser: detect, resolve, link and de-identify, then export it as piighost config.",
       detector:
         "Test a single PII detector in your browser: regex, classic NER or GLiNER. No data leaves the page.",
+      blog: "Articles on de-identifying personal data before an LLM. Sourced measurements, what piighost does, what it does not do, and the alternatives.",
     },
     ogImageAlt:
       "The piighost ghost logo and name, above the motto “Everything the model can do. Nothing it doesn’t need to know.” and the line “Reversible PII masking for LLM agents, in Python”.",

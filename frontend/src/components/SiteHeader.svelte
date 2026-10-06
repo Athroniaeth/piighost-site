@@ -19,7 +19,9 @@
     LOCALES,
     ORIGINE,
     lien,
+    lienDe,
     reconnaitre,
+    traduire,
     type Locale,
   } from "../lib/routes";
 
@@ -68,15 +70,32 @@
     };
   }
 
-  const links = $derived(
-    ecosystemLinks(surface, router.locale).map((link) => surLeSite(link)),
-  );
+  /** Les liens de l'écosystème, plus le blog, propre à ce site : il se range
+   *  après la philosophie, dernière page du site avant les autres surfaces.
+   *  Ajouté ici et non dans @piighost/ui, dont les liens valent pour toutes
+   *  les surfaces. */
+  const links = $derived.by(() => {
+    const communs = ecosystemLinks(surface, router.locale).map((link) =>
+      surLeSite(link),
+    );
+    const blog: NavLink = {
+      label: i18n.t.nav.blog,
+      href: lien("blog", router.locale),
+      current: !router.introuvable && router.nom === "blog",
+    };
+    const apres =
+      communs.findIndex((l) => l.href === lien("philosophy", router.locale)) +
+      1;
+    return [...communs.slice(0, apres), blog, ...communs.slice(apres)];
+  });
 
+  /** La même page dans chaque langue. Un article sans traduction renvoie à
+   *  l'index du blog de l'autre langue. */
   const locales = $derived<LocaleLink[]>(
     LOCALES.map((code) => ({
       code,
       name: NOMS[code],
-      href: lien(router.nom, code),
+      href: lienDe(traduire(router.route, code)),
     })),
   );
 
@@ -131,7 +150,7 @@
           props: { from: router.locale, to: page.locale },
         });
       }
-      router.aller(page.nom, page.locale);
+      router.aller(page.nom, page.locale, { article: page.article });
     };
     barre.addEventListener("click", clic);
     return () => barre.removeEventListener("click", clic);

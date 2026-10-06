@@ -8,6 +8,7 @@
  */
 
 import donnees from "../../../routes.json";
+import { lienArticle, tousLesArticles, trouver } from "./blog.svelte";
 
 /** Les unions sont écrites ici, pas dérivées du JSON.
  *
@@ -23,7 +24,8 @@ export type NomDePage =
   | "chat"
   | "proofreader"
   | "caviardage"
-  | "philosophy";
+  | "philosophy"
+  | "blog";
 
 export type Page = {
   nom: NomDePage;
@@ -51,6 +53,7 @@ const NOMS_ATTENDUS: readonly NomDePage[] = [
   "proofreader",
   "caviardage",
   "philosophy",
+  "blog",
 ];
 {
   const dansLeFichier = PAGES.map((p) => p.nom).sort();
@@ -81,24 +84,51 @@ export function cheminDe(nom: NomDePage): string {
   return page.chemin;
 }
 
-/** Toutes les URL du site, dans toutes les langues. Sert au prérendu. */
-export function toutesLesUrls(): {
-  url: string;
-  nom: NomDePage;
-  locale: Locale;
-}[] {
-  return LOCALES.flatMap((locale) =>
-    PAGES.map((p) => ({ url: lien(p.nom, locale), nom: p.nom, locale })),
-  );
+/** Une adresse du site : une page de routes.json, ou un article du blog.
+ *  `article` n'est posé que sur la page `blog`. */
+export type Route = { nom: NomDePage; locale: Locale; article?: string };
+
+/** L'URL d'une route, article compris. */
+export function lienDe(route: Route): string {
+  return route.article
+    ? lienArticle(route.locale, route.article)
+    : lien(route.nom, route.locale);
 }
 
-/** Reconnaît une URL. Renvoie null si elle n'appartient pas au site. */
-export function reconnaitre(
-  chemin: string,
-): { nom: NomDePage; locale: Locale } | null {
+/** La même route dans une autre langue. Un article sans traduction mène à
+ *  l'index du blog de cette langue, pas à une 404. */
+export function traduire(route: Route, locale: Locale): Route {
+  if (route.article && trouver(locale, route.article)) {
+    return { nom: "blog", locale, article: route.article };
+  }
+  return { nom: route.nom, locale };
+}
+
+/** Toutes les URL du site, dans toutes les langues, articles publiés
+ *  compris. Sert au prérendu. */
+export function toutesLesUrls(): (Route & { url: string })[] {
+  const pages: Route[] = LOCALES.flatMap((locale) =>
+    PAGES.map((p) => ({ nom: p.nom, locale })),
+  );
+  const articles: Route[] = tousLesArticles().map((a) => ({
+    nom: "blog",
+    locale: a.lang,
+    article: a.slug,
+  }));
+  return [...pages, ...articles].map((r) => ({ ...r, url: lienDe(r) }));
+}
+
+/** Reconnaît une URL. Renvoie null si elle n'appartient pas au site, y
+ *  compris un article inconnu ou non publié dans cette langue. */
+export function reconnaitre(chemin: string): Route | null {
   const segments = chemin.replace(/\/+$/, "").split("/").filter(Boolean);
   const [premier, ...reste] = segments;
   if (!premier || !estLocale(premier)) return null;
+  if (reste.length === 2 && reste[0] === "blog") {
+    return trouver(premier, reste[1])
+      ? { nom: "blog", locale: premier, article: reste[1] }
+      : null;
+  }
   const sousChemin = "/" + reste.join("/");
   const page = PAGES.find(
     (p) => p.chemin === (reste.length ? sousChemin : "/"),

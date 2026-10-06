@@ -35,6 +35,9 @@
       <p class="text-sm font-semibold">{i18n.t.footer.links}</p>
       <ul class="mt-3 space-y-2 text-sm text-muted-foreground max-sm:space-y-0">
         <li>
+          <Lien vers="blog" class={EXTERNE}>{i18n.t.nav.blog}</Lien>
+        </li>
+        <li>
           <a
             class={EXTERNE}
             href="{GITHUB_ORG}/piighost"

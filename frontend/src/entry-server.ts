@@ -10,10 +10,18 @@
 import { render } from "svelte/server";
 import App from "./App.svelte";
 import { router } from "./lib/router.svelte";
-import { meta, alternatives, OG_LOCALE, autreLocale } from "./lib/head";
+import {
+  meta,
+  alternatives,
+  balisesArticle,
+  lienDuFlux,
+  ogLocaleAlternative,
+  OG_LOCALE,
+} from "./lib/head";
 import { dictionaries } from "./i18n";
 import { donneesStructurees } from "./lib/jsonld";
-import type { Locale, NomDePage } from "./lib/routes";
+import { charger } from "./lib/blog.svelte";
+import type { Locale, Route } from "./lib/routes";
 
 export { toutesLesUrls } from "./lib/routes";
 
@@ -23,9 +31,12 @@ export type Rendu = {
   titre: string;
   description: string;
   lang: Locale;
-  /** `og:locale` et `og:locale:alternate`, au format Open Graph. */
+  /** `og:locale` et `og:locale:alternate`, au format Open Graph. Pas
+   *  d'alternative pour un article publié dans une seule langue. */
   ogLocale: string;
-  ogLocaleAlternate: string;
+  ogLocaleAlternate: string | null;
+  /** `article` pour un billet du blog, `website` partout ailleurs. */
+  ogType: "article" | "website";
   /** Le texte alternatif de l'image de partage, dans la langue de la page. */
   ogImageAlt: string;
   /** Les blocs schema.org de la page. Sérialisés par le prérendu, jamais par
@@ -33,28 +44,48 @@ export type Rendu = {
   jsonld: object[];
 };
 
-export function rendre(nom: NomDePage, locale: Locale): Rendu {
-  router.definir(nom, locale);
-  const { body, head } = render(App);
-  const { titre, description } = meta(nom, locale);
+/** Échappe une valeur d'attribut écrite à la main ci-dessous. */
+const attribut = (s: string) =>
+  s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 
-  const liens = alternatives(nom)
-    .map(
-      (a) => `<link rel="alternate" hreflang="${a.locale}" href="${a.url}" />`,
-    )
-    .join("\n    ");
+/** Le HTML d'une route. Asynchrone parce que le corps d'un article est un
+ *  module à part, chargé avant le rendu : sans lui, la page prérendue
+ *  n'aurait que son titre. */
+export async function rendre(route: Route): Promise<Rendu> {
+  const { locale } = route;
+  if (route.article) await charger(locale, route.article);
+  router.definir(route.nom, locale, route.article ?? null);
+  const { body, head } = render(App);
+  const { titre, description } = meta(route);
+
+  const liens = alternatives(route).map(
+    (a) => `<link rel="alternate" hreflang="${a.locale}" href="${a.url}" />`,
+  );
+  const flux = lienDuFlux(locale);
+  const balises = balisesArticle(route).map(
+    ([propriete, valeur]) =>
+      `<meta property="${propriete}" content="${attribut(valeur)}" />`,
+  );
 
   return {
     corps: body,
     // Pas de canonique ici : prerender.mjs remplace celui du gabarit. L'écrire
     // aux deux endroits en produisait deux, et deux canoniques valent zéro.
-    tete: [head, liens].filter(Boolean).join("\n    "),
+    tete: [
+      head,
+      ...liens,
+      `<link rel="alternate" type="application/atom+xml" title="${attribut(flux.titre)}" href="${flux.href}" />`,
+      ...balises,
+    ]
+      .filter(Boolean)
+      .join("\n    "),
     titre,
     description,
     lang: locale,
     ogLocale: OG_LOCALE[locale],
-    ogLocaleAlternate: OG_LOCALE[autreLocale(locale)],
+    ogLocaleAlternate: ogLocaleAlternative(route),
+    ogType: route.article ? "article" : "website",
     ogImageAlt: dictionaries[locale].seo.ogImageAlt,
-    jsonld: donneesStructurees(nom, locale),
+    jsonld: donneesStructurees(route),
   };
 }

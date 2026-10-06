@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Snippet } from "svelte";
   import { naviguer, router } from "../lib/router.svelte";
-  import { lien, type Locale, type NomDePage } from "../lib/routes";
+  import { lienDe, type Locale, type NomDePage } from "../lib/routes";
   import { cn } from "../lib/cn";
 
   /**
@@ -13,6 +13,7 @@
    */
   let {
     vers,
+    article = undefined,
     locale,
     class: extra = "",
     actif = false,
@@ -20,6 +21,8 @@
     ...rest
   }: {
     vers: NomDePage;
+    /** Un article de la page `blog`, par son slug. */
+    article?: string;
     locale?: Locale;
     class?: string;
     actif?: boolean;
@@ -28,14 +31,19 @@
   } = $props();
 
   const cible = $derived(locale ?? router.locale);
-  const estActif = $derived(actif || router.nom === vers);
+  const estActif = $derived(
+    actif ||
+      (router.nom === vers &&
+        cible === router.locale &&
+        (article ?? null) === router.article),
+  );
 </script>
 
 <a
-  href={lien(vers, cible)}
+  href={lienDe({ nom: vers, locale: cible, article })}
   class={cn(extra)}
   aria-current={estActif ? "page" : undefined}
-  onclick={(e) => naviguer(e, vers, cible)}
+  onclick={(e) => naviguer(e, vers, cible, article)}
   {...rest}
 >
   {@render children()}

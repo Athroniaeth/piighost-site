@@ -25,6 +25,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", "vite.config.ts"],
+  "include": ["src/**/*", "blog/**/*", "vite.config.ts"],
   "exclude": ["src/generated/**"]
 }

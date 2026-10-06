@@ -17,9 +17,11 @@ import {
   type Locale,
   type NomDePage,
   estLocale,
-  lien,
+  lienDe,
   reconnaitre,
+  traduire,
 } from "./routes";
+import { charger } from "./blog.svelte";
 
 /** La langue à servir à quelqu'un qui arrive sur `/`, sans rien imposer. */
 export function localePreferee(): Locale {
@@ -37,6 +39,9 @@ const NAVIGATEUR = typeof window !== "undefined";
 class Router {
   nom = $state<NomDePage>("home");
   locale = $state<Locale>(LOCALE_DEFAUT);
+  /** Le slug de l'article ouvert, sur la page `blog`. Null sur l'index du
+   *  blog et sur toute autre page. */
+  article = $state<string | null>(null);
   /** Vraie quand l'URL n'est aucune des quatorze. Le rendu affiche alors la 404. */
   introuvable = $state(false);
 
@@ -49,10 +54,12 @@ class Router {
     addEventListener("popstate", () => this.lire());
   }
 
-  /** Pose la route sans toucher à l'historique. Réservé au prérendu. */
-  definir(nom: NomDePage, locale: Locale) {
+  /** Pose la route sans toucher à l'historique. Réservé au prérendu, qui
+   *  a déjà chargé le corps de l'article. */
+  definir(nom: NomDePage, locale: Locale, article: string | null = null) {
     this.nom = nom;
     this.locale = locale;
+    this.article = article;
     this.introuvable = false;
   }
 
@@ -68,43 +75,64 @@ class Router {
 
     const trouve = reconnaitre(chemin);
     if (trouve) {
-      this.nom = trouve.nom;
-      this.locale = trouve.locale;
-      this.introuvable = false;
+      this.poser(trouve.nom, trouve.locale, trouve.article ?? null);
       return;
     }
     this.introuvable = true;
   }
 
-  /** Navigue sans recharger. `remplacer` évite d'empiler la redirection. */
+  /** Change de route. Le corps d'un article se charge en parallèle : la page
+   *  montre son titre tout de suite et son texte dès qu'il arrive. */
+  private poser(nom: NomDePage, locale: Locale, article: string | null) {
+    if (article) void charger(locale, article);
+    this.definir(nom, locale, article);
+  }
+
+  /** Navigue sans recharger. `remplacer` évite d'empiler la redirection,
+   *  `article` ouvre un article de la page `blog`. */
   aller(
     nom: NomDePage,
     locale: Locale = this.locale,
-    options: { remplacer?: boolean } = {},
+    options: { remplacer?: boolean; article?: string | null } = {},
   ) {
-    if (!NAVIGATEUR) return this.definir(nom, locale);
-    const url = lien(nom, locale);
+    const article = options.article ?? null;
+    if (!NAVIGATEUR) return this.definir(nom, locale, article);
+    const url = lienDe({ nom, locale, article: article ?? undefined });
     if (options.remplacer) history.replaceState({}, "", url);
     else history.pushState({}, "", url);
-    this.nom = nom;
-    this.locale = locale;
-    this.introuvable = false;
+    this.poser(nom, locale, article);
     scrollTo({ top: 0 });
   }
 
-  /** La même page dans l'autre langue, ce qu'attend un sélecteur de langue. */
+  /** La même page dans l'autre langue, ce qu'attend un sélecteur de langue.
+   *  Un article sans traduction mène à l'index du blog. */
   basculerLangue() {
     const autre = LOCALES.find((l) => l !== this.locale) ?? LOCALE_DEFAUT;
-    this.aller(this.nom, autre);
+    const route = traduire(this.route, autre);
+    this.aller(route.nom, route.locale, { article: route.article });
+  }
+
+  /** La route en cours, d'un seul tenant. */
+  get route() {
+    return {
+      nom: this.nom,
+      locale: this.locale,
+      article: this.article ?? undefined,
+    };
   }
 }
 
 export const router = new Router();
 
 /** Intercepte un clic sur un lien interne pour éviter le rechargement. */
-export function naviguer(event: MouseEvent, nom: NomDePage, locale?: Locale) {
+export function naviguer(
+  event: MouseEvent,
+  nom: NomDePage,
+  locale?: Locale,
+  article?: string,
+) {
   if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0)
     return;
   event.preventDefault();
-  router.aller(nom, locale ?? router.locale);
+  router.aller(nom, locale ?? router.locale, { article });
 }

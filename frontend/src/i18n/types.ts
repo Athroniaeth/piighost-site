@@ -48,6 +48,8 @@ export type Dictionary = {
     language: string;
     backToTop: string;
     mainNavigation: string;
+    /** Le lien du blog, dans la barre et le pied de page. */
+    blog: string;
     /** Le bouton du menu sur téléphone, lu par les lecteurs d'écran. */
     menu: string;
   };
@@ -160,6 +162,31 @@ export type Dictionary = {
     items: { question: string; answer: FaqSegment[] }[];
   };
   philosophy: PhilosophyDict;
+  blog: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    /** L'index quand aucun article n'est encore publié dans la langue. */
+    empty: string;
+    /** `{n}` est remplacé par le nombre de minutes. */
+    readingTime: string;
+    /** `{date}` est remplacé par la date de mise à jour. */
+    updated: string;
+    /** Le nom de la liste d'étiquettes, lu par un lecteur d'écran. */
+    tags: string;
+    allArticles: string;
+    /** Le lien visible vers le flux. */
+    feed: string;
+    /** Le titre du flux, annoncé dans la tête de chaque page. */
+    feedTitle: string;
+    /** Le lien vers la traduction, écrit dans la langue de la traduction. */
+    otherLanguage: string;
+    /** La pastille d'un brouillon, visible seulement avec BLOG_DRAFTS=1. */
+    draft: string;
+    breadcrumb: string;
+    copy: string;
+    copied: string;
+  };
   playground: {
     tabDetector: string;
     tabPipeline: string;
@@ -268,6 +295,7 @@ export type Dictionary = {
       /** Le titre d'onglet de la page philosophie. Il porte le terme de
        *  recherche, alors que le titre visible de la page reste court. */
       philosophy: string;
+      blog: string;
     };
     defaultDescription: string;
     philosophyDescription: string;
@@ -279,6 +307,7 @@ export type Dictionary = {
       caviardage: string;
       playground: string;
       detector: string;
+      blog: string;
     };
     /** Le texte alternatif de l'image de partage, dans la langue de la page. */
     ogImageAlt: string;

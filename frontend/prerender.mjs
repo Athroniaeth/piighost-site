@@ -66,7 +66,7 @@ const echappe = (s) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
-/** Les empreintes des blocs schema.org, dédoublonnées entre les quatorze pages.
+/** Les empreintes des blocs schema.org, dédoublonnées entre les pages.
  *  La CSP est script-src 'self' sans unsafe-inline : un bloc non autorisé est
  *  refusé par le navigateur, et les données structurées disparaissent sans que
  *  rien ne le signale. */
@@ -83,7 +83,7 @@ function structuree(donnees) {
 }
 
 let ecrites = 0;
-for (const { url, nom, locale } of toutesLesUrls()) {
+for (const { url, ...route } of toutesLesUrls()) {
   const {
     corps,
     tete,
@@ -92,9 +92,10 @@ for (const { url, nom, locale } of toutesLesUrls()) {
     lang,
     ogLocale,
     ogLocaleAlternate,
+    ogType,
     ogImageAlt,
     jsonld,
-  } = rendre(nom, locale);
+  } = await rendre(route);
 
   let html = gabarit;
   html = poser(html, /<html lang="fr">/, `<html lang="${lang}">`, url);
@@ -110,14 +111,22 @@ for (const { url, nom, locale } of toutesLesUrls()) {
     `<link rel="canonical" href="https://piighost.dev${url}" />`,
     url,
   );
+  // Un article publié dans une seule langue n'a pas de traduction à
+  // annoncer : la balise disparaît plutôt que de viser une page absente.
+  if (ogLocaleAlternate === null) {
+    html = poser(html, metaMotif("property", "og:locale:alternate"), "", url);
+  }
   /** Chaque balise meta du gabarit et sa valeur pour cette page. */
   const metas = [
+    ["property", "og:type", ogType],
     ["name", "description", description],
     ["property", "og:title", titre],
     ["property", "og:description", description],
     ["property", "og:url", `${PARTAGE}${url}`],
     ["property", "og:locale", ogLocale],
-    ["property", "og:locale:alternate", ogLocaleAlternate],
+    ...(ogLocaleAlternate === null
+      ? []
+      : [["property", "og:locale:alternate", ogLocaleAlternate]]),
     ["property", "og:image", `${PARTAGE}/og-${lang}.png`],
     ["property", "og:image:alt", ogImageAlt],
     ["name", "twitter:title", titre],

@@ -26,6 +26,9 @@ COPY --from=builder --chown=app:app /app/.venv /app/.venv
 # frontend et le prérendu : le prix d'une source unique est que chaque image
 # doit l'embarquer.
 COPY --chown=app:app routes.json /app/routes.json
+# Les articles du blog : backend/blog.py lit leur en-tête pour le sitemap et
+# les flux Atom. Seuls les fichiers Markdown, les images restent au frontend.
+COPY --chown=app:app frontend/src/content/blog /app/frontend/src/content/blog
 COPY --chown=app:app backend /app/backend
 
 ENV PATH="/app/.venv/bin:$PATH" PYTHONPATH=/app PYTHONUNBUFFERED=1 \

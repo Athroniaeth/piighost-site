@@ -13,13 +13,19 @@ prerenderer a growing application eventually needs reads the same list.
 """
 
 import json
+from datetime import date
+from xml.sax.saxutils import escape, quoteattr
 
 from litestar import Request, Response, get
+from litestar.exceptions import NotFoundException
+from litestar.params import FromPath
 
 from backend import PROJECT_ROOT
+from backend.blog import BLOG_ROOT, DRAFTS, Article, load_articles, translations
 
 XML_MEDIA_TYPE = "application/xml"
 TEXT_MEDIA_TYPE = "text/plain"
+ATOM_MEDIA_TYPE = "application/atom+xml"
 
 _ROUTES = json.loads((PROJECT_ROOT / "routes.json").read_text(encoding="utf-8"))
 
@@ -48,6 +54,29 @@ frontend router and the prerenderer: a page declared in one place and not the
 others is exactly the drift this project spends its time preventing. Fourteen
 entries today, two languages times seven pages.
 """
+
+ARTICLES: tuple[Article, ...] = load_articles(BLOG_ROOT, LOCALES, drafts=DRAFTS)
+"""The published blog articles, newest first, read once at startup.
+
+Read from the same Markdown files the frontend renders, with the same draft
+rule, so the sitemap and the feeds list exactly the pages nginx serves.
+"""
+
+FEEDS: dict[str, tuple[str, str]] = {
+    "fr": (
+        "Le blog de piighost",
+        "Des articles sur la dé-identification des données personnelles avant un LLM.",
+    ),
+    "en": (
+        "The piighost blog",
+        "Articles on de-identifying personal data before an LLM.",
+    ),
+}
+"""Each feed's title and subtitle, in its language."""
+
+BLOG_OPENED = date(2026, 10, 6)
+"""The day the blog opened. An Atom feed must carry an `updated` date, and an
+empty feed has no article to take it from."""
 
 DISALLOWED = ("/api/", "/schema")
 """Paths worth keeping out of an index: the API and its documentation.
@@ -154,6 +183,7 @@ async def sitemap(request: Request) -> Response[str]:
                 f"{alternates}"
                 f"</url>"
             )
+    lignes += [_article_entry(origin, article) for article in ARTICLES]
     entries = "\n".join(lignes)
     body = (
         '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -163,3 +193,94 @@ async def sitemap(request: Request) -> Response[str]:
         "</urlset>\n"
     )
     return Response(body, media_type=XML_MEDIA_TYPE, headers={"Cache-Control": CACHE})
+
+
+def _article_entry(origin: str, article: Article) -> str:
+    """One article in the sitemap.
+
+    Its `lastmod` is the date written in its front matter, the one date that
+    is true here. The language alternates are declared only when the article
+    is published in every language, because an alternate that leads to a 404
+    is worse than none. The page itself announces none in that case either.
+    """
+    versions = translations(ARTICLES, article.slug)
+    alternates = ""
+    if all(locale in versions for locale in LOCALES):
+        alternates = "".join(
+            f'<xhtml:link rel="alternate" hreflang="{locale}" '
+            f'href="{origin}{versions[locale].path}"/>'
+            for locale in LOCALES
+        ) + (
+            f'<xhtml:link rel="alternate" hreflang="x-default" '
+            f'href="{origin}{versions[DEFAULT_LOCALE].path}"/>'
+        )
+    return (
+        f"<url>"
+        f"<loc>{origin}{article.path}</loc>"
+        f"<lastmod>{article.updated.isoformat()}</lastmod>"
+        f"<changefreq>monthly</changefreq>"
+        f"<priority>0.7</priority>"
+        f"{alternates}"
+        f"</url>"
+    )
+
+
+def _timestamp(day: date) -> str:
+    """An Atom date, in RFC 3339, at midnight UTC."""
+    return f"{day.isoformat()}T00:00:00Z"
+
+
+@get(
+    "/{lang:str}/blog/feed.xml",
+    name="seo:feed",
+    media_type=ATOM_MEDIA_TYPE,
+    include_in_schema=False,
+)
+async def feed(request: Request, lang: FromPath[str]) -> Response[str]:
+    """The blog's Atom feed in one language, newest article first.
+
+    Each entry carries the article's description as its summary, not its
+    body. The body is rendered by the frontend, and a reader follows the link
+    to the page. Like the sitemap, the addresses follow the origin that was
+    asked, so a preview deployment advertises itself.
+    """
+    if lang not in LOCALES:
+        raise NotFoundException()
+    origin = origin_of(request)
+    title, subtitle = FEEDS[lang]
+    articles = [a for a in ARTICLES if a.lang == lang]
+    updated = max((a.updated for a in articles), default=BLOG_OPENED)
+    blog = f"{origin}/{lang}/blog"
+
+    entries = []
+    for article in articles:
+        url = f"{origin}{article.path}"
+        categories = "".join(
+            f"<category term={quoteattr(tag)}/>" for tag in article.tags
+        )
+        entries.append(
+            "<entry>"
+            f"<title>{escape(article.title)}</title>"
+            f'<link rel="alternate" type="text/html" href={quoteattr(url)}/>'
+            f"<id>{escape(url)}</id>"
+            f"<published>{_timestamp(article.published)}</published>"
+            f"<updated>{_timestamp(article.updated)}</updated>"
+            f"<author><name>{escape(article.author)}</name></author>"
+            f"<summary>{escape(article.description)}</summary>"
+            f"{categories}"
+            "</entry>"
+        )
+
+    body = (
+        '<?xml version="1.0" encoding="utf-8"?>\n'
+        f'<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{lang}">\n'
+        f"<title>{escape(title)}</title>\n"
+        f"<subtitle>{escape(subtitle)}</subtitle>\n"
+        f'<link rel="self" type="{ATOM_MEDIA_TYPE}" href="{blog}/feed.xml"/>\n'
+        f'<link rel="alternate" type="text/html" href="{blog}"/>\n'
+        f"<id>{blog}</id>\n"
+        f"<updated>{_timestamp(updated)}</updated>\n"
+        + "".join(f"{entry}\n" for entry in entries)
+        + "</feed>\n"
+    )
+    return Response(body, media_type=ATOM_MEDIA_TYPE, headers={"Cache-Control": CACHE})

@@ -3,8 +3,10 @@
 from litestar import Litestar
 from litestar.testing import AsyncTestClient
 
+from backend.blog import translations
 from backend.seo import (
     AI_CRAWLERS,
+    ARTICLES,
     DEFAULT_LOCALE,
     DISALLOWED,
     LOCALES,
@@ -60,7 +62,7 @@ class TestSeo:
         assert response.headers["content-type"].startswith("application/xml")
         for path in STATIC_PATHS:
             assert f"<loc>http://example.com{path}</loc>" in response.text
-        assert response.text.count("<url>") == len(STATIC_PATHS)
+        assert response.text.count("<url>") == len(STATIC_PATHS) + len(ARTICLES)
 
     def test_static_paths_is_every_page_in_every_language(self) -> None:
         """routes.json drives the router, the prerenderer and this sitemap.
@@ -85,10 +87,14 @@ class TestSeo:
         response = await client.get("/sitemap.xml", headers={"host": "example.com"})
         for locale in LOCALES:
             assert f'hreflang="{locale}"' in response.text
-        # Une alternative par langue et par URL, plus x-default.
-        assert response.text.count("xhtml:link") == len(STATIC_PATHS) * (
-            len(LOCALES) + 1
-        )
+        # Une alternative par langue et par URL, plus x-default. Un article
+        # n'en a que s'il est publié dans toutes les langues.
+        traduits = [
+            a for a in ARTICLES if len(translations(ARTICLES, a.slug)) == len(LOCALES)
+        ]
+        assert response.text.count("xhtml:link") == (
+            len(STATIC_PATHS) + len(traduits)
+        ) * (len(LOCALES) + 1)
 
     async def test_the_sitemap_declares_x_default_like_the_pages(
         self, client: AsyncTestClient[Litestar]
@@ -108,6 +114,9 @@ class TestSeo:
     async def test_the_sitemap_has_no_invented_lastmod(
         self, client: AsyncTestClient[Litestar]
     ) -> None:
-        """No date is better than today's date on every page."""
+        """No date is better than today's date on every page.
+
+        Only a blog article carries one, the date written in its front matter.
+        """
         response = await client.get("/sitemap.xml", headers={"host": "example.com"})
-        assert "<lastmod>" not in response.text
+        assert response.text.count("<lastmod>") == len(ARTICLES)

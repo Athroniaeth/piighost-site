@@ -16,7 +16,7 @@ from backend import DOCS_ENABLED, FRONTEND_ROOT, OPENAPI_SCHEMA
 from backend.exceptions import AppError, app_error_handler
 from backend.routes import ApiController
 from backend.security import API_KEY_HEADER, ensure_api_key_configured, identify_client
-from backend.seo import robots, sitemap
+from backend.seo import feed, robots, sitemap
 
 # nginx serves the frontend, not Litestar: `enabled=False` makes the plugin inert at
 # runtime (no HTML catch-all, no static files, no lifespan, no Vite process). The
@@ -146,8 +146,8 @@ rate_limit_config = build_rate_limit_config()
 app = Litestar(
     plugins=plugins,
     # robots.txt and sitemap.xml sit at the root, where a crawler looks for
-    # them, not under /api.
-    route_handlers=[api_router, robots, sitemap],
+    # them, not under /api. The blog feeds sit beside the blog, /{lang}/blog.
+    route_handlers=[api_router, robots, sitemap, feed],
     middleware=[rate_limit_config.middleware],
     exception_handlers={AppError: app_error_handler},
     openapi_config=build_openapi_config(docs_enabled=DOCS_ENABLED),

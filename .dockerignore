@@ -177,3 +177,7 @@ frontend/.litestar.json
 
 # Build output and docs not needed to build the image
 *.md
+
+# `*.md` ci-dessus ne vise que la racine du contexte. Les articles du blog sont
+# du Markdown que les deux images embarquent : l'exception le dit en clair.
+!frontend/src/content/blog/**/*.md

@@ -10,7 +10,8 @@
 import { render } from "svelte/server";
 import App from "./App.svelte";
 import { router } from "./lib/router.svelte";
-import { meta, alternatives } from "./lib/head";
+import { meta, alternatives, OG_LOCALE, autreLocale } from "./lib/head";
+import { dictionaries } from "./i18n";
 import { donneesStructurees } from "./lib/jsonld";
 import type { Locale, NomDePage } from "./lib/routes";
 
@@ -22,6 +23,11 @@ export type Rendu = {
   titre: string;
   description: string;
   lang: Locale;
+  /** `og:locale` et `og:locale:alternate`, au format Open Graph. */
+  ogLocale: string;
+  ogLocaleAlternate: string;
+  /** Le texte alternatif de l'image de partage, dans la langue de la page. */
+  ogImageAlt: string;
   /** Les blocs schema.org de la page. Sérialisés par le prérendu, jamais par
    *  un composant : voir lib/jsonld.ts. */
   jsonld: object[];
@@ -46,6 +52,9 @@ export function rendre(nom: NomDePage, locale: Locale): Rendu {
     titre,
     description,
     lang: locale,
+    ogLocale: OG_LOCALE[locale],
+    ogLocaleAlternate: OG_LOCALE[autreLocale(locale)],
+    ogImageAlt: dictionaries[locale].seo.ogImageAlt,
     jsonld: donneesStructurees(nom, locale),
   };
 }

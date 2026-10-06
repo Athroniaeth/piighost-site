@@ -53,8 +53,10 @@ const PAGES: Record<NomDePage, Entree> = {
     titre: t.seo.titles.caviardage,
     description: t.seo.pages.caviardage,
   }),
+  // Le titre d'onglet porte le terme de recherche, « avant un LLM » ; le titre
+  // visible de la page reste la question courte.
   philosophy: (t) => ({
-    titre: `${t.philosophy.title} - piighost`,
+    titre: t.seo.titles.philosophy,
     description: t.seo.philosophyDescription,
   }),
 };
@@ -96,7 +98,27 @@ export function appliquer(nom: NomDePage, locale: Locale) {
   poser("meta[property='og:title']", "content", titre);
   poser("meta[property='og:description']", "content", description);
   poser("meta[property='og:url']", "content", canonique(nom, locale));
+  poser("meta[property='og:locale']", "content", OG_LOCALE[locale]);
+  poser(
+    "meta[property='og:locale:alternate']",
+    "content",
+    OG_LOCALE[autreLocale(locale)],
+  );
+  poser(
+    "meta[property='og:image:alt']",
+    "content",
+    dictionaries[locale].seo.ogImageAlt,
+  );
+  poser("meta[name='twitter:title']", "content", titre);
+  poser("meta[name='twitter:description']", "content", description);
 }
+
+/** La forme Open Graph d'une langue : `fr_FR`, `en_US`. */
+export const OG_LOCALE: Record<Locale, string> = { fr: "fr_FR", en: "en_US" };
+
+/** L'autre langue du site, celle qu'annonce `og:locale:alternate`. */
+export const autreLocale = (locale: Locale): Locale =>
+  LOCALES.find((l) => l !== locale) ?? locale;
 
 function poser(selecteur: string, attribut: string, valeur: string) {
   document.querySelector(selecteur)?.setAttribute(attribut, valeur);

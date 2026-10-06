@@ -7,14 +7,14 @@
     <!-- Ces balises sont celles du repli. Le prérendu les réécrit par page,
          dans frontend/prerender.mjs, à partir de routes.json et du
          dictionnaire : ce que voit un robot n'est donc pas ce bloc, sauf sur
-         une URL inconnue. -->
-    <title>
-      piighost - anonymiser les PII avant qu'elles n'atteignent le modèle
-    </title>
-    <meta
-      name="description"
-      content="piighost est une librairie Python pour anonymiser les informations personnelles avant qu'elles n'atteignent un grand modèle de langage."
-    />
+         une URL inconnue.
+
+         Une balise par ligne, et ce fichier est exclu de Prettier, parce que
+         Prettier coupait les balises sur plusieurs lignes et que le motif du
+         prérendu ne trouvait plus og:description. Le prérendu échoue désormais
+         si une balise attendue manque. -->
+    <title>piighost - dé-identifier les données personnelles avant un LLM</title>
+    <meta name="description" content="piighost masque les données personnelles avant un LLM, puis restaure les vraies valeurs. Pseudonymisation réversible, souvent appelée anonymisation." />
     <link rel="canonical" href="https://piighost.dev/fr" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -29,14 +29,18 @@
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="piighost" />
-    <meta property="og:title" content="piighost" />
-    <meta
-      property="og:description"
-      content="Anonymize PII before it reaches the LLM."
-    />
+    <meta property="og:title" content="piighost - dé-identifier les données personnelles avant un LLM" />
+    <meta property="og:description" content="piighost masque les données personnelles avant un LLM, puis restaure les vraies valeurs. Pseudonymisation réversible, souvent appelée anonymisation." />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:image" content="https://piighost.dev/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Le logo de piighost, un fantôme, au-dessus de la phrase en anglais « Everything the model can do. Nothing it doesn't need to know. »" />
     <meta property="og:url" content="https://piighost.dev/fr" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="piighost - dé-identifier les données personnelles avant un LLM" />
+    <meta name="twitter:description" content="piighost masque les données personnelles avant un LLM, puis restaure les vraies valeurs. Pseudonymisation réversible, souvent appelée anonymisation." />
 
     <script src="/theme.js"></script>
   </head>

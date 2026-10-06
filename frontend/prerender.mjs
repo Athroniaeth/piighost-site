@@ -38,10 +38,26 @@ const { rendre, toutesLesUrls } = await import(SSR);
 
 const gabarit = await readFile(join(DIST, "index.html"), "utf8");
 
-/** Remplace une balise entière, ou l'ajoute si elle manque. */
-function poser(html, motif, remplacement) {
-  return motif.test(html) ? html.replace(motif, remplacement) : html;
+/** Remplace une balise entière, et échoue si elle manque.
+ *
+ *  L'ancienne version rendait la page telle quelle quand le motif ne trouvait
+ *  rien. Prettier avait coupé la balise og:description sur trois lignes, le
+ *  motif l'attendait sur une seule, et les quatorze pages ont annoncé la même
+ *  description anglaise du gabarit sans que le build ne dise rien. */
+function poser(html, motif, remplacement, url) {
+  if (!motif.test(html)) {
+    throw new Error(`prérendu : ${motif} introuvable dans le gabarit (${url})`);
+  }
+  // Une fonction plutôt qu'une chaîne : un `$` dans un texte serait sinon lu
+  // comme un motif de remplacement.
+  return html.replace(motif, () => remplacement);
 }
+
+/** Une balise meta repérée par son attribut, quels que soient les espaces et
+ *  les sauts de ligne entre `<meta` et la fin de la balise. Le guillemet
+ *  fermant compte, sinon `og:locale` trouverait aussi `og:locale:alternate`. */
+const metaMotif = (attribut, valeur) =>
+  new RegExp(`<meta\\s+${attribut}="${valeur}"[^>]*>`);
 
 const echappe = (s) =>
   s
@@ -68,45 +84,53 @@ function structuree(donnees) {
 
 let ecrites = 0;
 for (const { url, nom, locale } of toutesLesUrls()) {
-  const { corps, tete, titre, description, lang, jsonld } = rendre(nom, locale);
+  const {
+    corps,
+    tete,
+    titre,
+    description,
+    lang,
+    ogLocale,
+    ogLocaleAlternate,
+    ogImageAlt,
+    jsonld,
+  } = rendre(nom, locale);
 
   let html = gabarit;
-  html = html.replace('<html lang="fr">', `<html lang="${lang}">`);
+  html = poser(html, /<html lang="fr">/, `<html lang="${lang}">`, url);
   html = poser(
     html,
     /<title>[\s\S]*?<\/title>/,
     `<title>${echappe(titre)}</title>`,
+    url,
   );
   html = poser(
     html,
-    /<meta\s+name="description"[\s\S]*?\/>/,
-    `<meta name="description" content="${echappe(description)}" />`,
-  );
-  html = poser(
-    html,
-    /<link rel="canonical"[^>]*\/>/,
+    /<link\s+rel="canonical"[^>]*>/,
     `<link rel="canonical" href="https://piighost.dev${url}" />`,
+    url,
   );
-  html = poser(
-    html,
-    /<meta property="og:title"[^>]*\/>/,
-    `<meta property="og:title" content="${echappe(titre)}" />`,
-  );
-  html = poser(
-    html,
-    /<meta property="og:description"[^>]*\/>/,
-    `<meta property="og:description" content="${echappe(description)}" />`,
-  );
-  html = poser(
-    html,
-    /<meta property="og:url"[^>]*\/>/,
-    `<meta property="og:url" content="${PARTAGE}${url}" />`,
-  );
-  html = poser(
-    html,
-    /<meta property="og:image"[^>]*\/>/,
-    `<meta property="og:image" content="${PARTAGE}/og.png" />`,
-  );
+  /** Chaque balise meta du gabarit et sa valeur pour cette page. */
+  const metas = [
+    ["name", "description", description],
+    ["property", "og:title", titre],
+    ["property", "og:description", description],
+    ["property", "og:url", `${PARTAGE}${url}`],
+    ["property", "og:locale", ogLocale],
+    ["property", "og:locale:alternate", ogLocaleAlternate],
+    ["property", "og:image", `${PARTAGE}/og.png`],
+    ["property", "og:image:alt", ogImageAlt],
+    ["name", "twitter:title", titre],
+    ["name", "twitter:description", description],
+  ];
+  for (const [attribut, valeur, contenu] of metas) {
+    html = poser(
+      html,
+      metaMotif(attribut, valeur),
+      `<meta ${attribut}="${valeur}" content="${echappe(contenu)}" />`,
+      url,
+    );
+  }
   const structurees = jsonld.map(structuree).join("\n    ");
   html = html.replace("</head>", `  ${tete}\n    ${structurees}\n  </head>`);
   html = html.replace('<div id="app"></div>', `<div id="app">${corps}</div>`);

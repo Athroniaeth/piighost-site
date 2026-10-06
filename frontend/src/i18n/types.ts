@@ -265,6 +265,9 @@ export type Dictionary = {
       chat: string;
       proofreader: string;
       caviardage: string;
+      /** Le titre d'onglet de la page philosophie. Il porte le terme de
+       *  recherche, alors que le titre visible de la page reste court. */
+      philosophy: string;
     };
     defaultDescription: string;
     philosophyDescription: string;
@@ -277,5 +280,7 @@ export type Dictionary = {
       playground: string;
       detector: string;
     };
+    /** Le texte alternatif de l'image de partage, dans la langue de la page. */
+    ogImageAlt: string;
   };
 };

@@ -219,7 +219,7 @@ export const en: Dictionary = {
     mit: "MIT licensed.",
   },
   hero: {
-    name: "PIIGhost",
+    name: "piighost",
     sloganWork: "Everything the model can do.",
     sloganStay: "Nothing it doesn't need to know.",
     codeComment:
@@ -849,24 +849,27 @@ export const en: Dictionary = {
       chat: "piighost-chat - de-identified chat demo",
       proofreader: "piighost-proofreader - de-identified CV proofreader",
       caviardage: "caviardage - redact a Word deed in the browser",
+      philosophy: "Why de-identify data before an LLM? - piighost",
     },
     defaultDescription:
-      "piighost is a Python library to de-identify personally identifiable information before it reaches a large language model. Detect PII with regex, NER or an LLM, swap it for stable placeholders, and restore real values for your tools.",
+      "piighost de-identifies PII in Python before the LLM sees it, then restores the real values. Reversible pseudonymization, often called anonymization.",
     philosophyDescription:
-      "How a cloud model handles your data, what the law does and does not protect, and what de-identification changes.",
+      "How ChatGPT, Claude and other cloud LLMs handle your data, what GDPR does and does not protect, and what de-identification changes.",
     pages: {
       piighost:
-        "The core Python library to build PII de-identification pipelines. Detect with regex, NER or an LLM, swap PII for stable placeholders, and restore real values on tool output.",
-      api: "piighost-api hosts one de-identification pipeline behind an HTTP endpoint, so any service can swap PII for placeholders before it reaches a model.",
-      chat: "piighost-chat is a demo chatbot that de-identifies each message before the model sees it, then restores the real values in the reply.",
+        "Python library to redact PII from LLM prompts. Regex, NER or LLM detection, stable placeholders, real values restored in replies and tool calls.",
+      api: "Run piighost behind HTTP. A REST server and OpenAI- and Anthropic-compatible proxies de-identify PII before any LLM call. Self-hosted, from a Docker image.",
+      chat: "A demo chatbot that masks the PII in each message before the LLM sees it, then restores the real values in the reply. Built on piighost.",
       proofreader:
-        "piighost-proofreader is a CV proofreader that de-identifies documents before any model call, so personal data never leaves your control.",
+        "An LLM CV proofreader that de-identifies the personal data in a document before any model call, so it never leaves your control.",
       caviardage:
-        "caviardage removes the personal data from a Word deed, in the browser. piighost runs there in Pyodide with a GLiNER model, and nothing of the document leaves the tab.",
+        "Redact the personal data in a Word deed, in the browser. piighost runs there in Pyodide with a GLiNER model, and nothing leaves the tab.",
       playground:
         "Compose a full PII de-identification pipeline in the browser: detect, resolve, link and de-identify, then export it as piighost config.",
       detector:
         "Test a single PII detector in your browser: regex, classic NER or GLiNER. No data leaves the page.",
     },
+    ogImageAlt:
+      'The piighost ghost logo above the line "Everything the model can do. Nothing it doesn\'t need to know."',
   },
 };

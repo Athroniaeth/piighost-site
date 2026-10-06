@@ -1,3 +1,7 @@
 src/generated/
 public/
 pnpm-lock.yaml
+
+# Une balise d'en-tête par ligne. Prettier les coupait, et le prérendu, qui les
+# remplace page par page, ne trouvait plus og:description.
+index.html

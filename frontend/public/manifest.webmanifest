@@ -1,8 +1,8 @@
 {
   "name": "piighost",
   "short_name": "piighost",
-  "description": "Anonymize PII before it reaches the LLM. A Python library for reversible PII anonymization pipelines.",
-  "start_url": "/en/",
+  "description": "piighost replaces personal data with placeholders before the LLM sees it, then restores the real values in the reply and in tool calls.",
+  "start_url": "/en",
   "display": "standalone",
   "background_color": "oklch(0.155 0.010 220)",
   "theme_color": "oklch(0.155 0.010 220)",

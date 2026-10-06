@@ -221,7 +221,7 @@ export const fr: Dictionary = {
     mit: "Licence MIT.",
   },
   hero: {
-    name: "PIIGhost",
+    name: "piighost",
     sloganWork: "Tout ce que le modèle sait faire,",
     sloganStay: "rien de ce qu'il n'a pas à savoir.",
     codeComment:
@@ -851,7 +851,7 @@ export const fr: Dictionary = {
   },
   seo: {
     defaultTitle:
-      "piighost - dé-identifier les PII avant qu'elles n'atteignent le modèle",
+      "piighost - dé-identifier les données personnelles avant un LLM",
     titles: {
       piighost:
         "piighost - bibliothèque Python de dé-identification pour agents LLM",
@@ -859,24 +859,28 @@ export const fr: Dictionary = {
       chat: "piighost-chat - démonstration de chat dé-identifié",
       proofreader: "piighost-proofreader - relecteur de CV dé-identifié",
       caviardage: "caviardage - caviarder un acte Word dans le navigateur",
+      philosophy:
+        "Pourquoi dé-identifier ses données avant un LLM ? - piighost",
     },
     defaultDescription:
-      "piighost est une bibliothèque Python pour dé-identifier les informations personnelles avant qu'elles n'atteignent un grand modèle de langage. Détectez les PII par regex, NER ou LLM, remplacez-les par des jetons stables, puis restaurez les vraies valeurs pour vos outils.",
+      "piighost masque les données personnelles avant un LLM, puis restaure les vraies valeurs. Pseudonymisation réversible, souvent appelée anonymisation.",
     philosophyDescription:
-      "Comment un modèle cloud traite vos données, ce que le droit protège ou non, et ce que la dé-identification change.",
+      "Comment ChatGPT, Claude et les autres LLM cloud traitent vos données, ce que le RGPD protège ou non, et ce que la dé-identification change.",
     pages: {
       piighost:
-        "La bibliothèque Python pour construire des pipelines de dé-identification de PII. Détectez par regex, NER ou LLM, remplacez les PII par des jetons stables, et restaurez les vraies valeurs en sortie d'outil.",
-      api: "piighost-api héberge un pipeline de dé-identification derrière un point d'accès HTTP, pour que n'importe quel service remplace les PII par des jetons avant qu'elles n'atteignent un modèle.",
-      chat: "piighost-chat est un chatbot de démonstration qui dé-identifie chaque message avant que le modèle ne le voie, puis restaure les vraies valeurs dans la réponse.",
+        "Bibliothèque Python pour pseudonymiser les données personnelles avant un LLM. Détection regex, NER ou LLM, jetons stables, vraies valeurs restaurées.",
+      api: "piighost derrière HTTP. Un serveur REST et des proxys compatibles OpenAI et Anthropic dé-identifient les données personnelles avant tout appel au LLM.",
+      chat: "Un chatbot de démonstration qui masque les données personnelles de chaque message avant le LLM, puis restaure les vraies valeurs dans la réponse.",
       proofreader:
-        "piighost-proofreader est un relecteur de CV qui dé-identifie les documents avant tout appel à un modèle, pour que les données personnelles ne quittent jamais votre contrôle.",
+        "Un relecteur de CV par LLM qui dé-identifie les données personnelles du document avant tout appel au modèle. Elles restent sous votre contrôle.",
       caviardage:
-        "caviardage retire les données personnelles d'un acte Word, dans le navigateur. piighost y tourne dans Pyodide avec un modèle GLiNER, et rien du document ne quitte l'onglet.",
+        "Caviardez les données personnelles d'un acte Word, dans le navigateur. piighost y tourne dans Pyodide avec un modèle GLiNER, et rien ne quitte l'onglet.",
       playground:
         "Composez un pipeline complet de dé-identification de PII dans le navigateur : détecter, résoudre, lier et dé-identifier, puis exportez-le en configuration piighost.",
       detector:
         "Testez un détecteur de PII dans votre navigateur : regex, NER classique ou GLiNER. Aucune donnée ne quitte la page.",
     },
+    ogImageAlt:
+      "Le logo de piighost, un fantôme, au-dessus de la phrase en anglais « Everything the model can do. Nothing it doesn't need to know. »",
   },
 };

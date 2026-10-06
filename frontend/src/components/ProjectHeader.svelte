@@ -16,6 +16,11 @@
       project.tagline,
   );
 
+  const appLabel = $derived(
+    i18n.t.projects[project.slug as keyof typeof i18n.t.projects]?.appLabel ??
+      i18n.t.projectHeader.app,
+  );
+
   const sortant = (destination: string) =>
     track({
       name: "outbound",
@@ -56,7 +61,7 @@
           onclick={() => sortant("app")}
         >
           <ExternalLink class="mr-1 size-4" />
-          {i18n.t.projectHeader.app}
+          {appLabel}
         </Button>
       {/if}
       {#if project.docs}

@@ -11,6 +11,8 @@ export type ProjectSection = {
 
 export type ProjectPageDict = {
   tagline: string;
+  /** The live app button, when "demo" undersells a working tool. */
+  appLabel?: string;
   sections: ProjectSection[];
 };
 

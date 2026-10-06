@@ -180,11 +180,12 @@ export const fr: Dictionary = {
     caviardage: {
       tagline:
         "Une application qui caviarde un acte Word dans le navigateur. Rien du document ne quitte l'onglet.",
+      appLabel: "Ouvrir l'application",
       sections: [
         {
           heading: "Ce qu'il fait",
           paragraphs: [
-            "caviardage retire les données personnelles d'un acte rédigé sous Word. Ce retrait s'appelle le caviardage. Il est définitif, car l'application ne garde aucune table qui relie une valeur à son remplacement.",
+            "L'application retire les données personnelles d'un acte rédigé sous Word. Ce retrait est définitif, car l'application ne garde aucune table qui relie une valeur à son remplacement.",
             "Tout se passe dans l'onglet du navigateur. piighost y tourne grâce à Pyodide, une version de Python qui s'exécute dans le navigateur. Le document n'est jamais envoyé, et aucun compte n'est demandé. Seules des mesures de visite anonymes quittent l'onglet, comme les étapes atteintes.",
             "Il accepte aussi un PDF qui contient son texte. Les pages de la copie deviennent alors des images, avec les valeurs peintes par-dessus.",
           ],
@@ -322,7 +323,7 @@ export const fr: Dictionary = {
     eyebrow: "L'écosystème",
     title: "Une couche de confidentialité, plusieurs projets",
     description:
-      "Commencez par la bibliothèque. Passez au serveur quand plusieurs services partagent un pipeline, et voyez l'ensemble à l'œuvre dans la démo de chat et le relecteur de CV.",
+      "Commencez par la bibliothèque. Passez au serveur quand plusieurs services partagent un pipeline, et voyez l'ensemble à l'œuvre dans la démo de chat, le relecteur de CV et l'outil de caviardage.",
     learnMore: "En savoir plus",
     moreToCome: "À venir.",
   },

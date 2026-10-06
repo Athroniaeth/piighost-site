@@ -179,11 +179,12 @@ export const en: Dictionary = {
     caviardage: {
       tagline:
         "An app that redacts a Word deed in the browser. Nothing of the document leaves the tab.",
+      appLabel: "Open the app",
       sections: [
         {
           heading: "What it does",
           paragraphs: [
-            "caviardage removes the personal data from a deed written in Word. This removal is called redaction. It is final, because the app keeps no table that links a value to its replacement.",
+            "The app removes the personal data from a deed written in Word. This removal, called redaction, is final, because the app keeps no table that links a value to its replacement.",
             "Everything happens in the browser tab. piighost runs there through Pyodide, a version of Python that runs in the browser. The document is never uploaded, and no account is needed. Only anonymous visit counts leave the tab, such as the steps reached.",
             "It also accepts a PDF that carries its text. The pages of the copy then become pictures, with the values painted over.",
           ],
@@ -319,7 +320,7 @@ export const en: Dictionary = {
     eyebrow: "The ecosystem",
     title: "One privacy layer, many projects",
     description:
-      "Start with the library. Move to the server when several services share one pipeline, and see it all at work in the chat demo and the CV proofreader.",
+      "Start with the library. Move to the server when several services share one pipeline, and see it all at work in the chat demo, the CV proofreader and the redaction tool.",
     learnMore: "Learn more",
     moreToCome: "More to come.",
   },

@@ -1,5 +1,9 @@
 export const GITHUB_ORG = "https://github.com/Athroniaeth";
 
+/** La version de la bibliothèque piighost annoncée dans les données
+ *  structurées. Une seule ligne à changer à chaque release. */
+export const PIIGHOST_VERSION = "2.0.1";
+
 /**
  * The catalog of pattern groups, in the page's language. A site of its own, so
  * it is a link and not a route.

@@ -1,6 +1,13 @@
 # piighost
 
-> piighost is an open-source Python library that keeps personally identifiable information (PII) out of LLM prompts. It replaces each sensitive value with a placeholder before the text reaches the model, then restores the real values in the response.
+> piighost replaces personal data with placeholders before the LLM sees it, then restores the real values in the reply and in tool calls.
+
+piighost is an open-source Python library that keeps personally identifiable information (PII) out of LLM prompts. It does reversible pseudonymization, often called anonymization.
+
+When to use it:
+- Use piighost when an agent must send user data to OpenAI, Anthropic, Mistral or another hosted LLM, and the model does not need the real names, emails or numbers to do its job.
+- Unlike Presidio, piighost restores the real values for the user and for tools. Presidio detects and anonymizes, and restoring the values takes manual work with its `decrypt` operator.
+- Unlike LangChain's PIIMiddleware, piighost restores what it masked. That middleware masks or hashes values and does not restore them for the user.
 
 Key facts:
 - Language: Python 3.11+, MIT licence
@@ -23,9 +30,18 @@ Key facts:
 - [Why de-identify?](https://piighost.dev/en/philosophy): how cloud models handle your data, and what de-identification changes
 - The same pages exist in French under https://piighost.dev/fr
 
+## Docs
+
+- [Documentation](https://docs.piighost.dev/en/guide/): guides and API reference, in English and French
+- [Documentation index for LLMs](https://docs.piighost.dev/llms.txt)
+- [Full documentation for LLMs](https://docs.piighost.dev/llms-full.txt): the documentation in one file
+
+## Catalog
+
+- [Catalog](https://catalog.piighost.dev): the catalog of tested de-identification regexes and pipeline configurations
+- [Catalog index for LLMs](https://catalog.piighost.dev/llms.txt)
+
 ## Resources
 
-- [Documentation](https://athroniaeth.github.io/piighost/): guides and API reference
 - [Package (PyPI)](https://pypi.org/project/piighost/): `pip install piighost` or `uv add piighost`
 - [Source (GitHub)](https://github.com/Athroniaeth/piighost)
-- [Catalog](https://catalog.piighost.dev): the catalog of tested de-identification regexes and pipeline configurations, see https://catalog.piighost.dev/llms.txt

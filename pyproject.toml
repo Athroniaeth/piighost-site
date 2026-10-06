@@ -10,6 +10,7 @@ dependencies = [
     "python-dotenv>=1.2.3",
     "litestar-granian>=0.16.0",
     "structlog>=26.1.0",
+    "pyyaml>=6.0.3",
 ]
 
 [dependency-groups]

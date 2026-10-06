@@ -604,6 +604,7 @@ dependencies = [
     { name = "litestar-vite" },
     { name = "markupsafe" },
     { name = "python-dotenv" },
+    { name = "pyyaml" },
     { name = "structlog" },
 ]
 
@@ -625,6 +626,7 @@ requires-dist = [
     { name = "litestar-vite", specifier = ">=0.31.0" },
     { name = "markupsafe", specifier = ">=3.0.3" },
     { name = "python-dotenv", specifier = ">=1.2.3" },
+    { name = "pyyaml", specifier = ">=6.0.3" },
     { name = "structlog", specifier = ">=26.1.0" },
 ]
 

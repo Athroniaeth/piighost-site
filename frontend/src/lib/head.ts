@@ -105,6 +105,11 @@ export function appliquer(nom: NomDePage, locale: Locale) {
     OG_LOCALE[autreLocale(locale)],
   );
   poser(
+    "meta[property='og:image']",
+    "content",
+    `https://piighost.dev/og-${locale}.png`,
+  );
+  poser(
     "meta[property='og:image:alt']",
     "content",
     dictionaries[locale].seo.ogImageAlt,

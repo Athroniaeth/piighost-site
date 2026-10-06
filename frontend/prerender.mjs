@@ -118,7 +118,7 @@ for (const { url, nom, locale } of toutesLesUrls()) {
     ["property", "og:url", `${PARTAGE}${url}`],
     ["property", "og:locale", ogLocale],
     ["property", "og:locale:alternate", ogLocaleAlternate],
-    ["property", "og:image", `${PARTAGE}/og.png`],
+    ["property", "og:image", `${PARTAGE}/og-${lang}.png`],
     ["property", "og:image:alt", ogImageAlt],
     ["name", "twitter:title", titre],
     ["name", "twitter:description", description],

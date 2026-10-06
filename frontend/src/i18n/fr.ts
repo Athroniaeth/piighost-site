@@ -881,6 +881,6 @@ export const fr: Dictionary = {
         "Testez un détecteur de PII dans votre navigateur : regex, NER classique ou GLiNER. Aucune donnée ne quitte la page.",
     },
     ogImageAlt:
-      "Le logo de piighost, un fantôme, au-dessus de la phrase en anglais « Everything the model can do. Nothing it doesn't need to know. »",
+      "Le logo et le nom de piighost, au-dessus de la devise « Tout ce que le modèle sait faire, rien de ce qu’il n’a pas à savoir. » et de la ligne « Dé-identification réversible pour les agents LLM, en Python ».",
   },
 };

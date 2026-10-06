@@ -870,6 +870,6 @@ export const en: Dictionary = {
         "Test a single PII detector in your browser: regex, classic NER or GLiNER. No data leaves the page.",
     },
     ogImageAlt:
-      'The piighost ghost logo above the line "Everything the model can do. Nothing it doesn\'t need to know."',
+      "The piighost ghost logo and name, above the motto “Everything the model can do. Nothing it doesn’t need to know.” and the line “Reversible PII masking for LLM agents, in Python”.",
   },
 };

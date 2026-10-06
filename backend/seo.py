@@ -26,6 +26,9 @@ _ROUTES = json.loads((PROJECT_ROOT / "routes.json").read_text(encoding="utf-8"))
 LOCALES: tuple[str, ...] = tuple(_ROUTES["locales"])
 """The languages the site answers in, taken from routes.json."""
 
+DEFAULT_LOCALE: str = _ROUTES["localeParDefaut"]
+"""The language `x-default` points at, the one the bare root falls back to."""
+
 PAGES: tuple[dict, ...] = tuple(_ROUTES["pages"])
 """Every page, with its priority and change frequency."""
 
@@ -124,7 +127,14 @@ async def sitemap(request: Request) -> Response[str]:
 
     # Chaque page est déclarée dans les deux langues, et chacune pointe vers
     # l'autre par un lien alternate : c'est ce qui dit à un index que ce sont
-    # deux traductions et non deux pages concurrentes.
+    # deux traductions et non deux pages concurrentes. `x-default` vise la
+    # langue par défaut, comme les balises hreflang des pages elles-mêmes : un
+    # sitemap qui en annonce moins que la page envoie deux signaux différents.
+    #
+    # Pas de <lastmod>. La seule date juste serait celle du dernier commit des
+    # fichiers de la page, et l'image n'embarque pas .git (.dockerignore).
+    # La date du jour, elle, dirait à chaque passage que tout a changé, et un
+    # moteur finit par ignorer un lastmod qui ment.
     lignes = []
     for page in PAGES:
         for locale in LOCALES:
@@ -132,6 +142,9 @@ async def sitemap(request: Request) -> Response[str]:
                 f'<xhtml:link rel="alternate" hreflang="{autre}" '
                 f'href="{origin}{_url(page["chemin"], autre)}"/>'
                 for autre in LOCALES
+            ) + (
+                f'<xhtml:link rel="alternate" hreflang="x-default" '
+                f'href="{origin}{_url(page["chemin"], DEFAULT_LOCALE)}"/>'
             )
             lignes.append(
                 f"<url>"

@@ -3,7 +3,14 @@
 from litestar import Litestar
 from litestar.testing import AsyncTestClient
 
-from backend.seo import AI_CRAWLERS, DISALLOWED, LOCALES, PAGES, STATIC_PATHS
+from backend.seo import (
+    AI_CRAWLERS,
+    DEFAULT_LOCALE,
+    DISALLOWED,
+    LOCALES,
+    PAGES,
+    STATIC_PATHS,
+)
 
 
 class TestSeo:
@@ -78,5 +85,29 @@ class TestSeo:
         response = await client.get("/sitemap.xml", headers={"host": "example.com"})
         for locale in LOCALES:
             assert f'hreflang="{locale}"' in response.text
-        # Une alternative par langue et par URL.
-        assert response.text.count("xhtml:link") == len(STATIC_PATHS) * len(LOCALES)
+        # Une alternative par langue et par URL, plus x-default.
+        assert response.text.count("xhtml:link") == len(STATIC_PATHS) * (
+            len(LOCALES) + 1
+        )
+
+    async def test_the_sitemap_declares_x_default_like_the_pages(
+        self, client: AsyncTestClient[Litestar]
+    ) -> None:
+        """The pages announce x-default, so the sitemap must too.
+
+        It points at the default language, never at a bare path that nobody
+        serves.
+        """
+        response = await client.get("/sitemap.xml", headers={"host": "example.com"})
+        assert response.text.count('hreflang="x-default"') == len(STATIC_PATHS)
+        assert (
+            'hreflang="x-default" '
+            f'href="http://example.com/{DEFAULT_LOCALE}/projects/api"'
+        ) in response.text
+
+    async def test_the_sitemap_has_no_invented_lastmod(
+        self, client: AsyncTestClient[Litestar]
+    ) -> None:
+        """No date is better than today's date on every page."""
+        response = await client.get("/sitemap.xml", headers={"host": "example.com"})
+        assert "<lastmod>" not in response.text

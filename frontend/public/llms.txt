@@ -19,6 +19,7 @@ Key facts:
 - [piighost-api](https://piighost.dev/en/projects/api): a REST server hosting one pipeline behind HTTP
 - [piighost-chat](https://piighost.dev/en/projects/chat): a demo chatbot that de-identifies messages before the LLM sees them
 - [piighost-proofreader](https://piighost.dev/en/projects/proofreader): a CV proofreader that de-identifies documents before any LLM call
+- [caviardage](https://piighost.dev/en/projects/caviardage): a browser app that redacts a Word deed without the document leaving the tab, live at https://caviardage.piighost.dev/
 - [Why de-identify?](https://piighost.dev/en/philosophy): how cloud models handle your data, and what de-identification changes
 - The same pages exist in French under https://piighost.dev/fr
 

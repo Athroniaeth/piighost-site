@@ -177,6 +177,40 @@ export const fr: Dictionary = {
         },
       ],
     },
+    caviardage: {
+      tagline:
+        "Une application qui caviarde un acte Word dans le navigateur. Rien du document ne quitte l'onglet.",
+      sections: [
+        {
+          heading: "Ce qu'il fait",
+          paragraphs: [
+            "caviardage retire les données personnelles d'un acte rédigé sous Word. Ce retrait s'appelle le caviardage. Il est définitif, car l'application ne garde aucune table qui relie une valeur à son remplacement.",
+            "Tout se passe dans l'onglet du navigateur. piighost y tourne grâce à Pyodide, une version de Python qui s'exécute dans le navigateur. Le document n'est jamais envoyé, et aucun compte n'est demandé. Seules des mesures de visite anonymes quittent l'onglet, comme les étapes atteintes.",
+            "Il accepte aussi un PDF qui contient son texte. Les pages de la copie deviennent alors des images, avec les valeurs peintes par-dessus.",
+          ],
+        },
+        {
+          heading: "Comment ça marche",
+          ordered: true,
+          list: [
+            "Vous déposez un fichier `.docx`. Chaque valeur sera remplacée, à votre choix, par un libellé lisible comme `[Personne 1]`, par un jeton ou par une bande noire.",
+            "Les révisions en cours sont acceptées, pour qu'aucun texte supprimé ne reste caché dans le fichier. Les commentaires et les métadonnées sont retirés par défaut.",
+            "Des règles repèrent ce qui a une forme fixe, comme un IBAN ou un numéro de téléphone. GLiNER, un modèle d'IA qui lit le texte libre, trouve les noms de personnes, de lieux et d'organisations. Il pèse 349 Mo et ne se télécharge qu'une fois.",
+            "Vous vérifiez chaque valeur trouvée. Une réponse s'applique à toutes les occurrences de cette valeur.",
+            "Vous lisez tout le document, passage par passage, pour repérer ce que l'outil a manqué. La signature reste bloquée tant qu'un passage n'a pas été lu.",
+            "Vous téléchargez la copie caviardée. Sa dernière page est une attestation signée, qui dit ce qui a été retiré, par qui et à quelle date.",
+          ],
+        },
+        {
+          heading: "Ce qu'il ne fait pas",
+          list: [
+            "Il ne lit pas les images. Un document scanné est refusé, et un logo, une signature ou un tampon est copié tel quel.",
+            "Il ne garantit pas l'anonymat. C'est votre relecture qui l'établit, et l'attestation dit ce que vous avez fait.",
+            "Il ne conserve rien. Après le téléchargement, l'onglet oublie le fichier d'origine, les valeurs et vos réponses.",
+          ],
+        },
+      ],
+    },
   },
   footer: {
     tagline:
@@ -823,6 +857,7 @@ export const fr: Dictionary = {
       api: "piighost-api - serveur HTTP et proxys OpenAI et Anthropic",
       chat: "piighost-chat - démonstration de chat dé-identifié",
       proofreader: "piighost-proofreader - relecteur de CV dé-identifié",
+      caviardage: "caviardage - caviarder un acte Word dans le navigateur",
     },
     defaultDescription:
       "piighost est une bibliothèque Python pour dé-identifier les informations personnelles avant qu'elles n'atteignent un grand modèle de langage. Détectez les PII par regex, NER ou LLM, remplacez-les par des jetons stables, puis restaurez les vraies valeurs pour vos outils.",
@@ -835,6 +870,8 @@ export const fr: Dictionary = {
       chat: "piighost-chat est un chatbot de démonstration qui dé-identifie chaque message avant que le modèle ne le voie, puis restaure les vraies valeurs dans la réponse.",
       proofreader:
         "piighost-proofreader est un relecteur de CV qui dé-identifie les documents avant tout appel à un modèle, pour que les données personnelles ne quittent jamais votre contrôle.",
+      caviardage:
+        "caviardage retire les données personnelles d'un acte Word, dans le navigateur. piighost y tourne dans Pyodide avec un modèle GLiNER, et rien du document ne quitte l'onglet.",
       playground:
         "Composez un pipeline complet de dé-identification de PII dans le navigateur : détecter, résoudre, lier et dé-identifier, puis exportez-le en configuration piighost.",
       detector:

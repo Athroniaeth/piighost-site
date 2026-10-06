@@ -30,18 +30,22 @@
       {tagline}
     </p>
     <div class="mt-6 flex flex-wrap gap-3">
-      <Button
-        variant="outline"
-        size="sm"
-        class="max-sm:h-10 max-sm:px-3.5"
-        href={project.repo}
-        target="_blank"
-        rel="noreferrer"
-        onclick={() => sortant("repo")}
-      >
-        <GithubIcon class="mr-1 size-4" />
-        {i18n.t.projectHeader.repository}
-      </Button>
+      <!-- Un dépôt privé n'a pas de bouton : un lien vers GitHub lui
+           répondrait 404. -->
+      {#if project.repo}
+        <Button
+          variant="outline"
+          size="sm"
+          class="max-sm:h-10 max-sm:px-3.5"
+          href={project.repo}
+          target="_blank"
+          rel="noreferrer"
+          onclick={() => sortant("repo")}
+        >
+          <GithubIcon class="mr-1 size-4" />
+          {i18n.t.projectHeader.repository}
+        </Button>
+      {/if}
       {#if project.app}
         <Button
           size="sm"

@@ -4,6 +4,7 @@
   import Server from "@lucide/svelte/icons/server";
   import MessagesSquare from "@lucide/svelte/icons/messages-square";
   import FileText from "@lucide/svelte/icons/file-text";
+  import Eraser from "@lucide/svelte/icons/eraser";
   import Lien from "./Lien.svelte";
   import { i18n } from "../lib/i18n.svelte";
   import type { Project } from "../lib/site";
@@ -12,12 +13,14 @@
   let { project }: { project: Project } = $props();
 
   /** Le rôle du projet, en pictogramme : la bibliothèque est un paquet, le
-   *  serveur un serveur, et les deux démonstrations montrent leur objet. */
+   *  serveur un serveur, les deux démonstrations montrent leur objet, et le
+   *  caviardage la gomme, parce qu'il retire sans retour. */
   const ICONES = {
     piighost: Package,
     api: Server,
     chat: MessagesSquare,
     proofreader: FileText,
+    caviardage: Eraser,
   } as const;
   const Icone = $derived(
     ICONES[project.slug as keyof typeof ICONES] ?? Package,

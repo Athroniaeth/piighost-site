@@ -4,7 +4,7 @@
   import { i18n } from "../../lib/i18n.svelte";
   import { projects } from "../../lib/site";
 
-  /** Neuf emplacements : les quatre projets, puis des cases en attente. La
+  /** Neuf emplacements : les cinq projets, puis des cases en attente. La
    *  grille reste pleine, et les vides disent qu'il en viendra d'autres. */
   const EMPLACEMENTS = 9;
   const EMPREINTES = ["2b1f4a", "7c43e9", "9af0d2", "1e8c75", "f30b86"];

@@ -60,6 +60,7 @@ export type Dictionary = {
     api: ProjectPageDict;
     chat: ProjectPageDict;
     proofreader: ProjectPageDict;
+    caviardage: ProjectPageDict;
   };
   footer: {
     tagline: string;
@@ -261,6 +262,7 @@ export type Dictionary = {
       api: string;
       chat: string;
       proofreader: string;
+      caviardage: string;
     };
     defaultDescription: string;
     philosophyDescription: string;
@@ -269,6 +271,7 @@ export type Dictionary = {
       api: string;
       chat: string;
       proofreader: string;
+      caviardage: string;
       playground: string;
       detector: string;
     };

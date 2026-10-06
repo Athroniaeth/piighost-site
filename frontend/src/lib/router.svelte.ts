@@ -1,7 +1,7 @@
 /**
  * Un routeur d'historique en un fichier, conscient de la langue.
  *
- * Six pages, deux langues, aucune mise en page imbriquée : une dépendance de
+ * Sept pages, deux langues, aucune mise en page imbriquée : une dépendance de
  * routage coûterait plus en indirection qu'elle n'apporte. nginx renvoie déjà
  * le bon HTML prérendu pour chaque URL connue, ce qui est tout ce dont un
  * routeur d'historique a besoin.
@@ -37,7 +37,7 @@ const NAVIGATEUR = typeof window !== "undefined";
 class Router {
   nom = $state<NomDePage>("home");
   locale = $state<Locale>(LOCALE_DEFAUT);
-  /** Vraie quand l'URL n'est aucune des douze. Le rendu affiche alors la 404. */
+  /** Vraie quand l'URL n'est aucune des quatorze. Le rendu affiche alors la 404. */
   introuvable = $state(false);
 
   constructor() {

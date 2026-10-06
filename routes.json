@@ -16,6 +16,7 @@
     { "nom": "api",         "chemin": "/projects/api",          "priorite": 0.8, "frequence": "monthly" },
     { "nom": "chat",        "chemin": "/projects/chat",         "priorite": 0.7, "frequence": "monthly" },
     { "nom": "proofreader", "chemin": "/projects/proofreader",  "priorite": 0.7, "frequence": "monthly" },
+    { "nom": "caviardage",  "chemin": "/projects/caviardage",   "priorite": 0.7, "frequence": "monthly" },
     { "nom": "philosophy",  "chemin": "/philosophy",            "priorite": 0.6, "frequence": "monthly" }
   ]
 }

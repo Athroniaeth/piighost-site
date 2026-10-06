@@ -17,7 +17,13 @@ import donnees from "../../../routes.json";
  *  fichier disent la même chose. */
 export type Locale = "fr" | "en";
 export type NomDePage =
-  "home" | "piighost" | "api" | "chat" | "proofreader" | "philosophy";
+  | "home"
+  | "piighost"
+  | "api"
+  | "chat"
+  | "proofreader"
+  | "caviardage"
+  | "philosophy";
 
 export type Page = {
   nom: NomDePage;
@@ -43,6 +49,7 @@ const NOMS_ATTENDUS: readonly NomDePage[] = [
   "api",
   "chat",
   "proofreader",
+  "caviardage",
   "philosophy",
 ];
 {

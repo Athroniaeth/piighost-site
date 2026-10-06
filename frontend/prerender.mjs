@@ -4,7 +4,7 @@
  * Pourquoi cette étape existe : le site remplace un export statique Next où
  * chaque route était prérendue. Une application à page unique sert un seul
  * index.html, donc un robot et un aperçu de lien verraient la même page
- * générique sur les douze URL. Le dépôt piighost-seo mesure cette visibilité
+ * générique sur les quatorze URL. Le dépôt piighost-seo mesure cette visibilité
  * tous les jours, et la perdre se verrait.
  *
  * Le rendu vient de Svelte lui-même, pas d'un navigateur sans tête : la sortie
@@ -50,7 +50,7 @@ const echappe = (s) =>
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 
-/** Les empreintes des blocs schema.org, dédoublonnées entre les douze pages.
+/** Les empreintes des blocs schema.org, dédoublonnées entre les quatorze pages.
  *  La CSP est script-src 'self' sans unsafe-inline : un bloc non autorisé est
  *  refusé par le navigateur, et les données structurées disparaissent sans que
  *  rien ne le signale. */

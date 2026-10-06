@@ -1,7 +1,7 @@
 # piighost-site
 
 Le site de présentation de [piighost](https://github.com/Athroniaeth/piighost),
-servi sur `piighost.dev`. Six pages, deux langues, prérendues.
+servi sur `piighost.dev`. Sept pages, deux langues, prérendues.
 
 Il succède à [piighost-studio](https://github.com/Athroniaeth/piighost-studio),
 dont il a d'abord été un portage à l'identique, reconstruit à partir de
@@ -26,7 +26,7 @@ Litestar 2.24, Svelte 5, Vite 8, Tailwind 4, nginx, OpenPanel auto hébergé.
 **Il est prérendu.** Après le build, `frontend/prerender.mjs` rend chaque URL
 avec le moteur serveur de Svelte et écrit un `index.html` complet, avec son
 titre, sa description, son canonique et ses `hreflang`. Un robot qui n'exécute
-aucun script voit donc douze pages, pas une coquille répétée douze fois. Le
+aucun script voit donc quatorze pages, pas une coquille répétée quatorze fois. Le
 dépôt `piighost-seo` mesure cette visibilité tous les jours, et la perdre se
 verrait.
 
@@ -54,7 +54,7 @@ frontend/
   src/lib/             routeur, i18n, thème, tokens d'audience, en-têtes
   src/ui/              les composants de base, repris de piighost-design
   src/components/      la barre partagée branchée, le pied de page, la démonstration
-  src/pages/           les six pages
+  src/pages/           les sept pages
   src/i18n/            les dictionnaires, repris tels quels du studio
   src/app.css          importe @piighost/ui/styles.css, tokens et règles communes
   vendor/              l'archive de @piighost/ui, tant qu'elle n'est pas publiée

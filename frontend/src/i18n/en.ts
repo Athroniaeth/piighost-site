@@ -176,6 +176,40 @@ export const en: Dictionary = {
         },
       ],
     },
+    caviardage: {
+      tagline:
+        "An app that redacts a Word deed in the browser. Nothing of the document leaves the tab.",
+      sections: [
+        {
+          heading: "What it does",
+          paragraphs: [
+            "caviardage removes the personal data from a deed written in Word. This removal is called redaction. It is final, because the app keeps no table that links a value to its replacement.",
+            "Everything happens in the browser tab. piighost runs there through Pyodide, a version of Python that runs in the browser. The document is never uploaded, and no account is needed. Only anonymous visit counts leave the tab, such as the steps reached.",
+            "It also accepts a PDF that carries its text. The pages of the copy then become pictures, with the values painted over.",
+          ],
+        },
+        {
+          heading: "How it works",
+          ordered: true,
+          list: [
+            "You drop a `.docx` file. Each value will be replaced, as you choose, by a readable label such as `[Person 1]`, by a token or by a black bar.",
+            "Pending tracked changes are accepted, so no deleted text stays hidden in the file. Comments and metadata are removed by default.",
+            "Rules find what has a fixed shape, such as an IBAN or a phone number. GLiNER, an AI model that reads free text, finds the names of people, places and organisations. It weighs 349 MB and downloads only once.",
+            "You check each value found. One answer applies to every occurrence of that value.",
+            "You read the whole document, passage by passage, for anything the tool missed. Signing stays locked until every passage is read.",
+            "You download the redacted copy. Its last page is a signed declaration of what was removed, by whom and on what date.",
+          ],
+        },
+        {
+          heading: "What it does not do",
+          list: [
+            "It does not read images. A scanned document is refused, and a logo, a signature or a stamp is copied as is.",
+            "It does not guarantee anonymity. Your review establishes it, and the declaration states what you did.",
+            "It keeps nothing. After the download, the tab forgets the original file, the values and your answers.",
+          ],
+        },
+      ],
+    },
   },
   footer: {
     tagline: "De-identify PII before it reaches the LLM.",
@@ -813,6 +847,7 @@ export const en: Dictionary = {
       api: "piighost-api - HTTP server and OpenAI and Anthropic proxies",
       chat: "piighost-chat - de-identified chat demo",
       proofreader: "piighost-proofreader - de-identified CV proofreader",
+      caviardage: "caviardage - redact a Word deed in the browser",
     },
     defaultDescription:
       "piighost is a Python library to de-identify personally identifiable information before it reaches a large language model. Detect PII with regex, NER or an LLM, swap it for stable placeholders, and restore real values for your tools.",
@@ -825,6 +860,8 @@ export const en: Dictionary = {
       chat: "piighost-chat is a demo chatbot that de-identifies each message before the model sees it, then restores the real values in the reply.",
       proofreader:
         "piighost-proofreader is a CV proofreader that de-identifies documents before any model call, so personal data never leaves your control.",
+      caviardage:
+        "caviardage removes the personal data from a Word deed, in the browser. piighost runs there in Pyodide with a GLiNER model, and nothing of the document leaves the tab.",
       playground:
         "Compose a full PII de-identification pipeline in the browser: detect, resolve, link and de-identify, then export it as piighost config.",
       detector:

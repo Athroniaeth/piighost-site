@@ -49,6 +49,10 @@ const PAGES: Record<NomDePage, Entree> = {
     titre: t.seo.titles.proofreader,
     description: t.seo.pages.proofreader,
   }),
+  caviardage: (t) => ({
+    titre: t.seo.titles.caviardage,
+    description: t.seo.pages.caviardage,
+  }),
   philosophy: (t) => ({
     titre: `${t.philosophy.title} - piighost`,
     description: t.seo.philosophyDescription,

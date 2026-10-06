@@ -10,7 +10,13 @@
   import { appliquer } from "./lib/head";
   import { track } from "./lib/analytics";
 
-  const PROJETS = ["piighost", "api", "chat", "proofreader"] as const;
+  const PROJETS = [
+    "piighost",
+    "api",
+    "chat",
+    "proofreader",
+    "caviardage",
+  ] as const;
   type Slug = (typeof PROJETS)[number];
   const estProjet = (n: string): n is Slug =>
     (PROJETS as readonly string[]).includes(n);

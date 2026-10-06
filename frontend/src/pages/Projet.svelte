@@ -5,7 +5,7 @@
   import { getProject } from "../lib/site";
   import { i18n } from "../lib/i18n.svelte";
 
-  type Slug = "piighost" | "api" | "chat" | "proofreader";
+  type Slug = "piighost" | "api" | "chat" | "proofreader" | "caviardage";
   let { slug }: { slug: Slug } = $props();
 
   // Le code du README de la bibliothèque, vérifié contre ses imports : les
@@ -83,6 +83,10 @@ uv run streamlit run app.py`}
   />
 {:else if slug === "chat"}
   <ProjectArticle {slug} blocs={{ run: chatRun }} />
-{:else}
+{:else if slug === "proofreader"}
   <ProjectArticle {slug} blocs={{ run: proofreaderRun }} />
+{:else}
+  <!-- Pas de commande à lancer : le dépôt est privé, l'application se
+       visite en ligne depuis le bouton de l'en-tête. -->
+  <ProjectArticle {slug} blocs={{}} />
 {/if}

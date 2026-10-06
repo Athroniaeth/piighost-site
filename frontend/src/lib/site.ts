@@ -15,7 +15,9 @@ export type Project = {
   slug: string;
   name: string;
   tagline: string;
-  repo: string;
+  /** Absent quand le dépôt est privé : aucune page ne doit alors pointer vers
+   *  un lien GitHub qui répondrait 404 au visiteur. */
+  repo?: string;
   pypi?: string;
   docs?: string;
   app?: string;
@@ -53,6 +55,14 @@ export const projects: Project[] = [
     repo: `${GITHUB_ORG}/piighost-proofreader`,
     app: "https://proofreader.piighost.dev/",
   },
+  {
+    // Le dépôt est privé : pas de `repo`, l'application en ligne en tient lieu.
+    slug: "caviardage",
+    name: "caviardage",
+    tagline:
+      "An app that redacts a Word deed in the browser. Nothing of the document leaves the tab.",
+    app: "https://caviardage.piighost.dev/",
+  },
 ];
 
 export const navLinks = projects.map((p) => ({
@@ -72,6 +82,7 @@ export function getProject(slug: string): Project {
  * lecteur, un lien du site sait déjà dans quelle langue il lit.
  */
 export function docsPiighost(locale: string): string {
-  const base = getProject("piighost").docs ?? getProject("piighost").repo;
+  const piighost = getProject("piighost");
+  const base = piighost.docs ?? piighost.repo ?? GITHUB_ORG;
   return `${base}${locale === "fr" ? "fr" : "en"}/`;
 }

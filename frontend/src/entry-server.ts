@@ -4,7 +4,7 @@
  * Elle ne tourne jamais en production : nginx sert des fichiers. Elle existe
  * pour que chaque URL ait un HTML complet avant qu'un script ne s'exécute,
  * parce qu'un robot qui n'exécute rien ne verrait sinon qu'une page vide,
- * douze fois.
+ * quatorze fois.
  */
 
 import { render } from "svelte/server";

@@ -42,8 +42,8 @@ STATIC_PATHS: tuple[str, ...] = tuple(
 
 Read from routes.json rather than written here. The same file drives the
 frontend router and the prerenderer: a page declared in one place and not the
-others is exactly the drift this project spends its time preventing. Twelve
-entries today, two languages times six pages.
+others is exactly the drift this project spends its time preventing. Fourteen
+entries today, two languages times seven pages.
 """
 
 DISALLOWED = ("/api/", "/schema")

@@ -105,7 +105,13 @@ class TestSeo:
         serves.
         """
         response = await client.get("/sitemap.xml", headers={"host": "example.com"})
-        assert response.text.count('hreflang="x-default"') == len(STATIC_PATHS)
+        # Chaque URL traduite en porte un, articles du blog compris.
+        traduits = [
+            a for a in ARTICLES if len(translations(ARTICLES, a.slug)) == len(LOCALES)
+        ]
+        assert response.text.count('hreflang="x-default"') == len(STATIC_PATHS) + len(
+            traduits
+        )
         assert (
             'hreflang="x-default" '
             f'href="http://example.com/{DEFAULT_LOCALE}/projects/api"'

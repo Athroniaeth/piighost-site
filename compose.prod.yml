@@ -36,6 +36,20 @@ services:
       api:
         condition: service_healthy
     restart: unless-stopped
+    labels:
+      # www.piighost.dev answers with a 301 to piighost.dev, path kept. Coolify's
+      # "redirect to non-www" setting does not apply to a compose app, so the
+      # redirect is declared here. The priority beats the routers Coolify generates
+      # for the domains set in the UI; the certificate is still issued for www.
+      - traefik.http.middlewares.piighost-www-to-apex.redirectregex.regex=^https?://www\.piighost\.dev/(.*)
+      - traefik.http.middlewares.piighost-www-to-apex.redirectregex.replacement=https://piighost.dev/$${1}
+      - traefik.http.middlewares.piighost-www-to-apex.redirectregex.permanent=true
+      - traefik.http.routers.piighost-www.rule=Host(`www.piighost.dev`)
+      - traefik.http.routers.piighost-www.entrypoints=https
+      - traefik.http.routers.piighost-www.tls=true
+      - traefik.http.routers.piighost-www.tls.certresolver=letsencrypt
+      - traefik.http.routers.piighost-www.middlewares=piighost-www-to-apex
+      - traefik.http.routers.piighost-www.priority=1000
 
   api:
     build:
